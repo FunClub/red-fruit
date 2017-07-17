@@ -6,8 +6,9 @@ package com.taomei.service.utils;
 public enum  ResultViewStatusUtil {
     SUCCESS(200,"请求成功"),
     NOT_FOUND(404,"未找到数据"),
-    EXISTS(400,"数据已存在");
-
+    EXISTS(400,"数据已存在"),
+    UNKNOWN(0,"未知错误"),
+    ERROR(500,"服务器出错");
     private String message;
     private Integer code;
 

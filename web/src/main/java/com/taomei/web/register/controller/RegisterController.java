@@ -1,21 +1,20 @@
 package com.taomei.web.register.controller;
 
-import com.taomei.service.register.iservice.IBaseRegisterService;
-import com.taomei.web.utils.LoginUtil;
+import com.taomei.dao.dtos.RegisterDto;
 import com.taomei.dao.entities.ResultView;
+import com.taomei.dao.entities.Users;
+import com.taomei.service.register.iservice.IBaseRegisterService;
+import com.taomei.service.utils.RegisterUtil;
+import com.taomei.service.utils.ResultViewStatusUtil;
+import com.taomei.service.utils.ResultViewUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
-/**
- * 注册控制器
- */
 @RestController
 @RequestMapping("/register")
 public class RegisterController {
@@ -26,24 +25,30 @@ public class RegisterController {
     public RegisterController(IBaseRegisterService baseRegisterService) {
         this.baseRegisterService = baseRegisterService;
     }
-
-    /**
-     * 向浏览器输入验证码
-     * @param request javax.servlet.{@link HttpServletRequest}
-     * @param response javax.servlet.{@link HttpServletResponse}
-     */
-    @GetMapping("/verificationCodeImg")
-    public void createVerificationCodeImg(HttpServletRequest request, HttpServletResponse response){
-        LoginUtil.createVerificationCodeImg(request,response);
+    @PostMapping(value = "/user")
+    public ResultView register(@RequestBody RegisterDto registerDto,  HttpSession session) throws Exception {
+        String actualCode = session.getAttribute("verificationCode").toString();
+        boolean result = actualCode.equals(registerDto.getVerificationCode());
+        /*如果验证码无误*/
+        if (result){
+            return baseRegisterService.register(registerDto);
+        }else {
+            return ResultViewUtil.error(ResultViewStatusUtil.UNKNOWN.getCode(),ResultViewStatusUtil.UNKNOWN.getMessage());
+        }
     }
 
-    /**
-     *
+   /**
+     * 验证用户账号是否被注册
      * @param account 用户账号
      * @return 返回给浏览器的统一数据对象
      */
     @GetMapping("{account}/account")
     public ResultView selectAccountByAccount(@PathVariable("account") String account){
         return baseRegisterService.canRegisterAble(account);
+    }
+
+    @PostMapping("test")
+    public Users users(@RequestBody Users users){
+        return  users;
     }
 }
