@@ -2,18 +2,13 @@ package com.taomei.web.register.controller;
 
 import com.taomei.dao.dtos.RegisterDto;
 import com.taomei.dao.entities.ResultView;
-import com.taomei.dao.entities.Users;
 import com.taomei.service.register.iservice.IBaseRegisterService;
-import com.taomei.service.utils.RegisterUtil;
 import com.taomei.service.utils.ResultViewStatusUtil;
 import com.taomei.service.utils.ResultViewUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/register")
@@ -45,10 +40,5 @@ public class RegisterController {
     @GetMapping("{account}/account")
     public ResultView selectAccountByAccount(@PathVariable("account") String account){
         return baseRegisterService.canRegisterAble(account);
-    }
-
-    @PostMapping("test")
-    public Users users(@RequestBody Users users){
-        return  users;
     }
 }

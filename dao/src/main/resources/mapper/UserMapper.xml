@@ -16,6 +16,14 @@
     <result column="city" jdbcType="VARCHAR" property="city" />
   </resultMap>
   <!--通过账号查询账号-->
+  <select id="selectAccountByAccount" resultType="java.lang.String">
+    SELECT account FROM users WHERE account=#{account}
+  </select>
+
+  <!--通过账号密码查询用户-->
+  <select id="selectUserByAccountAndPassword" resultMap="BaseResultMap">
+    SELECT *FROM users WHERE passwords=#{passwords} AND account = #{account}
+  </select>
 
   <insert id="insert" parameterType="com.taomei.dao.entities.Users">
     insert into users (account,nickName, passwords,born, sex,city)
@@ -80,7 +88,5 @@
       </if>
     </trim>
   </insert>
-  <select id="selectAccountByAccount" resultType="java.lang.String">
-    SELECT account FROM users WHERE account=#{account}
-  </select>
+
 </mapper>

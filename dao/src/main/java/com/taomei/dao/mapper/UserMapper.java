@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface UserMapper {
+
+    Users selectUserByAccountAndPassword(Users users);
     /**
      *根据账号来查询账号，用于判断该账号是否被注册
      * @param account 用户待注册的账号
