@@ -20,6 +20,11 @@ public class BaseLoginService implements IBaseLoginService {
         users.setPasswords(ShareUtil.generateEncryptPass(acPassword));
         Users newUser = userMapper.selectUserByAccountAndPassword(users);
         if(newUser!=null){
+            if(newUser.getHalfId()!=null){
+
+            }else{
+
+            }
            return ResultViewUtil.success(newUser);
         }else {
             return ResultViewUtil.error(ResultViewStatusUtil.UNKNOWN.getCode(),ResultViewStatusUtil.UNKNOWN.getMessage());

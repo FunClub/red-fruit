@@ -3,9 +3,16 @@ package com.taomei.dao.mapper;
 import com.taomei.dao.entities.Users;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.math.BigInteger;
+
 @Mapper
 public interface UserMapper {
 
+    /**
+     *
+     * @param users 用户对象，只有帐号密码
+     * @return 查询出来的用户信息
+     */
     Users selectUserByAccountAndPassword(Users users);
     /**
      *根据账号来查询账号，用于判断该账号是否被注册
