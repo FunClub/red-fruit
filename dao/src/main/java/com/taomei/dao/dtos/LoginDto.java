@@ -12,6 +12,18 @@ public class LoginDto {
      * 是否有另一半
      */
     private boolean hasHalf;
+    /**
+     * 用户头像，主要用于邀请对象时的头像显示
+     */
+    private String profileImg;
+
+    public String getProfileImg() {
+        return profileImg;
+    }
+
+    public void setProfileImg(String profileImg) {
+        this.profileImg = profileImg;
+    }
 
     public boolean isHasHalf() {
         return hasHalf;

@@ -49,6 +49,8 @@ public class BaseLoginService implements IBaseLoginService {
             LoginDto dto = new LoginDto();
             dto.setUserId(newUser.getUserId());
             dto.setHasHalf(hasHalf(dto.getUserId()));
+            //主要用户邀请对象时显示
+            dto.setProfileImg(newUser.getProfileImg());
             //如果用户没有另一半就设置昵称用于在邀请界面显示
             if(!dto.isHasHalf()){
                 dto.setNickname(newUser.getNickname());
@@ -79,7 +81,7 @@ public class BaseLoginService implements IBaseLoginService {
             Users invited =userMapper.selectUserByIdOnInvite(dto.getInvitedId());
             Users invitation =userMapper.selectUserByIdOnInvite(dto.getInvitationId());
             //2.异性
-            if(!invited.getSex().equals(invitation.getSex())){
+            if(invited.getSex().equals(invitation.getSex())){
                 return ResultViewUtil.error(ResultViewStatusUtil.FAILED.getCode(),ResultViewStatusUtil.FAILED.getMessage());
             }
             return ResultViewUtil.success(true);

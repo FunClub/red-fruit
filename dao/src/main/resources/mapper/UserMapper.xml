@@ -25,7 +25,7 @@
 
   <!--通过账号密码查询用户-->
   <select id="selectUserByAccountAndPassword" resultMap="BaseResultMap">
-    SELECT user_id,nickname FROM users WHERE account=#{account} AND passwords=#{passwords}
+    SELECT user_id,nickname,profile_img FROM users WHERE account=#{account} AND passwords=#{passwords}
   </select>
   <select id="selectUserByIdOnInvite" resultMap="BaseResultMap">
     SELECT sex FROM users WHERE user_id=#{value}
@@ -38,6 +38,7 @@
     insert into users (account,nickName, passwords,born, sex,city)
     values (#{account,jdbcType=VARCHAR},#{nickname},#{passwords,jdbcType=VARCHAR},#{born,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{city,jdbcType=VARCHAR})
   </insert>
+
   <insert id="insertSelective" parameterType="com.taomei.dao.entities.Users">
     <!--
       WARNING - @mbggenerated
