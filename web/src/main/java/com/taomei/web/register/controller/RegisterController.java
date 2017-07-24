@@ -28,7 +28,7 @@ public class RegisterController {
         if (result){
             return baseRegisterService.register(registerDto);
         }else {
-            return ResultViewUtil.error(ResultViewStatusUtil.UNKNOWN.getCode(),ResultViewStatusUtil.UNKNOWN.getMessage());
+            return ResultViewUtil.error(ResultViewStatusUtil.FAILED.getCode(),ResultViewStatusUtil.FAILED.getMessage());
         }
     }
 

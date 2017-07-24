@@ -7,9 +7,20 @@ import java.math.BigInteger;
 
 @Mapper
 public interface UserMapper {
+    /**
+     * 通过id查询用户
+     * @param userId 用户id
+     * @return
+     */
+    BigInteger selectUserIdById(BigInteger userId);
+    /**
+     * 查询被邀请人或者邀请人的信息(性别)
+     * @param userId 用户
+     * @returnId
+     */
+    Users selectUserByIdOnInvite(BigInteger userId);
 
     /**
-     *
      * @param users 用户对象，只有帐号密码
      * @return 查询出来的用户信息
      */

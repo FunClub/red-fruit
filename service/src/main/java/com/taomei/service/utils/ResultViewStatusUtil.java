@@ -7,7 +7,7 @@ public enum  ResultViewStatusUtil {
     SUCCESS(200,"请求成功"),
     NOT_FOUND(404,"未找到数据"),
     EXISTS(400,"数据已存在"),
-    UNKNOWN(0,"未知错误"),
+    FAILED(0,"处理失败"),
     ERROR(500,"服务器出错");
     private String message;
     private Integer code;

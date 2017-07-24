@@ -15,7 +15,9 @@
     <result column="profile_img" jdbcType="VARCHAR" property="profileImg" />
     <result column="city" jdbcType="VARCHAR" property="city" />
     <result column="half-id" jdbcType="VARCHAR" property="halfId" />
+    <result column="invitation_id" jdbcType="VARCHAR" property="invitationId" />
   </resultMap>
+
   <!--通过账号查询账号-->
   <select id="selectAccountByAccount" resultType="java.lang.String">
     SELECT account FROM users WHERE account=#{account}
@@ -24,6 +26,12 @@
   <!--通过账号密码查询用户-->
   <select id="selectUserByAccountAndPassword" resultMap="BaseResultMap">
     SELECT user_id,nickname FROM users WHERE account=#{account} AND passwords=#{passwords}
+  </select>
+  <select id="selectUserByIdOnInvite" resultMap="BaseResultMap">
+    SELECT sex FROM users WHERE user_id=#{value}
+  </select>
+  <select id="selectUserIdById" resultType="java.math.BigInteger">
+    SELECT user_id FROM users WHERE user_id=#{value}
   </select>
 
   <insert id="insert" parameterType="com.taomei.dao.entities.Users">

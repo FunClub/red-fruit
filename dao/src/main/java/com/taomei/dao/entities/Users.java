@@ -73,13 +73,22 @@ public class Users {
      *
      * @mbggenerated
      */
-    private String halfId;
+    private BigInteger halfId;
+    private BigInteger invitationId;
 
-    public String getHalfId() {
+    public BigInteger getInvitationId() {
+        return invitationId;
+    }
+
+    public void setInvitationId(BigInteger invitationId) {
+        this.invitationId = invitationId;
+    }
+
+    public BigInteger getHalfId() {
         return halfId;
     }
 
-    public void setHalfId(String halfId) {
+    public void setHalfId(BigInteger halfId) {
         this.halfId = halfId;
     }
 
