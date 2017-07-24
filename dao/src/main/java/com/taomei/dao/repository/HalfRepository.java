@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.math.BigInteger;
 @Repository
 public interface HalfRepository extends MongoRepository<Half,BigInteger> {
-
+    Half findByUserId1(BigInteger userId1);
+    Half findByUserId2(BigInteger userId2);
 }

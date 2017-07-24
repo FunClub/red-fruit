@@ -12,8 +12,8 @@ import java.math.BigInteger;
 public class Half {
     @Id
     private BigInteger halfId;
-    private BigInteger userId1;
-    private BigInteger userId2;
+    private String userId1;
+    private String userId2;
 
     public BigInteger getHalfId() {
         return halfId;
@@ -23,19 +23,20 @@ public class Half {
         this.halfId = halfId;
     }
 
-    public BigInteger getUserId1() {
+    public String getUserId1() {
         return userId1;
     }
 
-    public void setUserId1(BigInteger userId1) {
+    public void setUserId1(String userId1) {
         this.userId1 = userId1;
     }
 
-    public BigInteger getUserId2() {
+    public String getUserId2() {
         return userId2;
     }
 
-    public void setUserId2(BigInteger userId2) {
+    public void setUserId2(String userId2) {
         this.userId2 = userId2;
     }
+
 }

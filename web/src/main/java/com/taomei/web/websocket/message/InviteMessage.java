@@ -2,7 +2,7 @@ package com.taomei.web.websocket.message;
 
 import com.taomei.dao.entities.invitation.Invitation;
 
-import java.math.BigInteger;
+
 
 /**
  * 邀请另一半消息

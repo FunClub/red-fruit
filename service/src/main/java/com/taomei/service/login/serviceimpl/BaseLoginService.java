@@ -104,9 +104,9 @@ public class BaseLoginService implements IBaseLoginService {
      * @return true有，false无
      */
     private boolean hasHalf(BigInteger userId){
-        Half half=mongoOperations.findOne(query(where("user_id1").is(userId)), Half.class);
+        Half half=halfRepository.findByUserId1(userId);
         if(half==null){
-            half=mongoOperations.findOne(query(where("user_id2").is(userId)), Half.class);
+            half=halfRepository.findByUserId2(userId);
             return !(half==null);
         }
         return true;

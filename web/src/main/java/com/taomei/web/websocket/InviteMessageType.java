@@ -2,9 +2,13 @@ package com.taomei.web.websocket;
 
 public enum InviteMessageType {
     /**
-     * 发送消息后系统回复
+     * 发送邀请消息后系统回复
      */
-    REBACK(0),
+    INVITE_REBACK(-1),
+    /**
+     * 发送同意后消息后系统回复
+     */
+    AGREE_REBACK(-2),
     /**
      *邀请另一半
      */
