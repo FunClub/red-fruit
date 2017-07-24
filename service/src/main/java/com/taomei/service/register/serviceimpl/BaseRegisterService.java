@@ -2,7 +2,7 @@ package com.taomei.service.register.serviceimpl;
 
 import com.taomei.dao.dtos.RegisterDto;
 import com.taomei.dao.entities.ResultView;
-import com.taomei.dao.entities.Users;
+import com.taomei.dao.entities.Users.Users;
 import com.taomei.dao.mapper.UserMapper;
 import com.taomei.service.register.iservice.IBaseRegisterService;
 import com.taomei.service.utils.RegisterUtil;

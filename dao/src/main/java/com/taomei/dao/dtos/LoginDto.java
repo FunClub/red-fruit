@@ -1,6 +1,9 @@
 package com.taomei.dao.dtos;
 
+import com.taomei.dao.entities.invitation.Invitation;
+
 import java.math.BigInteger;
+import java.util.List;
 
 /**
  * 登录时的用户
@@ -16,6 +19,18 @@ public class LoginDto {
      * 用户头像，主要用于邀请对象时的头像显示
      */
     private String profileImg;
+    /**
+     * 邀请人信息，没有另一半时才可能有值
+     */
+    private List<Invitation> invitations;
+
+    public List<Invitation> getInvitations() {
+        return invitations;
+    }
+
+    public void setInvitations(List<Invitation> invitations) {
+        this.invitations = invitations;
+    }
 
     public String getProfileImg() {
         return profileImg;

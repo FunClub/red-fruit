@@ -22,7 +22,7 @@ public class InviteMessageDecoder implements Decoder.Text<InviteMessage> {
         try {
             chatMessage =objectMapper.readValue(s, InviteMessage.class);
         } catch (IOException e) {
-            LOGGER.error("json字符串=》java对象，解析失败");
+                LOGGER.error("json字符串=》java对象，解析失败");
             e.printStackTrace();
         }
         return chatMessage;

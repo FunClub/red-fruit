@@ -1,4 +1,4 @@
-package com.taomei.dao.entities;
+package com.taomei.dao.entities.Users;
 
 
 import java.math.BigInteger;

@@ -1,45 +1,35 @@
 package com.taomei.web.websocket.message;
 
+import com.taomei.dao.entities.invitation.Invitation;
+
 import java.math.BigInteger;
 
 /**
  * 邀请另一半消息
  */
-public class InviteMessage {
-    private String inviteId;
-    private String invitedId;
-    private String profileImg;
-    private String nickname;
+public class InviteMessage extends Invitation {
+    /**
+     * 消息类型
+     */
+    private int type;
 
-    public String getInviteId() {
-        return inviteId;
+    /**
+     * 消息的状态，是否操作成功
+     */
+    private boolean status;
+    public int getType() {
+        return type;
     }
 
-    public void setInviteId(String inviteId) {
-        this.inviteId = inviteId;
+    public void setType(int type) {
+        this.type = type;
     }
 
-    public String getInvitedId() {
-        return invitedId;
+    public boolean isStatus() {
+        return status;
     }
 
-    public void setInvitedId(String invitedId) {
-        this.invitedId = invitedId;
-    }
-
-    public String getProfileImg() {
-        return profileImg;
-    }
-
-    public void setProfileImg(String profileImg) {
-        this.profileImg = profileImg;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }

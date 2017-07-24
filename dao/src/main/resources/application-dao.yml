@@ -6,7 +6,7 @@ mybatis:
 spring:
   data:
     mongodb:
-      database: fruit
+      database: red-fruit
   #jdbc数据源配置
   datasource:
     username: root

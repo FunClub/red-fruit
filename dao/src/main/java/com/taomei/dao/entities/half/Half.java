@@ -1,4 +1,4 @@
-package com.taomei.dao.entities;
+package com.taomei.dao.entities.half;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

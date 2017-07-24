@@ -1,6 +1,6 @@
 package com.taomei.dao.mapper;
 
-import com.taomei.dao.entities.Users;
+import com.taomei.dao.entities.Users.Users;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.math.BigInteger;

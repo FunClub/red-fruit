@@ -1,7 +1,6 @@
 package com.taomei.dao.repository;
 
-import com.taomei.dao.entities.Half;
-import com.taomei.dao.entities.Users;
+import com.taomei.dao.entities.half.Half;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

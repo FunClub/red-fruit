@@ -3,7 +3,7 @@ package com.taomei.web.login.controller;
 import com.taomei.dao.dtos.InvitationIdDto;
 import com.taomei.dao.dtos.LoginDto;
 import com.taomei.dao.entities.ResultView;
-import com.taomei.dao.entities.Users;
+import com.taomei.dao.entities.Users.Users;
 import com.taomei.service.login.iservice.IBaseLoginService;
 import com.taomei.service.utils.ResultViewStatusUtil;
 import com.taomei.service.utils.ResultViewUtil;

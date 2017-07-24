@@ -2,7 +2,7 @@ package com.taomei.service.login.iservice;
 
 import com.taomei.dao.dtos.InvitationIdDto;
 import com.taomei.dao.entities.ResultView;
-import com.taomei.dao.entities.Users;
+import com.taomei.dao.entities.Users.Users;
 
 import java.math.BigInteger;
 
@@ -23,4 +23,5 @@ public interface IBaseLoginService {
      * @return 返回前台的统一数据对象
      */
     ResultView canInvite(InvitationIdDto dto);
+
 }

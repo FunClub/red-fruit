@@ -2,7 +2,6 @@ package com.taomei.service.register.iservice;
 
 import com.taomei.dao.dtos.RegisterDto;
 import com.taomei.dao.entities.ResultView;
-import com.taomei.dao.entities.Users;
 
 /**
  * 基本的注册服务接口
