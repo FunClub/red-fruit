@@ -9,7 +9,7 @@ import java.util.List;
  * 登录时的用户
  */
 public class LoginDto {
-    private BigInteger userId;
+    private String userId;
     private String nickname;
     /**
      * 是否有另一半
@@ -48,11 +48,11 @@ public class LoginDto {
         this.hasHalf = hasHalf;
     }
 
-    public BigInteger getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(BigInteger userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

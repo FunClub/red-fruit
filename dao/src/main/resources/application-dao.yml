@@ -7,7 +7,11 @@ spring:
   data:
     mongodb:
       database: red-fruit
+      #rest资源的基本路径
+    rest:
+      base-path: /api
   #jdbc数据源配置
+
   datasource:
     username: root
     password: root

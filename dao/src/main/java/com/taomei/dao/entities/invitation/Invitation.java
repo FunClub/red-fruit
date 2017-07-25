@@ -8,17 +8,17 @@ import java.math.BigInteger;
 @Document(collection = "invitation")
 public class Invitation {
     @Id
-    private BigInteger invitationId;
+    private String invitationId;
     private String inviteId;
     private String invitedId;
     private String nickname;
     private String profileImg;
 
-    public BigInteger getInvitationId() {
+    public String getInvitationId() {
         return invitationId;
     }
 
-    public void setInvitationId(BigInteger invitationId) {
+    public void setInvitationId(String invitationId) {
         this.invitationId = invitationId;
     }
 

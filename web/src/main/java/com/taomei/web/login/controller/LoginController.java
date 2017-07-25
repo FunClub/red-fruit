@@ -43,7 +43,9 @@ public class LoginController {
      */
     @GetMapping("/user/invite")
     public ResultView getInviteUser(HttpSession session){
-        return ResultViewUtil.success(session.getAttribute("user"));
+        LoginDto ld = (LoginDto) session.getAttribute("user");
+        ld.setInvitations(baseLoginService.selectInvitation(ld.getUserId()));
+        return ResultViewUtil.success(ld);
     }
 
     /**
@@ -55,7 +57,7 @@ public class LoginController {
     public ResultView canToInvite(HttpSession session){
         LoginDto ld = (LoginDto)session.getAttribute("user");
         if(ld!=null){
-            if(!ld.isHasHalf()){
+            if(!baseLoginService.hasHalf(ld.getUserId())){
                 return ResultViewUtil.success(true);
             }
         }
@@ -69,7 +71,7 @@ public class LoginController {
      * @return 返回前台的统一数据对象
      */
     @GetMapping("/user/{userId}/can-invited")
-    public ResultView canInvite(@PathVariable("userId")BigInteger userId,HttpSession session){
+    public ResultView canInvite(@PathVariable("userId")String userId,HttpSession session){
         LoginDto ld = (LoginDto)session.getAttribute("user");
         InvitationIdDto dto = new InvitationIdDto();
         dto.setInvitationId(ld.getUserId());

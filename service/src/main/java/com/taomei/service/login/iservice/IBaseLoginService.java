@@ -3,8 +3,10 @@ package com.taomei.service.login.iservice;
 import com.taomei.dao.dtos.InvitationIdDto;
 import com.taomei.dao.entities.ResultView;
 import com.taomei.dao.entities.Users.Users;
+import com.taomei.dao.entities.invitation.Invitation;
 
 import java.math.BigInteger;
+import java.util.List;
 
 /**
  * 登录模块的基本接口
@@ -24,4 +26,16 @@ public interface IBaseLoginService {
      */
     ResultView canInvite(InvitationIdDto dto);
 
+    /**
+     * 查询邀请信息
+     * @param userId 用户Id
+     * @return
+     */
+    List<Invitation> selectInvitation(String userId);
+    /**
+     * 判断用户是否有另一半
+     * @param userId 用户id
+     * @return true有，false无
+     */
+    public boolean hasHalf(String userId);
 }

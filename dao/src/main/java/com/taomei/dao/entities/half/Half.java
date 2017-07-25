@@ -11,15 +11,15 @@ import java.math.BigInteger;
 @Document(collection = "half")
 public class Half {
     @Id
-    private BigInteger halfId;
+    private String halfId;
     private String userId1;
     private String userId2;
 
-    public BigInteger getHalfId() {
+    public String getHalfId() {
         return halfId;
     }
 
-    public void setHalfId(BigInteger halfId) {
+    public void setHalfId(String halfId) {
         this.halfId = halfId;
     }
 

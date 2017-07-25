@@ -9,26 +9,26 @@ public class InvitationIdDto {
     /**
      * 被邀请者id
      */
-    private BigInteger invitedId;
+    private String invitedId;
 
     /**
      * 邀请者id
      */
-    private BigInteger invitationId;
+    private String invitationId;
 
-    public BigInteger getInvitedId() {
+    public String getInvitedId() {
         return invitedId;
     }
 
-    public void setInvitedId(BigInteger invitedId) {
+    public void setInvitedId(String invitedId) {
         this.invitedId = invitedId;
     }
 
-    public BigInteger getInvitationId() {
+    public String getInvitationId() {
         return invitationId;
     }
 
-    public void setInvitationId(BigInteger invitationId) {
+    public void setInvitationId(String invitationId) {
         this.invitationId = invitationId;
     }
 }

@@ -5,6 +5,7 @@ import com.taomei.dao.dtos.LoginDto;
 import com.taomei.dao.entities.half.Half;
 import com.taomei.dao.entities.ResultView;
 import com.taomei.dao.entities.Users.Users;
+import com.taomei.dao.entities.invitation.Invitation;
 import com.taomei.dao.mapper.UserMapper;
 import com.taomei.dao.repository.HalfRepository;
 import com.taomei.dao.repository.InvitationRepository;
@@ -20,7 +21,11 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
+import java.util.List;
 
+/**
+ * 登陆服务接口的基本实现
+ */
 @Service
 public class BaseLoginService implements IBaseLoginService {
 
@@ -49,14 +54,12 @@ public class BaseLoginService implements IBaseLoginService {
         Users newUser = userMapper.selectUserByAccountAndPassword(users);
         if(newUser!=null){
             LoginDto dto = new LoginDto();
-            dto.setUserId(newUser.getUserId());
+            dto.setUserId(newUser.getUserId().toString());
             dto.setHasHalf(hasHalf(dto.getUserId()));
-
             //如果用户没有另一半就设置昵称用于在邀请界面显示
             if(!dto.isHasHalf()){
                 //主要用户邀请对象时显示
                 dto.setProfileImg(newUser.getProfileImg());
-                dto.setInvitations(invitationRepository.findByInvitedId(dto.getUserId().toString()));
                 dto.setNickname(newUser.getNickname());
             }
            return ResultViewUtil.success(dto);
@@ -90,7 +93,7 @@ public class BaseLoginService implements IBaseLoginService {
                 return ResultViewUtil.error(ResultViewStatusUtil.FAILED.getCode(),ResultViewStatusUtil.FAILED.getMessage());
             }
             //3.被人邀请
-            if(invitationRepository.findByInvitedId(dto.getInvitedId().toString()).size()!=0){
+            if(invitationRepository.findByInvitedId(dto.getInvitedId()).size()!=0){
                 return ResultViewUtil.error(ResultViewStatusUtil.FAILED.getCode(),ResultViewStatusUtil.FAILED.getMessage());
             }
             return ResultViewUtil.success(true);
@@ -99,11 +102,19 @@ public class BaseLoginService implements IBaseLoginService {
     }
 
     /**
+     * 查询邀请信息
+     * @param userId 用户Id
+     * @return 邀请信息
+     */
+    public List<Invitation> selectInvitation(String userId){
+        return this.invitationRepository.findByInvitedId(userId);
+    }
+    /**
      * 判断用户是否有另一半
      * @param userId 用户id
      * @return true有，false无
      */
-    private boolean hasHalf(BigInteger userId){
+    public boolean hasHalf(String userId){
         Half half=halfRepository.findByUserId1(userId);
         if(half==null){
             half=halfRepository.findByUserId2(userId);
@@ -117,7 +128,7 @@ public class BaseLoginService implements IBaseLoginService {
      * @param userId 用户id
      * @return true存在，false不存在
      */
-    private boolean userIdExist(BigInteger userId){
+    private boolean userIdExist(String userId){
         return userMapper.selectUserIdById(userId)!=null;
     }
 }

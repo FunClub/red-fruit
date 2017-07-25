@@ -15,16 +15,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
-import javax.websocket.EncodeException;
-import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
+import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 处理邀请信息的socket
+ */
 @ServerEndpoint(value="/invite/{userId}",configurator = CustomSpringConfigurator.class,
         encoders = {InviteMessageEncoder.class},
         decoders = {InviteMessageDecoder.class}
@@ -32,6 +32,9 @@ import java.util.Map;
 @Component
 public class InviteEndPoint {
     private final  static Logger LOGGER = LoggerFactory.getLogger(InviteMessageDecoder.class);
+    /**
+     * 保存会话
+     */
     private Map<String,Session> inviteSessionMap;
     private final InvitationRepository invitationRepository;
     private final HalfRepository halfRepository;
@@ -58,7 +61,6 @@ public class InviteEndPoint {
             if(invitationRepository.findByInvitedId(message.getInvitedId())!=null){
                 newMessage =invitationRepository.insert(message);
             }
-
             message.setStatus(newMessage!=null);
             try {
                 //通知被邀请方有人邀请(如果在线)
@@ -72,12 +74,11 @@ public class InviteEndPoint {
                 LOGGER.error("发送邀请信息时出错");
                 e.printStackTrace();
             }
-
             //如果是接受邀请的信息
         }else if (message.getType()== InviteMessageType.AGREE.getType()){
             Session inviteSession =inviteSessionMap.get(message.getInviteId());
                 //插入情侣文档，并设置状态
-                message.setStatus(halfRepository.insert(createHalf(message))!=null);
+                message.setStatus(halfRepository.insert(createHalf(message))!=null&&invitationRepository.deleteByInvitationId(message.getInvitationId())>0);
                     try {
                         //通知邀请方接受了邀请(如果在线)
                         if(inviteSession!=null) {
@@ -97,6 +98,26 @@ public class InviteEndPoint {
 
     }
 
+    @OnClose
+    public void close(Session session,CloseReason  closeReason,@PathParam("userId")String userId){
+        try {
+            session.close();
+            inviteSessionMap.remove(userId);
+        } catch (IOException e) {
+            LOGGER.error(session.getId()+"关闭socket连接失败");
+        }
+        LOGGER.info(session.getId()+"关闭socket连接");
+    }
+
+    @OnError
+    public void error(Throwable throwable,Session session,@PathParam("userId")String userId){
+        try {
+            session.close();
+            inviteSessionMap.remove(userId);
+        } catch (IOException e) {
+            LOGGER.error(session.getId()+"发生错误"+throwable.getMessage());
+        }
+    }
     /**
      * 根据接受邀请的消息生成Half
      * @param message 接受邀请的消息

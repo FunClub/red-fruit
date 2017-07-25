@@ -12,13 +12,13 @@ public interface UserMapper {
      * @param userId 用户id
      * @return
      */
-    BigInteger selectUserIdById(BigInteger userId);
+    BigInteger selectUserIdById(String userId);
     /**
      * 查询被邀请人或者邀请人的信息(性别)
      * @param userId 用户
      * @returnId
      */
-    Users selectUserByIdOnInvite(BigInteger userId);
+    Users selectUserByIdOnInvite(String userId);
 
     /**
      * @param users 用户对象，只有帐号密码
