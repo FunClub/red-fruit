@@ -1,6 +1,6 @@
 package com.taomei.service.register.iservice;
 
-import com.taomei.dao.dtos.RegisterDto;
+import com.taomei.dao.dtos.register.RegisterDto;
 import com.taomei.dao.entities.ResultView;
 
 /**

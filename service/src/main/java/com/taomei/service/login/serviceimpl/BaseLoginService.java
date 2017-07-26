@@ -1,11 +1,11 @@
 package com.taomei.service.login.serviceimpl;
 
-import com.taomei.dao.dtos.InvitationIdDto;
-import com.taomei.dao.dtos.LoginDto;
-import com.taomei.dao.entities.half.Half;
+import com.taomei.dao.dtos.login.InvitationIdDto;
+import com.taomei.dao.dtos.login.LoginDto;
+import com.taomei.dao.entities.Half;
 import com.taomei.dao.entities.ResultView;
-import com.taomei.dao.entities.Users.Users;
-import com.taomei.dao.entities.invitation.Invitation;
+import com.taomei.dao.entities.Users;
+import com.taomei.dao.entities.Invitation;
 import com.taomei.dao.mapper.UserMapper;
 import com.taomei.dao.repository.HalfRepository;
 import com.taomei.dao.repository.InvitationRepository;
@@ -16,11 +16,8 @@ import com.taomei.service.utils.ShareUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 
-import static org.springframework.data.mongodb.core.query.Criteria.where;
-import static org.springframework.data.mongodb.core.query.Query.query;
 import org.springframework.stereotype.Service;
 
-import java.math.BigInteger;
 import java.util.List;
 
 /**

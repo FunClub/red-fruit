@@ -1,6 +1,6 @@
 package com.taomei.web.register.controller;
 
-import com.taomei.dao.dtos.RegisterDto;
+import com.taomei.dao.dtos.register.RegisterDto;
 import com.taomei.dao.entities.ResultView;
 import com.taomei.service.register.iservice.IBaseRegisterService;
 import com.taomei.service.utils.ResultViewStatusUtil;

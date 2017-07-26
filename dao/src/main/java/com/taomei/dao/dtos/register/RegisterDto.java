@@ -1,6 +1,6 @@
-package com.taomei.dao.dtos;
+package com.taomei.dao.dtos.register;
 
-import com.taomei.dao.entities.Users.Users;
+import com.taomei.dao.entities.Users;
 
 /**
  * 注册用户时的数据转输对象

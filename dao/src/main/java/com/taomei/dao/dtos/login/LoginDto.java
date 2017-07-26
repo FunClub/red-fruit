@@ -1,8 +1,7 @@
-package com.taomei.dao.dtos;
+package com.taomei.dao.dtos.login;
 
-import com.taomei.dao.entities.invitation.Invitation;
+import com.taomei.dao.entities.Invitation;
 
-import java.math.BigInteger;
 import java.util.List;
 
 /**

@@ -1,4 +1,4 @@
-package com.taomei.dao.entities.invitation;
+package com.taomei.dao.entities;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

@@ -1,9 +1,8 @@
 package com.taomei.web.websocket.serverendpoint;
 
-import com.taomei.dao.entities.half.Half;
+import com.taomei.dao.entities.Half;
 import com.taomei.dao.repository.HalfRepository;
 import com.taomei.dao.repository.InvitationRepository;
-import com.taomei.service.login.serviceimpl.BaseLoginService;
 import com.taomei.web.configuration.CustomSpringConfigurator;
 import com.taomei.web.websocket.InviteMessageType;
 import com.taomei.web.websocket.decode.InviteMessageEncoder;

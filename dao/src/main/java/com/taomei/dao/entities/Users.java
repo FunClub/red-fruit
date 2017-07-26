@@ -1,4 +1,4 @@
-package com.taomei.dao.entities.Users;
+package com.taomei.dao.entities;
 
 
 import java.math.BigInteger;
@@ -73,23 +73,33 @@ public class Users {
      *
      * @mbggenerated
      */
-    private BigInteger halfId;
-    private BigInteger invitationId;
 
-    public BigInteger getInvitationId() {
-        return invitationId;
+    private String profession;
+    private String hobby;
+    private String character;
+
+    public String getProfession() {
+        return profession;
     }
 
-    public void setInvitationId(BigInteger invitationId) {
-        this.invitationId = invitationId;
+    public void setProfession(String profession) {
+        this.profession = profession;
     }
 
-    public BigInteger getHalfId() {
-        return halfId;
+    public String getHobby() {
+        return hobby;
     }
 
-    public void setHalfId(BigInteger halfId) {
-        this.halfId = halfId;
+    public void setHobby(String hobby) {
+        this.hobby = hobby;
+    }
+
+    public String getCharacter() {
+        return character;
+    }
+
+    public void setCharacter(String character) {
+        this.character = character;
     }
 
     /**

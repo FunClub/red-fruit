@@ -1,12 +1,21 @@
 package com.taomei.dao.mapper;
 
-import com.taomei.dao.entities.Users.Users;
+import com.taomei.dao.dtos.personinfo.BaseUserInfoDto;
+import com.taomei.dao.entities.Users;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.math.BigInteger;
 
 @Mapper
 public interface UserMapper {
+
+    int updateUserBaseInfoById(BaseUserInfoDto dto);
+    /**
+     * 根据用户id查询用户的所有基本信息
+     * @param bigInteger 用户信息
+     * @return
+     */
+    BaseUserInfoDto selectUserBaseInfoById(String bigInteger);
     /**
      * 通过id查询用户
      * @param userId 用户id

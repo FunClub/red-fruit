@@ -1,11 +1,10 @@
 package com.taomei.service.login.iservice;
 
-import com.taomei.dao.dtos.InvitationIdDto;
+import com.taomei.dao.dtos.login.InvitationIdDto;
 import com.taomei.dao.entities.ResultView;
-import com.taomei.dao.entities.Users.Users;
-import com.taomei.dao.entities.invitation.Invitation;
+import com.taomei.dao.entities.Users;
+import com.taomei.dao.entities.Invitation;
 
-import java.math.BigInteger;
 import java.util.List;
 
 /**

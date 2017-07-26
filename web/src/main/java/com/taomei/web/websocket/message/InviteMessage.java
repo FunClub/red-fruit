@@ -1,6 +1,6 @@
 package com.taomei.web.websocket.message;
 
-import com.taomei.dao.entities.invitation.Invitation;
+import com.taomei.dao.entities.Invitation;
 
 
 

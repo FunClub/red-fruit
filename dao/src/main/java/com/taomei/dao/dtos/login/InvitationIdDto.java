@@ -1,4 +1,4 @@
-package com.taomei.dao.dtos;
+package com.taomei.dao.dtos.login;
 
 import java.math.BigInteger;
 

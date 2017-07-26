@@ -1,6 +1,6 @@
 package com.taomei.dao.repository;
 
-import com.taomei.dao.entities.invitation.Invitation;
+import com.taomei.dao.entities.Invitation;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
