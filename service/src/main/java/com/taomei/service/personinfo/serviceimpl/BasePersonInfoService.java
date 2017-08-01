@@ -1,6 +1,7 @@
 package com.taomei.service.personinfo.serviceimpl;
 
 import com.taomei.dao.dtos.personinfo.BaseUserInfoDto;
+import com.taomei.dao.dtos.personinfo.UpdateProfileDto;
 import com.taomei.dao.entities.ResultView;
 import com.taomei.dao.mapper.UserMapper;
 import com.taomei.service.personinfo.iservice.IPersonInfoService;
@@ -21,6 +22,15 @@ public class BasePersonInfoService implements IPersonInfoService {
     @Autowired
     public BasePersonInfoService(UserMapper userMapper) {
         this.userMapper = userMapper;
+    }
+
+    @Override
+    public ResultView updateUserProfile(UpdateProfileDto dto) throws Exception {
+        int count= userMapper.updateUserProfile(dto);
+        if(count==0){
+            throw new Exception("修改头像失败");
+        }
+        return ResultViewUtil.success(true);
     }
 
     /**

@@ -24,10 +24,15 @@
     <result column="profession" property="profession"/>
     <result column="character" property="character"/>
     <result column="hobby" property="hobby"/>
+    <result column="profile_img" property="profileImg"/>
+    <result column="original_profile_img" property="originalProfileImg"/>
   </resultMap>
   <update id="updateUserBaseInfoById">
     UPDATE users SET nickname=#{nickname},born=#{born},profession=#{profession}, `character`=#{character},hobby=#{hobby},city=#{city}
     WHERE user_Id=#{userId}
+  </update>
+  <update id="updateUserProfile">
+    UPDATE users SET profile_img=#{profileImg},original_profile_img=#{originalProfileImg} WHERE user_id=#{userId}
   </update>
   <!--通过账号查询账号-->
   <select id="selectAccountByAccount" resultType="java.lang.String">
@@ -45,12 +50,12 @@
     SELECT user_id FROM users WHERE user_id=#{value}
   </select>
   <select id="selectUserBaseInfoById" resultMap="BaseUserInfoMap">
-    SELECT user_id,nickname,born,sex,city,profession,`character`,hobby FROM users WHERE user_id=#{value}
+    SELECT user_id,nickname,born,sex,city,profession,`character`,hobby,profile_img,original_profile_img FROM users WHERE user_id=#{value}
   </select>
 
   <insert id="insert" parameterType="com.taomei.dao.entities.Users">
-    insert into users (account,nickName, passwords,born, sex,city)
-    values (#{account,jdbcType=VARCHAR},#{nickname},#{passwords,jdbcType=VARCHAR},#{born,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{city,jdbcType=VARCHAR})
+    insert into users (account,nickName, passwords,born, sex,city,profile_img,original_profile_img)
+    values (#{account,jdbcType=VARCHAR},#{nickname},#{passwords,jdbcType=VARCHAR},#{born,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{city,jdbcType=VARCHAR},#{profileImg},#{originalProfileImg})
   </insert>
 
   <insert id="insertSelective" parameterType="com.taomei.dao.entities.Users">

@@ -9,7 +9,7 @@ import com.taomei.dao.entities.Invitation;
 import com.taomei.dao.mapper.UserMapper;
 import com.taomei.dao.repository.HalfRepository;
 import com.taomei.dao.repository.InvitationRepository;
-import com.taomei.service.login.iservice.IBaseLoginService;
+import com.taomei.service.login.iservice.ILoginService;
 import com.taomei.service.utils.ResultViewStatusUtil;
 import com.taomei.service.utils.ResultViewUtil;
 import com.taomei.service.utils.ShareUtil;
@@ -24,7 +24,7 @@ import java.util.List;
  * 登陆服务接口的基本实现
  */
 @Service
-public class BaseLoginService implements IBaseLoginService {
+public class BaseLoginService implements ILoginService {
 
     private final UserMapper userMapper;
 

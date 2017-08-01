@@ -1,6 +1,7 @@
 package com.taomei.dao.mapper;
 
 import com.taomei.dao.dtos.personinfo.BaseUserInfoDto;
+import com.taomei.dao.dtos.personinfo.UpdateProfileDto;
 import com.taomei.dao.entities.Users;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -8,7 +9,12 @@ import java.math.BigInteger;
 
 @Mapper
 public interface UserMapper {
-
+    /**
+     * 更新用户头像
+     * @param dto 用户头像
+     * @return
+     */
+    int updateUserProfile(UpdateProfileDto dto);
     int updateUserBaseInfoById(BaseUserInfoDto dto);
     /**
      * 根据用户id查询用户的所有基本信息

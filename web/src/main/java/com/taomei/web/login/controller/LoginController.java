@@ -4,7 +4,7 @@ import com.taomei.dao.dtos.login.InvitationIdDto;
 import com.taomei.dao.dtos.login.LoginDto;
 import com.taomei.dao.entities.ResultView;
 import com.taomei.dao.entities.Users;
-import com.taomei.service.login.iservice.IBaseLoginService;
+import com.taomei.service.login.iservice.ILoginService;
 import com.taomei.service.utils.ResultViewStatusUtil;
 import com.taomei.service.utils.ResultViewUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +15,10 @@ import javax.servlet.http.HttpSession;
 @RestController
 @RequestMapping("/login")
 public class LoginController {
-    private final IBaseLoginService baseLoginService;
+    private final ILoginService baseLoginService;
 
     @Autowired
-    public LoginController(IBaseLoginService baseLoginService) {
+    public LoginController(ILoginService baseLoginService) {
         this.baseLoginService = baseLoginService;
     }
 

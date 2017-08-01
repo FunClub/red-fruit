@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 登录模块的基本接口
  */
-public interface IBaseLoginService {
+public interface ILoginService {
     /**
      *用户登录
      * @param users 用户帐号密码

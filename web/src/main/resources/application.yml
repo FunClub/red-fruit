@@ -1,6 +1,11 @@
 spring:
   profiles:
     active: dao,service,log
-  devtools:
-    restart:
-      enabled: false
+  http:
+    multipart:
+      max-file-size: 10MB
+server:
+  session:
+    timeout: -1
+  tomcat:
+    basedir: D:\spring-tomcat-tmp

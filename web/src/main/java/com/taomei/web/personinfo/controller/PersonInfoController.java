@@ -2,6 +2,7 @@ package com.taomei.web.personinfo.controller;
 
 import com.taomei.dao.dtos.login.LoginDto;
 import com.taomei.dao.dtos.personinfo.BaseUserInfoDto;
+import com.taomei.dao.dtos.personinfo.UpdateProfileDto;
 import com.taomei.dao.entities.ResultView;
 import com.taomei.service.personinfo.serviceimpl.BasePersonInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +40,19 @@ public class PersonInfoController {
     @PutMapping("/base-info")
     public ResultView updateBaseInfo(@RequestBody BaseUserInfoDto dto) throws Exception {
         return personInfoService.updatePersonBaseInfo(dto);
+    }
+
+    /**
+     * 更新用户头像
+     * @param dto 用户头像
+     * @param session
+     * @return 统一数据对象
+     * @throws Exception 头像修改失败
+     */
+    @PutMapping("/profile-img")
+    public ResultView updateProfileImg(@RequestBody UpdateProfileDto dto,HttpSession session) throws Exception {
+        LoginDto loginDto = (LoginDto) session.getAttribute("user");
+        dto.setUserId(loginDto.getUserId());
+        return personInfoService.updateUserProfile(dto);
     }
 }

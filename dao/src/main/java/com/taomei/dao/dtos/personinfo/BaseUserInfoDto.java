@@ -13,6 +13,24 @@ public class BaseUserInfoDto {
     private String profession;
     private String hobby;
     private String character;
+    private String profileImg;
+    private String originalProfileImg;
+
+    public String getOriginalProfileImg() {
+        return originalProfileImg;
+    }
+
+    public void setOriginalProfileImg(String originalProfileImg) {
+        this.originalProfileImg = originalProfileImg;
+    }
+
+    public String getProfileImg() {
+        return profileImg;
+    }
+
+    public void setProfileImg(String profileImg) {
+        this.profileImg = profileImg;
+    }
 
     public String getUserId() {
         return userId;
