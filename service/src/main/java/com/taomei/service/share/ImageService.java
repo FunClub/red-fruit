@@ -25,8 +25,7 @@ public class ImageService {
     private static final String ENDPOINT="http://oss-cn-shenzhen.aliyuncs.com";
     private static final String ACCESS_KEY_ID= "LTAIseZOgs0quMxr";
     private static final String ACCESS_KEY_SECRET = "duoh4gnCVAIu8gvDJ1p7vE1pg0ARuw";
-    private static final String MOOD_BUCKET_PATH ="mood/";
-    public static final String MOOD__BUCKET_NAME ="red-fruit";
+    public static final String BUCKET_NAME ="red-fruit";
     private OSSClient client;
     public ImageService() {
         client =new OSSClient(ENDPOINT, ACCESS_KEY_ID, ACCESS_KEY_SECRET);
@@ -34,31 +33,31 @@ public class ImageService {
 
     /**
      * 删除图片
-     * @param bucketName 仓库名
+     *
      * @param imgPath 路片路径集合
      * @return 统一对象
      */
-   public void deleteMoodImg(String bucketName, List<String> imgPath){
+   public void deleteImg( List<String> imgPath){
        for(String path:imgPath){
-           client.deleteObject(bucketName,path);
+           client.deleteObject(BUCKET_NAME,path);
        }
    }
 
 
     /**
-     * 上传心情图片并获得路径
+     * 上传图片并获得路径
      * @param files 上传的文件
-     * @return 心情图片地址集合
+     * @return 图片地址集合
      * @throws IOException 文件IO异常
      */
-    public List<String> generateMoodPath(List<MultipartFile> files) throws IOException {
+    public List<String> generateImgPath(List<MultipartFile> files,String folder) throws IOException {
         List<String> imgPath = new ArrayList<>();
         ObjectMetadata meta = new ObjectMetadata();
         for(MultipartFile file:files){
             InputStream inputStream = file.getInputStream();
-            String imageName =MOOD_BUCKET_PATH+ TimeUtil.getFileTime()+file.getOriginalFilename();
+            String imageName =folder+"/"+ TimeUtil.getFileTime()+file.getOriginalFilename();
             meta.setContentLength(file.getBytes().length);
-            client.putObject(MOOD__BUCKET_NAME,imageName,inputStream,meta);
+            client.putObject(BUCKET_NAME,imageName,inputStream,meta);
             imgPath.add(imageName);
         }
         return imgPath;

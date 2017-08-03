@@ -53,14 +53,14 @@ public class ShareController {
         return  ResultViewUtil.success(result);
     }
 
-    @PutMapping("mood-img")
-    public ResultView upload(@PathParam("moodImgs") List<MultipartFile> moodImgs) throws IOException {
-        System.out.println(moodImgs.size());
-        return ResultViewUtil.success(imageService.generateMoodPath(moodImgs));
+    @PutMapping("img/{folder}")
+    public ResultView upload(@PathParam("moodImgs") List<MultipartFile> moodImgs, @PathVariable("folder") String folder) throws IOException {
+        System.out.println(folder);
+        return ResultViewUtil.success(imageService.generateImgPath(moodImgs,folder));
     }
-    @PatchMapping("mood-img")
+    @PatchMapping("img")
     public ResultView delete(@RequestBody List<String> moodImgs){
-        imageService.deleteMoodImg(ImageService.MOOD__BUCKET_NAME,moodImgs);
+        imageService.deleteImg(moodImgs);
         return ResultViewUtil.success(true);
     }
 }
