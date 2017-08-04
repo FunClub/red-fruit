@@ -1,10 +1,10 @@
 package com.taomei.web.share.controller;
 
 import com.taomei.service.share.ImageService;
-import com.taomei.service.utils.ImageConditionUtil;
-import com.taomei.service.utils.ResultViewUtil;
+import com.taomei.web.share.utils.ResultViewStatusUtil;
+import com.taomei.web.share.utils.ResultViewUtil;
 import com.taomei.dao.entities.ResultView;
-import com.taomei.web.utils.ValidateUtil;
+import com.taomei.web.share.utils.ValidateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.websocket.server.PathParam;
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
 
 /**
@@ -54,13 +53,13 @@ public class ShareController {
     }
 
     @PutMapping("img/{folder}")
-    public ResultView upload(@PathParam("moodImgs") List<MultipartFile> moodImgs, @PathVariable("folder") String folder) throws IOException {
-        System.out.println(folder);
-        return ResultViewUtil.success(imageService.generateImgPath(moodImgs,folder));
+    public ResultView upload(@PathParam("imgs") List<MultipartFile> imgs, @PathVariable("folder") String folder) throws IOException {
+        return ResultViewUtil.success(imageService.generateImgPath(imgs,folder));
     }
     @PatchMapping("img")
-    public ResultView delete(@RequestBody List<String> moodImgs){
-        imageService.deleteImg(moodImgs);
-        return ResultViewUtil.success(true);
+    public ResultView delete(@RequestBody List<String> moodImgs) throws Exception {
+
+     return ResultViewUtil.success(imageService.deleteImg(moodImgs));
+
     }
 }

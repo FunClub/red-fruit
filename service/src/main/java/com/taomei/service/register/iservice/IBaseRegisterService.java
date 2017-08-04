@@ -11,14 +11,14 @@ public interface IBaseRegisterService {
     /**
      * 判断账号是否能被注册
      * @param account 用户待注册的账号
-     * @return 返回给浏览器的统一数据对象
+     * @return
      */
-    ResultView canRegisterAble(String account);
+    boolean canRegisterAble(String account);
 
     /**
      *
      * @param registerDto 待注册用户DTO
-     * @return 返回给浏览器的统一数据对象
+     * @return
      */
-    ResultView register(RegisterDto registerDto) throws Exception;
+    boolean register(RegisterDto registerDto) throws Exception;
 }

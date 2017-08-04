@@ -10,9 +10,8 @@ import com.taomei.dao.mapper.UserMapper;
 import com.taomei.dao.repository.HalfRepository;
 import com.taomei.dao.repository.InvitationRepository;
 import com.taomei.service.login.iservice.ILoginService;
-import com.taomei.service.utils.ResultViewStatusUtil;
-import com.taomei.service.utils.ResultViewUtil;
-import com.taomei.service.utils.ShareUtil;
+
+import com.taomei.service.share.utils.ShareUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 
@@ -42,26 +41,28 @@ public class BaseLoginService implements ILoginService {
     /**
      * 登录操作，主要用于查询用户和判断用户是否有另一半
      * @param users 用户帐号密码
-     * @return 返回给前台的统一对象
+     * @return 登录dto
      */
     @Override
-    public ResultView Login(Users users) {
+    public LoginDto Login(Users users) throws Exception {
         String acPassword = users.getPasswords();
         users.setPasswords(ShareUtil.generateEncryptPass(acPassword));
         Users newUser = userMapper.selectUserByAccountAndPassword(users);
         if(newUser!=null){
             LoginDto dto = new LoginDto();
             dto.setUserId(newUser.getUserId().toString());
-            dto.setHasHalf(hasHalf(dto.getUserId()));
+            Half half = getHalf(dto.getUserId());
+            dto.setHalf(half);
+            dto.setHasHalf(half!=null);
             //如果用户没有另一半就设置昵称用于在邀请界面显示
             if(!dto.isHasHalf()){
                 //主要用户邀请对象时显示
                 dto.setProfileImg(newUser.getProfileImg());
                 dto.setNickname(newUser.getNickname());
             }
-           return ResultViewUtil.success(dto);
+           return dto;
         }else {
-            return ResultViewUtil.error(ResultViewStatusUtil.FAILED.getCode(),ResultViewStatusUtil.FAILED.getMessage());
+            throw new Exception("登录失败");
         }
     }
 
@@ -76,26 +77,26 @@ public class BaseLoginService implements ILoginService {
      * @return 返回给前台的统一对象
      */
     @Override
-    public ResultView canInvite(InvitationIdDto dto) {
+    public boolean canInvite(InvitationIdDto dto) throws Exception {
         //如果对方Id存在
         if(userIdExist(dto.getInvitedId())){
             //1.有另一半
             if(hasHalf(dto.getInvitedId())){
-                return ResultViewUtil.error(ResultViewStatusUtil.FAILED.getCode(),ResultViewStatusUtil.FAILED.getMessage());
+                throw new Exception("无法邀请");
             }
             Users invited =userMapper.selectUserByIdOnInvite(dto.getInvitedId());
             Users invitation =userMapper.selectUserByIdOnInvite(dto.getInvitationId());
             //2.同性
             if(invited.getSex().equals(invitation.getSex())){
-                return ResultViewUtil.error(ResultViewStatusUtil.FAILED.getCode(),ResultViewStatusUtil.FAILED.getMessage());
+                throw new Exception("无法邀请");
             }
             //3.被人邀请
             if(invitationRepository.findByInvitedId(dto.getInvitedId()).size()!=0){
-                return ResultViewUtil.error(ResultViewStatusUtil.FAILED.getCode(),ResultViewStatusUtil.FAILED.getMessage());
+                throw new Exception("无法邀请");
             }
-            return ResultViewUtil.success(true);
+            return true;
         }
-        return ResultViewUtil.error(ResultViewStatusUtil.FAILED.getCode(),ResultViewStatusUtil.FAILED.getMessage());
+        throw new Exception("无法邀请");
     }
 
     /**
@@ -112,14 +113,21 @@ public class BaseLoginService implements ILoginService {
      * @return true有，false无
      */
     public boolean hasHalf(String userId){
+        return getHalf(userId)!=null;
+    }
+
+    /**
+     * 获取用户另一半对象
+     * @param userId 用户id
+     * @return 另一半对象
+     */
+    public Half getHalf(String userId){
         Half half=halfRepository.findByUserId1(userId);
         if(half==null){
             half=halfRepository.findByUserId2(userId);
-            return !(half==null);
         }
-        return true;
+        return half;
     }
-
     /**
      * 判断用户是否存在
      * @param userId 用户id

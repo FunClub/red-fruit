@@ -1,5 +1,6 @@
 package com.taomei.dao.mapper;
 
+import com.taomei.dao.dtos.home.HomeInfoDto;
 import com.taomei.dao.dtos.personinfo.BaseUserInfoDto;
 import com.taomei.dao.dtos.personinfo.UpdateProfileDto;
 import com.taomei.dao.entities.Users;
@@ -9,6 +10,13 @@ import java.math.BigInteger;
 
 @Mapper
 public interface UserMapper {
+
+    /**
+     * 查询用户的主页信息
+     * @param userId 用户id
+     * @return
+     */
+    HomeInfoDto selectHomeInfo(String userId);
     /**
      * 更新用户头像
      * @param dto 用户头像

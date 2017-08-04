@@ -5,6 +5,8 @@ import com.taomei.dao.dtos.personinfo.BaseUserInfoDto;
 import com.taomei.dao.dtos.personinfo.UpdateProfileDto;
 import com.taomei.dao.entities.ResultView;
 import com.taomei.service.personinfo.serviceimpl.BasePersonInfoService;
+import com.taomei.web.share.utils.ResultViewUtil;
+import com.taomei.web.share.utils.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -33,13 +35,13 @@ public class PersonInfoController {
      */
     @GetMapping("/base-info")
     public ResultView selectBaseInfo(HttpSession session) throws Exception {
-        LoginDto loginDto = (LoginDto) session.getAttribute("user");
-        return personInfoService.selectPersonBaseInfo(loginDto.getUserId());
+        return ResultViewUtil.success(personInfoService.selectPersonBaseInfo(UserUtil.getUserIdBySession(session)));
     }
 
     @PutMapping("/base-info")
-    public ResultView updateBaseInfo(@RequestBody BaseUserInfoDto dto) throws Exception {
-        return personInfoService.updatePersonBaseInfo(dto);
+    public ResultView updateBaseInfo(@RequestBody BaseUserInfoDto dto,HttpSession session) throws Exception {
+        dto.setUserId(UserUtil.getUserIdBySession(session));
+        return ResultViewUtil.success( personInfoService.updatePersonBaseInfo(dto));
     }
 
     /**
@@ -50,9 +52,8 @@ public class PersonInfoController {
      * @throws Exception 头像修改失败
      */
     @PutMapping("/profile-img")
-    public ResultView updateProfileImg(@RequestBody UpdateProfileDto dto,HttpSession session) throws Exception {
-        LoginDto loginDto = (LoginDto) session.getAttribute("user");
-        dto.setUserId(loginDto.getUserId());
-        return personInfoService.updateUserProfile(dto);
+    public ResultView updateProfileImg(@RequestBody UpdateProfileDto dto, HttpSession session) throws Exception {
+        dto.setUserId(UserUtil.getUserIdBySession(session));
+        return ResultViewUtil.success(personInfoService.updateUserProfile(dto));
     }
 }

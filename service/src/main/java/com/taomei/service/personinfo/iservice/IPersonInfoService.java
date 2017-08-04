@@ -15,19 +15,19 @@ public interface IPersonInfoService {
      * @param dto 用户头像
      * @return
      */
-    ResultView updateUserProfile(UpdateProfileDto dto) throws Exception;
+    boolean updateUserProfile(UpdateProfileDto dto) throws Exception;
     /**
      * 查询用户的基本资料
      * @param userId 用户id
      * @return 统一数据对象
      */
-    ResultView selectPersonBaseInfo(String userId) throws Exception;
+    BaseUserInfoDto selectPersonBaseInfo(String userId) throws Exception;
 
     /**
      * 更新用户基本资料
      * @param infoUser 待更新的用户数据
      * @return 统一数据对象
      */
-    ResultView updatePersonBaseInfo(BaseUserInfoDto infoUser) throws Exception;
+    boolean updatePersonBaseInfo(BaseUserInfoDto infoUser) throws Exception;
 
 }

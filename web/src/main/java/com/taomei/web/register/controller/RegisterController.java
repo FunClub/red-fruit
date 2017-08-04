@@ -3,8 +3,8 @@ package com.taomei.web.register.controller;
 import com.taomei.dao.dtos.register.RegisterDto;
 import com.taomei.dao.entities.ResultView;
 import com.taomei.service.register.iservice.IBaseRegisterService;
-import com.taomei.service.utils.ResultViewStatusUtil;
-import com.taomei.service.utils.ResultViewUtil;
+import com.taomei.web.share.utils.ResultViewStatusUtil;
+import com.taomei.web.share.utils.ResultViewUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
@@ -26,10 +26,9 @@ public class RegisterController {
         boolean result = actualCode.equals(registerDto.getVerificationCode());
         /*如果验证码无误*/
         if (result){
-            return baseRegisterService.register(registerDto);
-        }else {
-            return ResultViewUtil.error(ResultViewStatusUtil.FAILED.getCode(),ResultViewStatusUtil.FAILED.getMessage());
+            return ResultViewUtil.success(baseRegisterService.register(registerDto));
         }
+        throw new Exception("注册失败");
     }
 
    /**
@@ -39,6 +38,6 @@ public class RegisterController {
      */
     @GetMapping("{account}/account")
     public ResultView selectAccountByAccount(@PathVariable("account") String account){
-        return baseRegisterService.canRegisterAble(account);
+        return ResultViewUtil.success(baseRegisterService.canRegisterAble(account));
     }
 }

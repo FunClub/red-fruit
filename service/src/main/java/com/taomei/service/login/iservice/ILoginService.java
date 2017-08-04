@@ -1,6 +1,8 @@
 package com.taomei.service.login.iservice;
 
 import com.taomei.dao.dtos.login.InvitationIdDto;
+import com.taomei.dao.dtos.login.LoginDto;
+import com.taomei.dao.entities.Half;
 import com.taomei.dao.entities.ResultView;
 import com.taomei.dao.entities.Users;
 import com.taomei.dao.entities.Invitation;
@@ -12,18 +14,24 @@ import java.util.List;
  */
 public interface ILoginService {
     /**
+     * 获取用户另一半对象
+     * @param userId 用户id
+     * @return 另一半对象
+     */
+    Half getHalf(String userId);
+    /**
      *用户登录
      * @param users 用户帐号密码
-     * @return 返回前台的统一数据对象
+     * @return 登录dto
      */
-    ResultView Login(Users users);
+    LoginDto Login(Users users) throws Exception;
 
     /**
      *判断另一半是否能被邀请
      * @param dto 邀请和被邀请id dto
-     * @return 返回前台的统一数据对象
+     * @return
      */
-    ResultView canInvite(InvitationIdDto dto);
+    boolean canInvite(InvitationIdDto dto) throws Exception;
 
     /**
      * 查询邀请信息
@@ -36,5 +44,5 @@ public interface ILoginService {
      * @param userId 用户id
      * @return true有，false无
      */
-    public boolean hasHalf(String userId);
+     boolean hasHalf(String userId);
 }

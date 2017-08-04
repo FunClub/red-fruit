@@ -1,5 +1,6 @@
 package com.taomei.dao.dtos.login;
 
+import com.taomei.dao.entities.Half;
 import com.taomei.dao.entities.Invitation;
 
 import java.util.List;
@@ -10,6 +11,10 @@ import java.util.List;
 public class LoginDto {
     private String userId;
     private String nickname;
+    /**
+     * 另一半对象
+     */
+    private Half half;
     /**
      * 是否有另一半
      */
@@ -61,5 +66,13 @@ public class LoginDto {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public Half getHalf() {
+        return half;
+    }
+
+    public void setHalf(Half half) {
+        this.half = half;
     }
 }

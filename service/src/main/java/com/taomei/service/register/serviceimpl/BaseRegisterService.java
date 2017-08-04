@@ -5,10 +5,9 @@ import com.taomei.dao.entities.ResultView;
 import com.taomei.dao.entities.Users;
 import com.taomei.dao.mapper.UserMapper;
 import com.taomei.service.register.iservice.IBaseRegisterService;
-import com.taomei.service.utils.RegisterUtil;
-import com.taomei.service.utils.ResultViewStatusUtil;
-import com.taomei.service.utils.ResultViewUtil;
-import com.taomei.service.utils.ShareUtil;
+import com.taomei.service.share.utils.RegisterUtil;
+
+import com.taomei.service.share.utils.ShareUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +29,7 @@ public class BaseRegisterService implements IBaseRegisterService {
      * @param registerDto 待注册用户DTO
      */
     @Override
-    public ResultView register(RegisterDto registerDto) throws Exception {
+    public boolean register(RegisterDto registerDto) throws Exception {
         Users users = registerDto.getUser();
         /*将密码加密*/
         String encryptPass = ShareUtil.generateEncryptPass(users.getPasswords());
@@ -41,7 +40,7 @@ public class BaseRegisterService implements IBaseRegisterService {
         users.setOriginalProfileImg("assets/img/defaultMeImg.png");
         int count = userMapper.insert(users);
         if(count>0){
-            return ResultViewUtil.success(true);
+            return true;
         }else{
             throw new Exception("注册失败！");
         }
@@ -53,11 +52,11 @@ public class BaseRegisterService implements IBaseRegisterService {
      * @param account 用户待注册的账号
      */
     @Override
-    public ResultView canRegisterAble(String account) {
+    public boolean canRegisterAble(String account) {
         if( userMapper.selectAccountByAccount(account)==null){
-           return ResultViewUtil.success(true);
+           return true;
         }else{
-            return ResultViewUtil.error(ResultViewStatusUtil.EXISTS.getCode(),ResultViewStatusUtil.EXISTS.getMessage());
+            return false;
         }
 
     }

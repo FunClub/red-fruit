@@ -5,8 +5,8 @@ import com.taomei.dao.dtos.login.LoginDto;
 import com.taomei.dao.entities.ResultView;
 import com.taomei.dao.entities.Users;
 import com.taomei.service.login.iservice.ILoginService;
-import com.taomei.service.utils.ResultViewStatusUtil;
-import com.taomei.service.utils.ResultViewUtil;
+import com.taomei.web.share.utils.ResultViewStatusUtil;
+import com.taomei.web.share.utils.ResultViewUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,16 +23,16 @@ public class LoginController {
     }
 
     /**
-     *
+     *用户登录
      * @param users 保存用户的帐号密码
      * @param session 存放用户对象（有id，如果有nickname那说明没有另一半）
      * @return 统一结果对象
      */
     @PostMapping("/user")
-    public ResultView login(@RequestBody Users users, HttpSession session){
-        ResultView rv = baseLoginService.Login(users);
-        session.setAttribute("user",rv.getData());
-        return rv;
+    public ResultView login(@RequestBody Users users, HttpSession session) throws Exception {
+        LoginDto dto = baseLoginService.Login(users);
+        session.setAttribute("user",dto);
+        return ResultViewUtil.success(dto);
     }
 
     /**
@@ -60,7 +60,7 @@ public class LoginController {
                 return ResultViewUtil.success(true);
             }
         }
-        return ResultViewUtil.error(ResultViewStatusUtil.FAILED.getCode(),ResultViewStatusUtil.FAILED.getMessage());
+        return ResultViewUtil.success(false);
     }
 
 
@@ -70,12 +70,12 @@ public class LoginController {
      * @return 返回前台的统一数据对象
      */
     @GetMapping("/user/{userId}/can-invited")
-    public ResultView canInvite(@PathVariable("userId")String userId,HttpSession session){
+    public ResultView canInvite(@PathVariable("userId")String userId,HttpSession session) throws Exception {
         LoginDto ld = (LoginDto)session.getAttribute("user");
         InvitationIdDto dto = new InvitationIdDto();
         dto.setInvitationId(ld.getUserId());
         dto.setInvitedId(userId);
-        return baseLoginService.canInvite(dto);
+        return ResultViewUtil.success(baseLoginService.canInvite(dto));
     }
 
 }

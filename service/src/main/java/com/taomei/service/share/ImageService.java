@@ -1,17 +1,13 @@
 package com.taomei.service.share;
 
 import com.aliyun.oss.OSSClient;
-import com.aliyun.oss.model.OSSObject;
 import com.aliyun.oss.model.ObjectMetadata;
 import com.taomei.dao.entities.ResultView;
-import com.taomei.service.utils.ResultViewUtil;
-import com.taomei.service.utils.TimeUtil;
-import org.apache.tomcat.util.http.fileupload.FileUtils;
+
+import com.taomei.service.share.utils.TimeUtil;
 
 import org.springframework.stereotype.Service;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
-import sun.misc.IOUtils;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -37,10 +33,17 @@ public class ImageService {
      * @param imgPath 路片路径集合
      * @return 统一对象
      */
-   public void deleteImg( List<String> imgPath){
+   public boolean deleteImg( List<String> imgPath) throws Exception {
+       int i=0;
        for(String path:imgPath){
            client.deleteObject(BUCKET_NAME,path);
+           i++;
        }
+       if(i!=imgPath.size()){
+            throw new Exception("删除图片失败");
+       }
+       return true;
+
    }
 
 
