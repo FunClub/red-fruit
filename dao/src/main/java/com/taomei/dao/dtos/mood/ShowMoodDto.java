@@ -12,6 +12,33 @@ public class ShowMoodDto {
     private String nickname;
     private String profileImg;
     private String howLongAgo;
+    private boolean showSortDate;
+    private String sortDate;
+    private String shortDate;
+
+    public String getShortDate() {
+        return shortDate;
+    }
+
+    public void setShortDate(String shortDate) {
+        this.shortDate = shortDate;
+    }
+
+    public boolean isShowSortDate() {
+        return showSortDate;
+    }
+
+    public void setShowSortDate(boolean showSortDate) {
+        this.showSortDate = showSortDate;
+    }
+
+    public String getSortDate() {
+        return sortDate;
+    }
+
+    public void setSortDate(String sortDate) {
+        this.sortDate = sortDate;
+    }
 
     public String getHowLongAgo() {
         return howLongAgo;

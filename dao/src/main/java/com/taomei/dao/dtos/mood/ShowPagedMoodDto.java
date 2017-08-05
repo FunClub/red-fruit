@@ -9,8 +9,6 @@ import java.util.List;
  */
 public class ShowPagedMoodDto {
     private long totalElements;
-    private Integer totalPages;
-    private int currentPage;
     private List<ShowMoodDto> content;
 
     public long getTotalElements() {
@@ -21,13 +19,6 @@ public class ShowPagedMoodDto {
         this.totalElements = totalElements;
     }
 
-    public Integer getTotalPages() {
-        return totalPages;
-    }
-
-    public void setTotalPages(Integer totalPages) {
-        this.totalPages = totalPages;
-    }
 
     public List<ShowMoodDto> getContent() {
         return content;
@@ -37,11 +28,4 @@ public class ShowPagedMoodDto {
         this.content = content;
     }
 
-    public int getCurrentPage() {
-        return currentPage;
-    }
-
-    public void setCurrentPage(int currentPage) {
-        this.currentPage = currentPage;
-    }
 }

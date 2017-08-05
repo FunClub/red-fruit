@@ -11,7 +11,7 @@ public class SelectMoodConditionDto {
 
     private String halfId;
 
-    private int page;
+    private int pageIndex;
 
     private int pageSize;
 
@@ -31,12 +31,12 @@ public class SelectMoodConditionDto {
         this.halfId = halfId;
     }
 
-    public int getPage() {
-        return page;
+    public int getPageIndex() {
+        return pageIndex;
     }
 
-    public void setPage(int page) {
-        this.page = page;
+    public void setPageIndex(int pageIndex) {
+        this.pageIndex = pageIndex;
     }
 
     public int getPageSize() {

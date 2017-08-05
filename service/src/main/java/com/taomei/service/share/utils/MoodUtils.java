@@ -7,6 +7,7 @@ import com.taomei.dao.entities.Mood;
 import com.taomei.dao.mapper.UserMapper;
 import org.springframework.data.domain.Page;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,21 +25,35 @@ public class MoodUtils {
         List<ShowMoodDto> showMoodDtos = new ArrayList<>();
 
         showPagedMoodDto.setTotalElements(moodPage.getTotalElements());
-        showPagedMoodDto.setTotalPages(moodPage.getTotalPages());
-        showPagedMoodDto.setCurrentPage(moodPage.getNumber());
         List<Mood> preMoods = moodPage.getContent();
         MoodUserInfoDto moodUserInfoDto=null;
         ShowMoodDto showMoodDto = null;
+        String lastDate="";
         for(Mood mood:preMoods){
             moodUserInfoDto= userMapper.selectMoodUserInfo(mood.getUserId());
             showMoodDto=  new ShowMoodDto();
+            showMoodDto.setMood(mood);
+            //设置心情的额外属性
             showMoodDto.setNickname(moodUserInfoDto.getNickname());
             showMoodDto.setProfileImg(moodUserInfoDto.getProfileImg());
-            showMoodDto.setHowLongAgo(TimeUtil.calculateHowLongAgo(mood.getDate()));
-            showMoodDto.setMood(mood);
+            String howLoginAgo=TimeUtil.calculateHowLongAgo(mood.getDate());
+            showMoodDto.setHowLongAgo(howLoginAgo);
+            String sortDate = TimeUtil.calculateSortDate(howLoginAgo,mood.getDate());
+            if(sortDate.equals(lastDate)){
+                showMoodDto.setShowSortDate(false);
+            }else{
+                showMoodDto.setShowSortDate(true);
+                showMoodDto.setSortDate(sortDate);
+
+                lastDate=sortDate;
+            }
+            showMoodDto.setShortDate(TimeUtil.generateShortDate(mood.getDate()));
             showMoodDtos.add(showMoodDto);
         }
         showPagedMoodDto.setContent(showMoodDtos);
         return showPagedMoodDto;
     }
+
+
+
 }

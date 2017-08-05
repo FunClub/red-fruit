@@ -42,14 +42,14 @@ public class MoodController {
      * 根据条件查询心情
      * @param session
      * @param byHalf 是否是情侣间查询
-     * @param page 第几页
+     * @param pageIndex 第几页
      * @param pageSize 每一页多少条数据
      * @return  统一数据对象
      */
-    @GetMapping("/{byHalf}/{page}/{pageSize}")
-    public ResultView getMood(HttpSession session, @PathVariable("byHalf") boolean byHalf, @PathVariable("page") int page, @PathVariable("pageSize") int pageSize) {
+    @GetMapping("/{byHalf}/{pageIndex}/{pageSize}")
+    public ResultView getMood(HttpSession session, @PathVariable("byHalf") boolean byHalf, @PathVariable("pageIndex") int pageIndex, @PathVariable("pageSize") int pageSize) {
         SelectMoodConditionDto condition = new SelectMoodConditionDto();
-        condition.setByHalf(byHalf);condition.setPage(page);condition.setPageSize(pageSize);
+        condition.setByHalf(byHalf);condition.setPageIndex(pageIndex);condition.setPageSize(pageSize);
         //情侣间查询用情侣id查
         if(condition.isByHalf()){
             condition.setHalfId(UserUtil.getHalfIdBySession(session));

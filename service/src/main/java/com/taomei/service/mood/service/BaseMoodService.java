@@ -48,7 +48,7 @@ public class BaseMoodService implements IMoodService {
      */
     @Override
     public ShowPagedMoodDto selectMoodByHalfId(SelectMoodConditionDto condition) {
-        PageRequest pageRequest = new PageRequest(condition.getPage(),condition.getPageSize(),new Sort(Sort.Direction.DESC,"date"));
+        PageRequest pageRequest = new PageRequest(condition.getPageIndex(),condition.getPageSize(),new Sort(Sort.Direction.DESC,"date"));
         Page<Mood> page=null;
         //情侣间心情查询根据情侣id
         if(condition.isByHalf()){

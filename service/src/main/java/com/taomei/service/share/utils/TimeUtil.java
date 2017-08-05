@@ -64,4 +64,52 @@ public class TimeUtil {
         }
 
     }
+
+    /**
+     * 获取分门别类的时间
+     * @param howLongAgo 多久之前
+     * @param date 日期
+     * @return 分门别类的时间
+     */
+    public static String  calculateSortDate(String howLongAgo,String date){
+        int howLongLength = howLongAgo.length();
+        int dateLength = date.length();
+        char lastHowLong = howLongAgo.charAt(howLongLength-1);
+        char firstHowLong = howLongAgo.charAt(0);
+        //截取年月日
+        StringBuilder sb = new StringBuilder(date);
+        int blackChar = sb.indexOf(" ");
+        String yyd= sb.delete(blackChar,date.length()).toString();
+
+        //截取月日
+        String yd = yyd.substring(5,blackChar);
+        if(lastHowLong=='年'){
+            return yyd;
+        }else if (lastHowLong=='月'){
+            return yd;
+        }else if (lastHowLong=='天'){
+            if(howLongLength==2){
+                if(firstHowLong=='1'){
+                    return "昨天";
+                }else if (firstHowLong=='2'){
+                    return "前天";
+                }
+            }
+            return yd;
+        }else{
+            return "今天";
+        }
+
+    }
+
+    /**
+     * 获取简短日期比如2017-12-12 12:23:15 的简短日期是12:12
+     * @param date
+     * @return
+     */
+    public static  String generateShortDate(String date){
+        int blackChar = new StringBuilder(date).indexOf(" ");
+        return date.substring(blackChar+1,date.length()-3);
+    }
+
 }
