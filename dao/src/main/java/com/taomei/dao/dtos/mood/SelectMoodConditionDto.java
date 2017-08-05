@@ -3,7 +3,7 @@ package com.taomei.dao.dtos.mood;
 /**
  * 查询心情的条件
  */
-public class SelectMoodCondition {
+public class SelectMoodConditionDto {
     /**
      * 是否是情侣间查询
      */

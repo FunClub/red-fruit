@@ -1,6 +1,7 @@
 package com.taomei.dao.mapper;
 
 import com.taomei.dao.dtos.home.HomeInfoDto;
+import com.taomei.dao.dtos.mood.MoodUserInfoDto;
 import com.taomei.dao.dtos.personinfo.BaseUserInfoDto;
 import com.taomei.dao.dtos.personinfo.UpdateProfileDto;
 import com.taomei.dao.entities.Users;
@@ -10,6 +11,13 @@ import java.math.BigInteger;
 
 @Mapper
 public interface UserMapper {
+
+    /**
+     * 查询心情发布人的信息
+     * @param userId 用户Id
+     * @return
+     */
+    MoodUserInfoDto selectMoodUserInfo(String userId);
 
     /**
      * 查询用户的主页信息
