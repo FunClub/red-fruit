@@ -9,12 +9,35 @@ import java.util.List;
  */
 public class ShowMoodDto {
     private Mood mood;
+    private String moodId;
     private String nickname;
     private String profileImg;
+    /**
+     * 多久之前发的
+     */
     private String howLongAgo;
+
+    /**
+     * 是否显示分类时间
+     */
     private boolean showSortDate;
+    /**
+     * 分类时间
+     */
     private String sortDate;
+
+    /**
+     * 简短时间
+     */
     private String shortDate;
+
+    public String getMoodId() {
+        return moodId;
+    }
+
+    public void setMoodId(String moodId) {
+        this.moodId = moodId;
+    }
 
     public String getShortDate() {
         return shortDate;

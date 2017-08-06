@@ -22,7 +22,7 @@ public class RegisterController {
     }
     @PostMapping(value = "/user")
     public ResultView register(@RequestBody RegisterDto registerDto,  HttpSession session) throws Exception {
-        String actualCode = session.getAttribute("verificationCode").toString();
+        String actualCode = (String) session.getAttribute("verificationCode");
         boolean result = actualCode.equals(registerDto.getVerificationCode());
         /*如果验证码无误*/
         if (result){

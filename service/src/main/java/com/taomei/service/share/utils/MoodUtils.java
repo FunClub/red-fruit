@@ -6,8 +6,6 @@ import com.taomei.dao.dtos.mood.ShowPagedMoodDto;
 import com.taomei.dao.entities.Mood;
 import com.taomei.dao.mapper.UserMapper;
 import org.springframework.data.domain.Page;
-
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +31,8 @@ public class MoodUtils {
             moodUserInfoDto= userMapper.selectMoodUserInfo(mood.getUserId());
             showMoodDto=  new ShowMoodDto();
             showMoodDto.setMood(mood);
-            //设置心情的额外属性
+            showMoodDto.setMoodId(mood.getMoodId());
+            //设置心情的额外属性,以及是否显示分类时间等
             showMoodDto.setNickname(moodUserInfoDto.getNickname());
             showMoodDto.setProfileImg(moodUserInfoDto.getProfileImg());
             String howLoginAgo=TimeUtil.calculateHowLongAgo(mood.getDate());
@@ -44,7 +43,6 @@ public class MoodUtils {
             }else{
                 showMoodDto.setShowSortDate(true);
                 showMoodDto.setSortDate(sortDate);
-
                 lastDate=sortDate;
             }
             showMoodDto.setShortDate(TimeUtil.generateShortDate(mood.getDate()));

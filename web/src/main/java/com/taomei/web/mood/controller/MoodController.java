@@ -4,6 +4,8 @@ import com.taomei.dao.dtos.mood.SelectMoodConditionDto;
 import com.taomei.dao.entities.Mood;
 import com.taomei.dao.entities.ResultView;
 import com.taomei.service.mood.iservice.IMoodService;
+import com.taomei.web.share.contolleradvice.anotaions.SetHalfId;
+import com.taomei.web.share.contolleradvice.anotaions.SetId;
 import com.taomei.web.share.utils.ResultViewUtil;
 import com.taomei.web.share.utils.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,22 +21,24 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/mood")
 public class MoodController {
     private final IMoodService moodService;
+    private final HttpSession session;
     @Autowired
-    public MoodController(@Qualifier("baseMoodService") IMoodService moodService) {
+    public MoodController(@Qualifier("baseMoodService") IMoodService moodService, HttpSession session) {
         this.moodService = moodService;
+        this.session=session;
     }
 
     /**
      * 插入一条心情
      * @param mood 心情对象
-     * @param session
      * @return 统一数据对象
      * @throws Exception 插入失败
      */
+    @SetId
     @PostMapping("/")
-    public ResultView insertMood(@RequestBody Mood mood, HttpSession session) throws Exception {
-        mood.setHalfId(UserUtil.getHalfIdBySession(session));
-        mood.setUserId(UserUtil.getUserIdBySession(session));
+    public ResultView insertMood(String userId,String halfId,@RequestBody Mood mood) throws Exception {
+        mood.setHalfId(halfId);
+        mood.setUserId(userId);
         return ResultViewUtil.success(moodService.insert(mood));
     }
 
@@ -46,15 +50,16 @@ public class MoodController {
      * @param pageSize 每一页多少条数据
      * @return  统一数据对象
      */
+    @SetHalfId
     @GetMapping("/{byHalf}/{pageIndex}/{pageSize}")
-    public ResultView getMood(HttpSession session, @PathVariable("byHalf") boolean byHalf, @PathVariable("pageIndex") int pageIndex, @PathVariable("pageSize") int pageSize) {
+    public ResultView getMood(String halfId,@PathVariable("byHalf") boolean byHalf, @PathVariable("pageIndex") int pageIndex, @PathVariable("pageSize") int pageSize,HttpSession session) {
         SelectMoodConditionDto condition = new SelectMoodConditionDto();
         condition.setByHalf(byHalf);condition.setPageIndex(pageIndex);condition.setPageSize(pageSize);
         //情侣间查询用情侣id查
         if(condition.isByHalf()){
-            condition.setHalfId(UserUtil.getHalfIdBySession(session));
+            condition.setHalfId(halfId);
         }
-        return ResultViewUtil.success(moodService.selectMoodByHalfId(condition));
+        return ResultViewUtil.success(moodService.selectMood(condition));
     }
 
 }

@@ -1,18 +1,13 @@
 package com.taomei.web.personinfo.controller;
 
-import com.taomei.dao.dtos.login.LoginDto;
 import com.taomei.dao.dtos.personinfo.BaseUserInfoDto;
 import com.taomei.dao.dtos.personinfo.UpdateProfileDto;
 import com.taomei.dao.entities.ResultView;
 import com.taomei.service.personinfo.serviceimpl.BasePersonInfoService;
+import com.taomei.web.share.contolleradvice.anotaions.SetUserId;
 import com.taomei.web.share.utils.ResultViewUtil;
-import com.taomei.web.share.utils.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpSession;
-import java.math.BigInteger;
 
 /**
  * 用户信息控制器
@@ -29,31 +24,32 @@ public class PersonInfoController {
 
     /**
      * 获取用户基本资料
-     * @param session
+     * @param userId
      * @return 统一数据对象
      * @throws Exception
      */
+    @SetUserId
     @GetMapping("/base-info")
-    public ResultView selectBaseInfo(HttpSession session) throws Exception {
-        return ResultViewUtil.success(personInfoService.selectPersonBaseInfo(UserUtil.getUserIdBySession(session)));
+    public ResultView selectBaseInfo(String userId) throws Exception {
+        return ResultViewUtil.success(personInfoService.selectPersonBaseInfo(userId));
     }
-
+    @SetUserId
     @PutMapping("/base-info")
-    public ResultView updateBaseInfo(@RequestBody BaseUserInfoDto dto,HttpSession session) throws Exception {
-        dto.setUserId(UserUtil.getUserIdBySession(session));
+    public ResultView updateBaseInfo(String userId,@RequestBody BaseUserInfoDto dto) throws Exception {
+        dto.setUserId(userId);
         return ResultViewUtil.success( personInfoService.updatePersonBaseInfo(dto));
     }
 
     /**
      * 更新用户头像
      * @param dto 用户头像
-     * @param session
      * @return 统一数据对象
      * @throws Exception 头像修改失败
      */
+    @SetUserId
     @PutMapping("/profile-img")
-    public ResultView updateProfileImg(@RequestBody UpdateProfileDto dto, HttpSession session) throws Exception {
-        dto.setUserId(UserUtil.getUserIdBySession(session));
+    public ResultView updateProfileImg(String userId,@RequestBody UpdateProfileDto dto) throws Exception {
+        dto.setUserId(userId);
         return ResultViewUtil.success(personInfoService.updateUserProfile(dto));
     }
 }

@@ -4,6 +4,7 @@ import com.taomei.dao.dtos.login.LoginDto;
 import com.taomei.dao.entities.ResultView;
 import com.taomei.service.home.iservice.IHomeService;
 import com.taomei.service.login.iservice.ILoginService;
+import com.taomei.web.share.contolleradvice.anotaions.SetUserId;
 import com.taomei.web.share.utils.ResultViewUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,17 +32,15 @@ public class HomeController {
     /**
      * 判断用户能否进入home界面
      * 登录且有另一半才能进入
-     * @param session
+     * @param userId
      * @return 统一数据对象
      */
     @GetMapping("/can-to")
-    public ResultView canToHome(HttpSession session){
-        LoginDto dto = (LoginDto) session.getAttribute("user");
-        if(dto!=null){
-            if (loginService.hasHalf(dto.getUserId())){
+    @SetUserId
+    public ResultView canToHome(String userId){
+            if (loginService.hasHalf(userId)){
                 return ResultViewUtil.success(true);
             }
-        }
         return ResultViewUtil.success(false);
     }
 

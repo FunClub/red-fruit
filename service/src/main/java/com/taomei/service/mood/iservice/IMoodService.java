@@ -22,5 +22,5 @@ public interface IMoodService {
      * @param condition 限定条件
      * @return 分页的心情dto
      */
-    ShowPagedMoodDto selectMoodByHalfId(SelectMoodConditionDto condition);
+    ShowPagedMoodDto selectMood(SelectMoodConditionDto condition);
 }
