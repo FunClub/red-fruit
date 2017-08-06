@@ -5,6 +5,7 @@ package com.taomei.dao.entities.discussion;
  */
 public class SubDiscussion {
     private String userId;
+
     private String content;
     private String date;
     private int thumbsUpCount;
@@ -19,6 +20,8 @@ public class SubDiscussion {
     public String getContent() {
         return content;
     }
+
+
 
     public void setContent(String content) {
         this.content = content;

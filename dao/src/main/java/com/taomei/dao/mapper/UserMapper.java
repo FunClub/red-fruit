@@ -1,7 +1,7 @@
 package com.taomei.dao.mapper;
 
 import com.taomei.dao.dtos.home.HomeInfoDto;
-import com.taomei.dao.dtos.mood.MoodUserInfoDto;
+import com.taomei.dao.dtos.base.UserNPInfoDto;
 import com.taomei.dao.dtos.personinfo.BaseUserInfoDto;
 import com.taomei.dao.dtos.personinfo.UpdateProfileDto;
 import com.taomei.dao.entities.Users;
@@ -17,7 +17,7 @@ public interface UserMapper {
      * @param userId 用户Id
      * @return
      */
-    MoodUserInfoDto selectMoodUserInfo(String userId);
+    UserNPInfoDto selectUserNPInfo(String userId);
 
     /**
      * 查询用户的主页信息

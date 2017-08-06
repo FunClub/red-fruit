@@ -12,6 +12,11 @@ public class ShowMoodDto {
     private String moodId;
     private String nickname;
     private String profileImg;
+    private int thumbsUpCount;
+    /**
+     * 能否点赞
+     */
+    private boolean thumbsUpAble;
     /**
      * 多久之前发的
      */
@@ -30,6 +35,32 @@ public class ShowMoodDto {
      * 简短时间
      */
     private String shortDate;
+
+    private long discussionCount;
+
+    public long getDiscussionCount() {
+        return discussionCount;
+    }
+
+    public void setDiscussionCount(long discussionCount) {
+        this.discussionCount = discussionCount;
+    }
+
+    public int getThumbsUpCount() {
+        return thumbsUpCount;
+    }
+
+    public void setThumbsUpCount(int thumbsUpCount) {
+        this.thumbsUpCount = thumbsUpCount;
+    }
+
+    public boolean isThumbsUpAble() {
+        return thumbsUpAble;
+    }
+
+    public void setThumbsUpAble(boolean thumbsUpAble) {
+        this.thumbsUpAble = thumbsUpAble;
+    }
 
     public String getMoodId() {
         return moodId;

@@ -8,6 +8,10 @@ public class SelectMoodConditionDto {
      * 是否是情侣间查询
      */
     private boolean byHalf;
+    /**
+     * 通过userId判断心情是否点赞
+     */
+    private String userId;
 
     private String halfId;
 
@@ -45,5 +49,13 @@ public class SelectMoodConditionDto {
 
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

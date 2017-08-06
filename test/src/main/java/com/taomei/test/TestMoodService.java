@@ -60,7 +60,7 @@ public class TestMoodService {
         List<ParentDiscussion> parentDiscussions = new ArrayList<>();
         parentDiscussions.add(parentDiscussion1);parentDiscussions.add(parentDiscussion2);
 
-        mood.setParentDiscussions(parentDiscussions);
+
 
         moodRepository.save(mood);
 

@@ -6,6 +6,7 @@ import com.taomei.dao.entities.ResultView;
 import com.taomei.service.mood.iservice.IMoodService;
 import com.taomei.web.share.contolleradvice.anotaions.SetHalfId;
 import com.taomei.web.share.contolleradvice.anotaions.SetId;
+import com.taomei.web.share.contolleradvice.anotaions.SetUserId;
 import com.taomei.web.share.utils.ResultViewUtil;
 import com.taomei.web.share.utils.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,11 +51,11 @@ public class MoodController {
      * @param pageSize 每一页多少条数据
      * @return  统一数据对象
      */
-    @SetHalfId
+    @SetId
     @GetMapping("/{byHalf}/{pageIndex}/{pageSize}")
-    public ResultView getMood(String halfId,@PathVariable("byHalf") boolean byHalf, @PathVariable("pageIndex") int pageIndex, @PathVariable("pageSize") int pageSize,HttpSession session) {
+    public ResultView getMood(String userId,String halfId,@PathVariable("byHalf") boolean byHalf, @PathVariable("pageIndex") int pageIndex, @PathVariable("pageSize") int pageSize,HttpSession session) {
         SelectMoodConditionDto condition = new SelectMoodConditionDto();
-        condition.setByHalf(byHalf);condition.setPageIndex(pageIndex);condition.setPageSize(pageSize);
+        condition.setByHalf(byHalf);condition.setPageIndex(pageIndex);condition.setPageSize(pageSize);condition.setUserId(userId);
         //情侣间查询用情侣id查
         if(condition.isByHalf()){
             condition.setHalfId(halfId);
@@ -62,4 +63,15 @@ public class MoodController {
         return ResultViewUtil.success(moodService.selectMood(condition));
     }
 
+    /**
+     * 点赞
+     * @param userId 用户ID
+     * @param moodId 心情ID
+     * @return 统一数据对象
+     */
+    @PutMapping("/{moodId}/thumbsUpUserIds")
+    @SetUserId
+    public  ResultView updateThumbsUpUserIds(String userId, @PathVariable("moodId") String moodId){
+        return ResultViewUtil.success(moodService.updateThumbsUpUserIds(userId,moodId));
+    }
 }

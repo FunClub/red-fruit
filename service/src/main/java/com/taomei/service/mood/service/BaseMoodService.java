@@ -13,18 +13,22 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import static org.springframework.data.mongodb.core.query.Criteria.*;
 
 @Service
 public class BaseMoodService implements IMoodService {
     private final MoodRepository moodRepository;
     private final UserMapper userMapper;
+    private final MongoOperations mongoOperations;
     @Autowired
-    public BaseMoodService(MoodRepository moodRepository, UserMapper userMapper) {
+    public BaseMoodService(MoodRepository moodRepository, UserMapper userMapper, MongoOperations mongoOperations) {
         this.moodRepository = moodRepository;
         this.userMapper = userMapper;
+        this.mongoOperations = mongoOperations;
     }
 
     /**
@@ -48,7 +52,8 @@ public class BaseMoodService implements IMoodService {
      */
     @Override
     public ShowPagedMoodDto selectMood(SelectMoodConditionDto condition) {
-        PageRequest pageRequest = new PageRequest(condition.getPageIndex(),condition.getPageSize(),new Sort(Sort.Direction.DESC,"date"));
+        PageRequest pageRequest = new PageRequest(condition.getPageIndex(),condition.getPageSize(),
+                new Sort(Sort.Direction.DESC,"date"));
         Page<Mood> page=null;
         //情侣间心情查询根据情侣id
         if(condition.isByHalf()){
@@ -56,7 +61,15 @@ public class BaseMoodService implements IMoodService {
             mood.setHalfId(condition.getHalfId());
             page = moodRepository.findAll(Example.of(mood),pageRequest);
         }
+        return MoodUtils.generateShowPagedMoodDto(page,userMapper,condition.getUserId(),mongoOperations);
+    }
 
-        return MoodUtils.generateShowPagedMoodDto(page,userMapper);
+    @Override
+    public boolean updateThumbsUpUserIds(String userId,String moodId) {
+        Query query =Query.query(where("moodId").is(moodId));
+        Update update = new Update();
+        update.addToSet("thumbsUpUserIds",userId);
+        mongoOperations.updateFirst(query,update,Mood.class,"mood").getN();
+        return true;
     }
 }

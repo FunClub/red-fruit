@@ -20,7 +20,7 @@ public class Mood {
     private List<String> imgs;
     private Integer limit;
     private List<String> thumbsUpUserIds;
-    private List<ParentDiscussion> parentDiscussions;
+
 
     public String getMoodId() {
         return moodId;
@@ -78,13 +78,6 @@ public class Mood {
         this.thumbsUpUserIds = thumbsUpUserIds;
     }
 
-    public List<ParentDiscussion> getParentDiscussions() {
-        return parentDiscussions;
-    }
-
-    public void setParentDiscussions(List<ParentDiscussion> parentDiscussions) {
-        this.parentDiscussions = parentDiscussions;
-    }
 
     public String getHalfId() {
         return halfId;

@@ -23,4 +23,12 @@ public interface IMoodService {
      * @return 分页的心情dto
      */
     ShowPagedMoodDto selectMood(SelectMoodConditionDto condition);
+
+    /**
+     * 点赞
+     * @param userId 用户id
+     * @param moodId 心情id
+     * @return 成功与否
+     */
+    boolean updateThumbsUpUserIds(String userId,String moodId);
 }

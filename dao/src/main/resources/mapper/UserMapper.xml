@@ -36,7 +36,7 @@
   </resultMap>
 
   <!--显示心情发布人的信息Map-->
-  <resultMap id="MoodUserInfoMap" type="com.taomei.dao.dtos.mood.MoodUserInfoDto">
+  <resultMap id="MoodUserInfoMap" type="com.taomei.dao.dtos.base.UserNPInfoDto">
     <result column="nickname" jdbcType="VARCHAR" property="nickname" />
     <result column="profile_img" property="profileImg"/>
   </resultMap>
@@ -69,7 +69,7 @@
     <select id="selectHomeInfo" resultMap="HomeInfoMap">
       SELECT user_id,nickname,profile_img FROM users WHERE user_id=#{value}
     </select>
-  <select id="selectMoodUserInfo" resultMap="MoodUserInfoMap">
+  <select id="selectUserNPInfo" resultMap="MoodUserInfoMap">
       SELECT nickname,profile_img FROM users WHERE user_id=#{value}
   </select>
 
