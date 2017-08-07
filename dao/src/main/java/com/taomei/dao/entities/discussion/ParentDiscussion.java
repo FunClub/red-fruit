@@ -19,21 +19,10 @@ public class ParentDiscussion extends SubDiscussion{
     /**
      * 子评论长度用于最热评论排序显示
      */
-    private long subDiscussionsLength;
+    private Long subDiscussionsLength;
     private List<SubDiscussion> subDiscussions;
-    public List<SubDiscussion> getSubDiscussions() {
-        return subDiscussions;
-    }
-    public void setSubDiscussions(List<SubDiscussion> subDiscussions) {
-        this.subDiscussions = subDiscussions;
-    }
-    public String getArtId() {
-        return artId;
-    }
+    private List<String> thumbsUpUserIds;
 
-    public void setArtId(String artId) {
-        this.artId = artId;
-    }
     public String getDiscussionId() {
         return discussionId;
     }
@@ -42,11 +31,35 @@ public class ParentDiscussion extends SubDiscussion{
         this.discussionId = discussionId;
     }
 
-    public long getSubDiscussionsLength() {
+    public String getArtId() {
+        return artId;
+    }
+
+    public void setArtId(String artId) {
+        this.artId = artId;
+    }
+
+    public Long getSubDiscussionsLength() {
         return subDiscussionsLength;
     }
 
-    public void setSubDiscussionsLength(long subDiscussionsLength) {
+    public void setSubDiscussionsLength(Long subDiscussionsLength) {
         this.subDiscussionsLength = subDiscussionsLength;
+    }
+
+    public List<SubDiscussion> getSubDiscussions() {
+        return subDiscussions;
+    }
+
+    public void setSubDiscussions(List<SubDiscussion> subDiscussions) {
+        this.subDiscussions = subDiscussions;
+    }
+
+    public List<String> getThumbsUpUserIds() {
+        return thumbsUpUserIds;
+    }
+
+    public void setThumbsUpUserIds(List<String> thumbsUpUserIds) {
+        this.thumbsUpUserIds = thumbsUpUserIds;
     }
 }

@@ -64,12 +64,18 @@ public class BaseMoodService implements IMoodService {
         return MoodUtils.generateShowPagedMoodDto(page,userMapper,condition.getUserId(),mongoOperations);
     }
 
+    /**
+     *
+     * @param userId 用户id
+     * @param moodId 心情id
+     * @return
+     */
     @Override
     public boolean updateThumbsUpUserIds(String userId,String moodId) {
         Query query =Query.query(where("moodId").is(moodId));
         Update update = new Update();
         update.addToSet("thumbsUpUserIds",userId);
-        mongoOperations.updateFirst(query,update,Mood.class,"mood").getN();
+        mongoOperations.updateFirst(query,update,Mood.class,"mood");
         return true;
     }
 }

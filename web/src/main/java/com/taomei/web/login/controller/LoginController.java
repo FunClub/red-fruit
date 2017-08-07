@@ -5,7 +5,7 @@ import com.taomei.dao.dtos.login.LoginDto;
 import com.taomei.dao.entities.ResultView;
 import com.taomei.dao.entities.Users;
 import com.taomei.service.login.iservice.ILoginService;
-import com.taomei.web.share.contolleradvice.anotaions.SetUserId;
+import com.taomei.web.share.anotaions.SetUserId;
 import com.taomei.web.share.utils.ResultViewUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

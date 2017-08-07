@@ -2,40 +2,40 @@ package com.taomei.dao.dtos.discussion;
 
 public class ShowSubDiscussionDto {
     private String userId;
-    private String profileImg;
-    private String nickName;
+    private String nickname;
     private String content;
-    private String date;
     private String sortDate;
     private String shortDate;
-    private int thumbsUpCount;
-
-    public String getUserId() {
-        return userId;
-    }
-
+    /**
+     * 子评论目标用户昵称
+     */
+    private String sendToNickname;
     public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    public String getProfileImg() {
-        return profileImg;
+    public String getSendToNickname() {
+        return sendToNickname;
     }
 
-    public void setProfileImg(String profileImg) {
-        this.profileImg = profileImg;
+    public void setSendToNickname(String sendToNickname) {
+        this.sendToNickname = sendToNickname;
     }
 
     public String getContent() {
         return content;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getSortDate() {
@@ -58,19 +58,5 @@ public class ShowSubDiscussionDto {
         this.content = content;
     }
 
-    public String getDate() {
-        return date;
-    }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public int getThumbsUpCount() {
-        return thumbsUpCount;
-    }
-
-    public void setThumbsUpCount(int thumbsUpCount) {
-        this.thumbsUpCount = thumbsUpCount;
-    }
 }

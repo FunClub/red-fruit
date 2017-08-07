@@ -14,7 +14,10 @@ public class SelectDiscussionConditionDto {
      * 根据什么排序
      */
     private String sortBy;
-
+    /**
+     * 用户id,判断能否点赞
+     */
+    private String userId;
     public String getSortBy() {
         return sortBy;
     }
@@ -45,5 +48,13 @@ public class SelectDiscussionConditionDto {
 
     public void setPageIndex(int pageIndex) {
         this.pageIndex = pageIndex;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

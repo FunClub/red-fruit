@@ -1,4 +1,4 @@
-package com.taomei.web.share.contolleradvice.anotaions;
+package com.taomei.web.share.anotaions;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;

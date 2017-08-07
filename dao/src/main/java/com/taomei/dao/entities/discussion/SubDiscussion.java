@@ -5,10 +5,18 @@ package com.taomei.dao.entities.discussion;
  */
 public class SubDiscussion {
     private String userId;
-
     private String content;
     private String date;
-    private int thumbsUpCount;
+    private String sendToUserId;
+
+    public String getSendToUserId() {
+        return sendToUserId;
+    }
+
+    public void setSendToUserId(String sendToUserId) {
+        this.sendToUserId = sendToUserId;
+    }
+
     public String getUserId() {
         return userId;
     }
@@ -35,11 +43,4 @@ public class SubDiscussion {
         this.date = date;
     }
 
-    public int getThumbsUpCount() {
-        return thumbsUpCount;
-    }
-
-    public void setThumbsUpCount(int thumbsUpCount) {
-        this.thumbsUpCount = thumbsUpCount;
-    }
 }

@@ -7,6 +7,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpSession;
@@ -23,14 +24,13 @@ public class UserAspect {
         this.session = session;
     }
 
-    @Pointcut("execution(* com.taomei.web.*.controller.*.*(..))")
-    public void setIdPoint(){}
+
     /**
      * 从从session中取出userId并设置到目标方法
      * @param point
      * @return
      */
-    @Around("setIdPoint()&&@annotation(com.taomei.web.share.contolleradvice.anotaions.SetUserId)")
+    @Around("@annotation(com.taomei.web.share.anotaions.SetUserId)")
     public Object setUserId(ProceedingJoinPoint point) throws Exception,Throwable {
         Object[] args=point.getArgs();
         LoginDto loginDto = (LoginDto) session.getAttribute("user");
@@ -44,7 +44,7 @@ public class UserAspect {
      * @param point
      * @return
      */
-    @Around(value = "setIdPoint()&&@annotation(com.taomei.web.share.contolleradvice.anotaions.SetHalfId)")
+    @Around(value = "@annotation(com.taomei.web.share.anotaions.SetHalfId)")
     public Object setHalfId(ProceedingJoinPoint point) throws Exception,Throwable {
         Object[] args=point.getArgs();
         LoginDto loginDto = (LoginDto) session.getAttribute("user");
@@ -58,7 +58,7 @@ public class UserAspect {
      * @param point
      * @return
      */
-    @Around(value = "setIdPoint()&&@annotation(com.taomei.web.share.contolleradvice.anotaions.SetId)")
+    @Around(value = "@annotation(com.taomei.web.share.anotaions.SetId)")
     public Object setId(ProceedingJoinPoint point) throws Exception,Throwable {
         Object[] args=point.getArgs();
         LoginDto loginDto = (LoginDto) session.getAttribute("user");

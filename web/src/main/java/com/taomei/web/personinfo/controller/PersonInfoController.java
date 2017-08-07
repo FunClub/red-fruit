@@ -4,7 +4,7 @@ import com.taomei.dao.dtos.personinfo.BaseUserInfoDto;
 import com.taomei.dao.dtos.personinfo.UpdateProfileDto;
 import com.taomei.dao.entities.ResultView;
 import com.taomei.service.personinfo.serviceimpl.BasePersonInfoService;
-import com.taomei.web.share.contolleradvice.anotaions.SetUserId;
+import com.taomei.web.share.anotaions.SetUserId;
 import com.taomei.web.share.utils.ResultViewUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
