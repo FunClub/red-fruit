@@ -1,8 +1,6 @@
 package com.taomei.service.discussion.iservice;
 
-import com.taomei.dao.dtos.discussion.InsertSubDiscussionDto;
-import com.taomei.dao.dtos.discussion.SelectDiscussionConditionDto;
-import com.taomei.dao.dtos.discussion.ShowPagedDiscussionDto;
+import com.taomei.dao.dtos.discussion.*;
 import com.taomei.dao.entities.discussion.ParentDiscussion;
 import org.springframework.data.domain.Page;
 
@@ -16,13 +14,13 @@ public interface IDiscussionService {
      * @param dto 插入子评论dto
      * @return 成功与否
      */
-    boolean insertSubDiscussion(InsertSubDiscussionDto dto) throws Exception;
+    ShowSubDiscussionDto insertSubDiscussion(InsertSubDiscussionDto dto) throws Exception;
     /**
      * 插入父级评论
      * @param discussion 评论
-     * @return 成功或失败
+     * @return 父评论DTO
      */
-    boolean insertParentDiscussion(ParentDiscussion discussion) throws Exception;
+    ShowParentDiscussionDto insertParentDiscussion(ParentDiscussion discussion) throws Exception;
 
     /**
      * 查询评论

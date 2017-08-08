@@ -1,8 +1,6 @@
 package com.taomei.service.discussion.service;
 
-import com.taomei.dao.dtos.discussion.InsertSubDiscussionDto;
-import com.taomei.dao.dtos.discussion.SelectDiscussionConditionDto;
-import com.taomei.dao.dtos.discussion.ShowPagedDiscussionDto;
+import com.taomei.dao.dtos.discussion.*;
 import com.taomei.dao.entities.Mood;
 import com.taomei.dao.entities.discussion.ParentDiscussion;
 import com.taomei.dao.entities.discussion.SubDiscussion;
@@ -40,10 +38,10 @@ public class BaseDiscussionService implements IDiscussionService{
     /**
      * 插入子评论
      * @param dto 插入子评论dto
-     * @return 成功与否
+     * @return 子评论dto
      */
     @Override
-    public boolean insertSubDiscussion(InsertSubDiscussionDto dto) throws Exception {
+    public ShowSubDiscussionDto insertSubDiscussion(InsertSubDiscussionDto dto) throws Exception {
         Query query = Query.query(where("discussionId").is(dto.getDiscussionId()));
 
         SubDiscussion subDiscussion= new SubDiscussion();
@@ -61,20 +59,21 @@ public class BaseDiscussionService implements IDiscussionService{
         update.inc("subDiscussionsLength",1);
         count+=mongoOperations.updateFirst(query,update,ParentDiscussion.class,"discussion").getN();
         if(count<2)throw new Exception("插入子评论失败");
-        return count>0;
+
+        return DiscussionUtil.generateSubDiscussionDto(subDiscussion,userMapper);
     }
 
     /**
      * 插入父级评论
      * @param discussion 评论
-     * @return 成功与否
+     * @return 父评论DTO
      */
     @Override
-    public boolean insertParentDiscussion(ParentDiscussion discussion) throws Exception {
+    public ShowParentDiscussionDto insertParentDiscussion(ParentDiscussion discussion) throws Exception {
         discussion.setDate(TimeUtil.getSimpleTime());
        ParentDiscussion parentDiscussion= discussionRepository.insert(discussion);
        if(parentDiscussion!=null){
-           return true;
+           return DiscussionUtil.generateParentDiscussionDto(parentDiscussion,userMapper,discussion.getUserId());
        }
        throw new Exception("插入评论失败");
     }
