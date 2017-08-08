@@ -36,6 +36,17 @@ public class BaseDiscussionService implements IDiscussionService{
     }
 
     /**
+     * 删除评论
+     * @param discussionId 评论id
+     * @return
+     */
+    @Override
+    public boolean deleteParentDiscussion(String discussionId) {
+        discussionRepository.delete(discussionId);
+        return true;
+    }
+
+    /**
      * 插入子评论
      * @param dto 插入子评论dto
      * @return 子评论dto
@@ -43,7 +54,6 @@ public class BaseDiscussionService implements IDiscussionService{
     @Override
     public ShowSubDiscussionDto insertSubDiscussion(InsertSubDiscussionDto dto) throws Exception {
         Query query = Query.query(where("discussionId").is(dto.getDiscussionId()));
-
         SubDiscussion subDiscussion= new SubDiscussion();
         subDiscussion.setUserId(dto.getUserId());
         subDiscussion.setContent(dto.getContend());

@@ -10,6 +10,12 @@ import org.springframework.data.domain.Page;
 public interface IDiscussionService {
 
     /**
+     * 删除父评论
+     * @param discussionId 评论id
+     * @return 成功与否
+     */
+    boolean deleteParentDiscussion(String discussionId);
+    /**
      * 插入子评论
      * @param dto 插入子评论dto
      * @return 成功与否

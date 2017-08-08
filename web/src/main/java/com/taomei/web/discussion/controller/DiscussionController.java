@@ -50,6 +50,15 @@ public class DiscussionController {
     }
 
     /**
+     * 删除父评论
+     * @param discussionId 评论id
+     * @return 统一数据对象
+     */
+    @DeleteMapping("/{discussionId}/parent-discussion")
+    public ResultView deleteParentDiscussion(@PathVariable("discussionId") String discussionId){
+        return ResultViewUtil.success(discussionService.deleteParentDiscussion(discussionId));
+    }
+    /**
      * 查询评论
      * @param dto 查询条件
      * @return 统一数据对象
