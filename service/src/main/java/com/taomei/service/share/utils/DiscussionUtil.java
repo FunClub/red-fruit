@@ -50,7 +50,7 @@ public class DiscussionUtil {
             /*时间处理*/
         String date =parentDiscussion.getDate();
         String howLongDate = TimeUtil.calculateHowLongAgo(date);
-        String sortDate = TimeUtil.calculateSortDate(howLongDate,date);
+        String sortDate = TimeUtil.calculateSortDate(date);
         String shortDate = TimeUtil.generateShortDate(date);
         parentDiscussionDto.setShortDate(shortDate);
         parentDiscussionDto.setSortDate(sortDate);
@@ -90,8 +90,7 @@ public class DiscussionUtil {
         //时间计算
         String date1 =subDiscussion.getDate();
         subDiscussionDto.setShortDate(TimeUtil.generateShortDate(date1));
-        String howLongAgo = TimeUtil.calculateHowLongAgo(date1);
-        subDiscussionDto.setSortDate(TimeUtil.calculateSortDate(howLongAgo,date1));
+        subDiscussionDto.setSortDate(TimeUtil.calculateSortDate(date1));
 
         //填充昵称
         UserNPInfoDto userNPInfoDto = userMapper.selectUserNPInfo(subDiscussion.getUserId());

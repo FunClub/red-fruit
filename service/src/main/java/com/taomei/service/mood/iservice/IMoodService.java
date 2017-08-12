@@ -3,7 +3,7 @@ package com.taomei.service.mood.iservice;
 import com.taomei.dao.dtos.mood.SelectMoodConditionDto;
 import com.taomei.dao.dtos.mood.ShowPagedMoodDto;
 import com.taomei.dao.entities.Mood;
-import org.springframework.data.domain.Page;
+import com.taomei.dao.entities.NoticeArt;
 
 /**
  * 心情服务接口
@@ -25,10 +25,9 @@ public interface IMoodService {
     ShowPagedMoodDto selectMood(SelectMoodConditionDto condition);
 
     /**
-     * 点赞
-     * @param userId 用户id
-     * @param moodId 心情id
-     * @return 成功与否
+     * 插入点赞
+     * @param noticeArt 通知动态文档
+     * @return
      */
-    boolean updateThumbsUpUserIds(String userId,String moodId);
+    boolean updateThumbsUpUserIds(NoticeArt noticeArt);
 }

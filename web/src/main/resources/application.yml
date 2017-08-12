@@ -7,6 +7,4 @@ spring:
 server:
   session:
     timeout: -1
-  tomcat:
-    basedir: D:\spring-tomcat-tmp
-  port: 8081
+  port: 80

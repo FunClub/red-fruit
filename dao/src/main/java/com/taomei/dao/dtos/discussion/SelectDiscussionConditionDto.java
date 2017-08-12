@@ -1,29 +1,27 @@
 package com.taomei.dao.dtos.discussion;
 
+import com.taomei.dao.dtos.base.PageRequest;
+
 /**
  * 查询评论DTO
  */
-public class SelectDiscussionConditionDto {
+public class SelectDiscussionConditionDto extends PageRequest{
     /**
      * 动态id
      */
     private String artId;
-    private int pageSize;
-    private int pageIndex;
-    /**
-     * 根据什么排序
-     */
-    private String sortBy;
     /**
      * 用户id,判断能否点赞
      */
     private String userId;
-    public String getSortBy() {
-        return sortBy;
+
+
+    public String getUserId() {
+        return userId;
     }
 
-    public void setSortBy(String sortBy) {
-        this.sortBy = sortBy;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getArtId() {
@@ -32,29 +30,5 @@ public class SelectDiscussionConditionDto {
 
     public void setArtId(String artId) {
         this.artId = artId;
-    }
-
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public int getPageIndex() {
-        return pageIndex;
-    }
-
-    public void setPageIndex(int pageIndex) {
-        this.pageIndex = pageIndex;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 }

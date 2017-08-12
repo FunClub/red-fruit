@@ -3,9 +3,11 @@ package com.taomei.service.mood.service;
 import com.taomei.dao.dtos.mood.SelectMoodConditionDto;
 import com.taomei.dao.dtos.mood.ShowPagedMoodDto;
 import com.taomei.dao.entities.Mood;
+import com.taomei.dao.entities.NoticeArt;
 import com.taomei.dao.mapper.UserMapper;
 import com.taomei.dao.repository.MoodRepository;
 import com.taomei.service.mood.iservice.IMoodService;
+import com.taomei.service.share.anotaions.InsertArtThumbsUpNoticeArt;
 import com.taomei.service.share.utils.MoodUtils;
 import com.taomei.service.share.utils.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,17 +67,17 @@ public class BaseMoodService implements IMoodService {
     }
 
     /**
-     *
-     * @param userId 用户id
-     * @param moodId 心情id
+     * 插入点赞
+     * @param noticeArt 点赞dto
      * @return
      */
     @Override
-    public boolean updateThumbsUpUserIds(String userId,String moodId) {
-        Query query =Query.query(where("moodId").is(moodId));
+    @InsertArtThumbsUpNoticeArt
+    public boolean updateThumbsUpUserIds(NoticeArt noticeArt) {
+        Query query =Query.query(where("moodId").is(noticeArt.getArtId()));
         Update update = new Update();
-        update.addToSet("thumbsUpUserIds",userId);
-        mongoOperations.updateFirst(query,update,Mood.class,"mood");
+        update.addToSet("thumbsUpUserIds",noticeArt.getGenerateUserId());
+        int count= mongoOperations.updateFirst(query,update,Mood.class,"mood").getN();
         return true;
     }
 }

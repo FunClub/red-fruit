@@ -26,7 +26,7 @@ public interface IDiscussionService {
      * @param discussion 评论
      * @return 父评论DTO
      */
-    ShowParentDiscussionDto insertParentDiscussion(ParentDiscussion discussion) throws Exception;
+    ShowParentDiscussionDto insertParentDiscussion(InsertParentDiscussionDto discussion) throws Exception;
 
     /**
      * 查询评论

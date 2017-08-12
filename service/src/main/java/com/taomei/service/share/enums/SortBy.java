@@ -1,11 +1,11 @@
-package com.taomei.service.share.statics;
+package com.taomei.service.share.enums;
 
 /**
  * 数据排序类型
  */
 public enum SortBy {
-    LATEST("latest"),
-    HOT("hot");
+    LATEST("date"),
+    HOT("subDiscussionsLength");
     private String sort;
 
     SortBy(String sort) {

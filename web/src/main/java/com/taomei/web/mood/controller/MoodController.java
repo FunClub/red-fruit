@@ -2,6 +2,7 @@ package com.taomei.web.mood.controller;
 
 import com.taomei.dao.dtos.mood.SelectMoodConditionDto;
 import com.taomei.dao.entities.Mood;
+import com.taomei.dao.entities.NoticeArt;
 import com.taomei.dao.entities.ResultView;
 import com.taomei.service.mood.iservice.IMoodService;
 import com.taomei.web.share.anotaions.SetId;
@@ -63,13 +64,13 @@ public class MoodController {
 
     /**
      * 点赞
-     * @param userId 用户ID
-     * @param moodId 心情ID
+     * @param noticeArt 通知动态文档
      * @return 统一数据对象
      */
-    @PutMapping("/{moodId}/thumbsUpUserIds")
+    @PutMapping("/thumbsUpUserIds")
     @SetUserId
-    public  ResultView updateThumbsUpUserIds(String userId, @PathVariable("moodId") String moodId){
-        return ResultViewUtil.success(moodService.updateThumbsUpUserIds(userId,moodId));
+    public  ResultView updateThumbsUpUserIds(String userId,@RequestBody NoticeArt noticeArt){
+        noticeArt.setGenerateUserId(userId);
+        return ResultViewUtil.success(moodService.updateThumbsUpUserIds(noticeArt));
     }
 }

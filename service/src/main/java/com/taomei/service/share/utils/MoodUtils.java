@@ -35,13 +35,14 @@ public class MoodUtils {
             userNPInfoDto = userMapper.selectUserNPInfo(mood.getUserId());
             showMoodDto=  new ShowMoodDto();
             showMoodDto.setMood(mood);
+            showMoodDto.setOriginal(mood.isOriginal());
             showMoodDto.setMoodId(mood.getMoodId());
             //设置心情的额外属性
             showMoodDto.setNickname(userNPInfoDto.getNickname());
             showMoodDto.setProfileImg(userNPInfoDto.getProfileImg());
             String howLoginAgo=TimeUtil.calculateHowLongAgo(mood.getDate());
             showMoodDto.setHowLongAgo(howLoginAgo);
-            String sortDate = TimeUtil.calculateSortDate(howLoginAgo,mood.getDate());
+            String sortDate = TimeUtil.calculateSortDate(mood.getDate());
             //是否显示时间分类的判断
             if(sortDate.equals(lastDate)){
                 showMoodDto.setShowSortDate(false);

@@ -10,9 +10,11 @@ import java.util.List;
 public class ShowMoodDto {
     private Mood mood;
     private String moodId;
+    private String userId;
     private String nickname;
     private String profileImg;
     private int thumbsUpCount;
+    private boolean original;
     /**
      * 能否点赞
      */
@@ -124,5 +126,21 @@ public class ShowMoodDto {
 
     public void setProfileImg(String profileImg) {
         this.profileImg = profileImg;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public boolean isOriginal() {
+        return original;
+    }
+
+    public void setOriginal(boolean original) {
+        this.original = original;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

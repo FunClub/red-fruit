@@ -1,17 +1,18 @@
 package com.taomei.dao.dtos.discussion;
 
+import com.taomei.dao.entities.NoticeArt;
+import com.taomei.dao.entities.discussion.SubDiscussion;
+
 /**
  * 插入子评论的dto
  */
 public class InsertSubDiscussionDto {
-   private String discussionId;
-   private String contend;
-   private String date;
-   private String userId;
+    private SubDiscussion subDiscussion;
+    private String discussionId;
+    private NoticeArt noticeArt;
     /**
      * 给自评论回复的用户id(回复谁，为空则是回复父评论)
      */
-    private String sendToUserId;
 
     public String getDiscussionId() {
         return discussionId;
@@ -21,35 +22,19 @@ public class InsertSubDiscussionDto {
         this.discussionId = discussionId;
     }
 
-    public String getContend() {
-        return contend;
+    public SubDiscussion getSubDiscussion() {
+        return subDiscussion;
     }
 
-    public String getUserId() {
-        return userId;
+    public void setSubDiscussion(SubDiscussion subDiscussion) {
+        this.subDiscussion = subDiscussion;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public NoticeArt getNoticeArt() {
+        return noticeArt;
     }
 
-    public void setContend(String contend) {
-        this.contend = contend;
-    }
-
-    public String getSendToUserId() {
-        return sendToUserId;
-    }
-
-    public void setSendToUserId(String sendToUserId) {
-        this.sendToUserId = sendToUserId;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
+    public void setNoticeArt(NoticeArt noticeArt) {
+        this.noticeArt = noticeArt;
     }
 }

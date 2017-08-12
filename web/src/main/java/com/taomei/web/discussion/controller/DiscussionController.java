@@ -1,5 +1,6 @@
 package com.taomei.web.discussion.controller;
 
+import com.taomei.dao.dtos.discussion.InsertParentDiscussionDto;
 import com.taomei.dao.dtos.discussion.InsertSubDiscussionDto;
 import com.taomei.dao.dtos.discussion.SelectDiscussionConditionDto;
 import com.taomei.dao.entities.ResultView;
@@ -31,7 +32,8 @@ public class DiscussionController {
     @PostMapping("/sub-discussion")
     @SetUserId
     public ResultView insertSubDiscussion(String userId, @RequestBody InsertSubDiscussionDto dto) throws Exception {
-        dto.setUserId(userId);
+        dto.getSubDiscussion().setUserId(userId);
+        dto.getNoticeArt().setGenerateUserId(userId);
         return ResultViewUtil.success(discussionService.insertSubDiscussion(dto));
     }
 
@@ -44,8 +46,9 @@ public class DiscussionController {
      */
     @SetUserId
     @PostMapping("/parent-discussion")
-    public ResultView insertParentDiscussion(String userId,@RequestBody ParentDiscussion discussion) throws Exception {
-        discussion.setUserId(userId);
+    public ResultView insertParentDiscussion(String userId,@RequestBody InsertParentDiscussionDto discussion) throws Exception {
+        discussion.getNoticeArt().setGenerateUserId(userId);
+        discussion.getParentDiscussion().setUserId(userId);
         return ResultViewUtil.success(discussionService.insertParentDiscussion(discussion));
     }
 

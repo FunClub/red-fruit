@@ -48,6 +48,7 @@ public class InviteEndPoint {
     @OnOpen
     public void open(Session session, @PathParam("userId")String userId) throws IOException {
         this.inviteSessionMap.put(userId,session);
+        LOGGER.info(session.getId()+"connected");
     }
 
     @OnMessage
@@ -103,9 +104,9 @@ public class InviteEndPoint {
             session.close();
             inviteSessionMap.remove(userId);
         } catch (IOException e) {
-            LOGGER.error(session.getId()+"关闭socket连接失败");
+            LOGGER.error(session.getId()+"close socket failed");
         }
-        LOGGER.info(session.getId()+"关闭socket连接");
+        LOGGER.info(closeReason.getReasonPhrase()+","+session.getId()+"close socket");
     }
 
     @OnError

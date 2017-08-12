@@ -1,9 +1,11 @@
 package com.taomei.dao.dtos.mood;
 
+import com.taomei.dao.dtos.base.PageRequest;
+
 /**
  * 查询心情的条件
  */
-public class SelectMoodConditionDto {
+public class SelectMoodConditionDto extends PageRequest{
     /**
      * 是否是情侣间查询
      */
@@ -15,9 +17,6 @@ public class SelectMoodConditionDto {
 
     private String halfId;
 
-    private int pageIndex;
-
-    private int pageSize;
 
     public boolean isByHalf() {
         return byHalf;
@@ -33,22 +32,6 @@ public class SelectMoodConditionDto {
 
     public void setHalfId(String halfId) {
         this.halfId = halfId;
-    }
-
-    public int getPageIndex() {
-        return pageIndex;
-    }
-
-    public void setPageIndex(int pageIndex) {
-        this.pageIndex = pageIndex;
-    }
-
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
     }
 
     public String getUserId() {

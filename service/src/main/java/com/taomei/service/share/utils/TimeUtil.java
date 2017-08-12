@@ -67,11 +67,11 @@ public class TimeUtil {
 
     /**
      * 获取分门别类的时间
-     * @param howLongAgo 多久之前
      * @param date 日期
      * @return 分门别类的时间
      */
-    public static String  calculateSortDate(String howLongAgo,String date){
+    public static String  calculateSortDate(String date){
+        String howLongAgo= calculateHowLongAgo(date);
         int howLongLength = howLongAgo.length();
         int dateLength = date.length();
         char lastHowLong = howLongAgo.charAt(howLongLength-1);

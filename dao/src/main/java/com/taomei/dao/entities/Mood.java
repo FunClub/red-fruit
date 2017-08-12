@@ -16,11 +16,20 @@ public class Mood {
     private String userId;
     private String halfId;
     private String content;
+    private Boolean original;
     private String date;
     private List<String> imgs;
     private Integer limit;
     private List<String> thumbsUpUserIds;
+    /**
+     * 原创用户id
+     */
+    private  String originalUserId;
 
+    /**
+     * 原创动态id
+     */
+    private  String originalArtId;
 
     public String getMoodId() {
         return moodId;
@@ -78,6 +87,13 @@ public class Mood {
         this.thumbsUpUserIds = thumbsUpUserIds;
     }
 
+    public boolean isOriginal() {
+        return original;
+    }
+
+    public void setOriginal(boolean original) {
+        this.original = original;
+    }
 
     public String getHalfId() {
         return halfId;
@@ -85,5 +101,21 @@ public class Mood {
 
     public void setHalfId(String halfId) {
         this.halfId = halfId;
+    }
+
+    public String getOriginalUserId() {
+        return originalUserId;
+    }
+
+    public void setOriginalUserId(String originalUserId) {
+        this.originalUserId = originalUserId;
+    }
+
+    public String getOriginalArtId() {
+        return originalArtId;
+    }
+
+    public void setOriginalArtId(String originalArtId) {
+        this.originalArtId = originalArtId;
     }
 }
