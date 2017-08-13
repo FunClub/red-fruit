@@ -1,12 +1,15 @@
 package com.taomei.service.noticeart.service;
 
 import com.taomei.dao.dtos.base.UserNPInfoDto;
+import com.taomei.dao.dtos.discussion.ShowParentDiscussionDto;
 import com.taomei.dao.dtos.noticeart.SelectNoticeArtConditionDto;
 import com.taomei.dao.dtos.noticeart.ShowNoticeArtDto;
 import com.taomei.dao.dtos.noticeart.ShowPagedNoticeArtDto;
 import com.taomei.dao.entities.Mood;
 import com.taomei.dao.entities.NoticeArt;
+import com.taomei.dao.entities.discussion.ParentDiscussion;
 import com.taomei.dao.mapper.UserMapper;
+import com.taomei.dao.repository.DiscussionRepository;
 import com.taomei.dao.repository.MoodRepository;
 import com.taomei.dao.repository.NoticeArtRepository;
 
@@ -39,12 +42,14 @@ public class BaseNoticeArtService implements INoticeArtService {
     private final MongoOperations mongoOperations;
     private final MoodRepository moodRepository;
     private final UserMapper userMapper;
+    private final DiscussionRepository discussionRepository;
     @Autowired
-    public BaseNoticeArtService(NoticeArtRepository artRepository, MongoOperations mongoOperations, MoodRepository moodRepository, UserMapper userMapper) {
+    public BaseNoticeArtService(NoticeArtRepository artRepository, MongoOperations mongoOperations, MoodRepository moodRepository, UserMapper userMapper, DiscussionRepository discussionRepository) {
         this.artRepository = artRepository;
         this.mongoOperations = mongoOperations;
         this.moodRepository = moodRepository;
         this.userMapper = userMapper;
+        this.discussionRepository = discussionRepository;
     }
 
     /**
@@ -54,7 +59,8 @@ public class BaseNoticeArtService implements INoticeArtService {
      */
     @Override
     public ShowPagedNoticeArtDto selectNoticeArt(SelectNoticeArtConditionDto dto) {
-        PageRequest pageRequest = new PageRequest(dto.getPageIndex(),dto.getPageSize());
+        Sort sort = new Sort(Sort.Direction.DESC,"date");
+        PageRequest pageRequest = new PageRequest(dto.getPageIndex(),dto.getPageSize(),sort);
         NoticeArt noticeArtExample = new NoticeArt();
         noticeArtExample.setNoticeArtUserId(dto.getUserId());
         Page<NoticeArt> page=artRepository.findAll(Example.of(noticeArtExample),pageRequest);
@@ -69,6 +75,7 @@ public class BaseNoticeArtService implements INoticeArtService {
             noticeArtDto.setGenerateUserId(noticeArt.getGenerateUserId());
             noticeArtDto.setArtType(noticeArt.getArtType());
             noticeArtDto.setArtId(noticeArt.getArtId());
+            noticeArtDto.setArtUserId(noticeArt.getArtUserId());
             noticeArtDto.setNoticeArtType(noticeArt.getNoticeArtType());
             UserNPInfoDto npInfoDto = userMapper.selectUserNPInfo(noticeArtDto.getGenerateUserId());
             noticeArtDto.setGenerateNickname(npInfoDto.getNickname());
@@ -78,20 +85,31 @@ public class BaseNoticeArtService implements INoticeArtService {
             noticeArtDto.setArtContent(noticeArt.getArtContent());
             noticeArtDto.setOriginal(noticeArt.getOriginal());
             noticeArtDto.setFirstArtImg(noticeArt.getFirstArtImg());
+            noticeArtDto.setCurrentContent(noticeArt.getCurrentContent());
             //填充动态人的昵称,和id
             //如果动态不是原创
             if(!noticeArt.getOriginal()){
                 String originalUserId = noticeArt.getOriginalUserId();
                 UserNPInfoDto originalUserDto = userMapper.selectUserNPInfo(originalUserId);
                 noticeArtDto.setArtNickname(originalUserDto.getNickname());
-
                 noticeArtDto.setOriginalArtId(noticeArt.getOriginalArtId());
                 noticeArtDto.setOriginalUserId(noticeArt.getOriginalUserId());
             }else{
-                String noticeArtUserId = noticeArt.getNoticeArtUserId();
-                UserNPInfoDto artUserDto = userMapper.selectUserNPInfo(noticeArtUserId);
+                String artUserId = noticeArt.getArtUserId();
+                UserNPInfoDto artUserDto = userMapper.selectUserNPInfo(artUserId);
                 noticeArtDto.setArtNickname(artUserDto.getNickname());
             }
+            ShowParentDiscussionDto discussionDto=null;
+            String discussionId = noticeArt.getDiscussionId();
+            //如果有评论就设置评论
+            if(discussionId!=null){
+                ParentDiscussion parentDiscussion=discussionRepository.findOne(noticeArt.getDiscussionId());
+                if(parentDiscussion!=null){
+                    discussionDto = DiscussionUtil.generateParentDiscussionDto(parentDiscussion,userMapper,dto.getUserId());
+                    noticeArtDto.setDiscussion(discussionDto);
+                }
+            }
+
             noticeArtDtos.add(noticeArtDto);
             //生成评论
         }
@@ -104,8 +122,7 @@ public class BaseNoticeArtService implements INoticeArtService {
      * @return 成功与否
      */
     @Override
-    public boolean insertNoticeArt(NoticeArt noticeArt) {
-
-        return artRepository.insert(noticeArt)!=null;
+    public NoticeArt insertNoticeArt(NoticeArt noticeArt) {
+        return artRepository.insert(noticeArt);
     }
 }

@@ -21,15 +21,7 @@ public class DiscussionUtil {
         for(ParentDiscussion parentDiscussion:discussionPage){
             /*生成父评论dto*/
             ShowParentDiscussionDto parentDiscussionDto = generateParentDiscussionDto(parentDiscussion,userMapper,userId);
-            /*子评论*/
-            if(parentDiscussion.getSubDiscussionsLength()!=null){
-                List<SubDiscussion> subDiscussions= parentDiscussion.getSubDiscussions();
-                List<ShowSubDiscussionDto> subDiscussionDtos = new ArrayList<>();
-                for (SubDiscussion subDiscussion:subDiscussions){
-                    subDiscussionDtos.add(generateSubDiscussionDto(subDiscussion,userMapper));
-                }
-                parentDiscussionDto.setSubDiscussionDtos(subDiscussionDtos);
-            }
+
             parentDiscussionDtos.add(parentDiscussionDto);
         }
         pagedDiscussionDto.setContent(parentDiscussionDtos);
@@ -73,6 +65,15 @@ public class DiscussionUtil {
             parentDiscussionDto.setThumbsUpAble(true);
             parentDiscussionDto.setThumbsUpCount(0);
         }
+        /*子评论*/
+        if(parentDiscussion.getSubDiscussionsLength()!=null){
+            List<SubDiscussion> subDiscussions= parentDiscussion.getSubDiscussions();
+            List<ShowSubDiscussionDto> subDiscussionDtos = new ArrayList<>();
+            for (SubDiscussion subDiscussion:subDiscussions){
+                subDiscussionDtos.add(generateSubDiscussionDto(subDiscussion,parentDiscussion.getUserId(),userMapper));
+            }
+            parentDiscussionDto.setSubDiscussionDtos(subDiscussionDtos);
+        }
         return parentDiscussionDto;
 
     }
@@ -80,9 +81,10 @@ public class DiscussionUtil {
      * 生成子评论dto
      * @param subDiscussion 子评论
      * @param userMapper
+     * @param parentDiscussionUserId 父评论用户id
      * @return
      */
-    public static ShowSubDiscussionDto generateSubDiscussionDto(SubDiscussion subDiscussion,UserMapper userMapper){
+    public static ShowSubDiscussionDto generateSubDiscussionDto(SubDiscussion subDiscussion,String parentDiscussionUserId,UserMapper userMapper){
         ShowSubDiscussionDto subDiscussionDto=new ShowSubDiscussionDto();
 
         subDiscussionDto.setContent(subDiscussion.getContent());
@@ -92,17 +94,15 @@ public class DiscussionUtil {
         subDiscussionDto.setShortDate(TimeUtil.generateShortDate(date1));
         subDiscussionDto.setSortDate(TimeUtil.calculateSortDate(date1));
 
-        //填充昵称
+        //填充昵称和头像
         UserNPInfoDto userNPInfoDto = userMapper.selectUserNPInfo(subDiscussion.getUserId());
         subDiscussionDto.setNickname(userNPInfoDto.getNickname());
-
+        subDiscussionDto.setProfileImg(userNPInfoDto.getProfileImg());
 
         //子评论目标用户id处理（填充昵称）
         String sendToUserId = subDiscussion.getSendToUserId();
-        if(sendToUserId!=null){
-            UserNPInfoDto userNPInfoDto1 = userMapper.selectUserNPInfo(subDiscussion.getSendToUserId());
-            subDiscussionDto.setSendToNickname(userNPInfoDto1.getNickname());
-        }
+        UserNPInfoDto userNPInfoDto1 = userMapper.selectUserNPInfo(subDiscussion.getSendToUserId());
+        subDiscussionDto.setSendToNickname(userNPInfoDto1.getNickname());
         return subDiscussionDto;
     }
 }

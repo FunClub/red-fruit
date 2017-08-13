@@ -1,6 +1,7 @@
 package com.taomei.dao.entities;
 
 import com.taomei.dao.entities.discussion.ParentDiscussion;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -8,12 +9,18 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Document(collection = "noticeArt")
 public class NoticeArt {
+    @Id
     private String noticeArtId;
     private String date;
     private String artId;
+    private String artUserId;
     private String originalArtId;
     private String originalUserId;
     private Boolean original;
+    /**
+     * 当前的通知内容
+     */
+    private String currentContent;
     /**
      * 通知动态所属用户的id
      */
@@ -36,7 +43,7 @@ public class NoticeArt {
     private boolean state;
     private String artContent;
     private String firstArtImg;
-    private ParentDiscussion discussion;
+    private String discussionId;
 
     public Boolean getOriginal() {
         return original;
@@ -121,13 +128,12 @@ public class NoticeArt {
     }
 
 
-
-    public ParentDiscussion getDiscussion() {
-        return discussion;
+    public String getDiscussionId() {
+        return discussionId;
     }
 
-    public void setDiscussion(ParentDiscussion discussion) {
-        this.discussion = discussion;
+    public void setDiscussionId(String discussionId) {
+        this.discussionId = discussionId;
     }
 
     public String getArtId() {
@@ -152,5 +158,21 @@ public class NoticeArt {
 
     public void setOriginalUserId(String originalUserId) {
         this.originalUserId = originalUserId;
+    }
+
+    public String getArtUserId() {
+        return artUserId;
+    }
+
+    public void setArtUserId(String artUserId) {
+        this.artUserId = artUserId;
+    }
+
+    public String getCurrentContent() {
+        return currentContent;
+    }
+
+    public void setCurrentContent(String currentContent) {
+        this.currentContent = currentContent;
     }
 }

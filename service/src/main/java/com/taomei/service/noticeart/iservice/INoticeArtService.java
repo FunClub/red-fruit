@@ -18,7 +18,7 @@ public interface INoticeArtService {
     /**
      * 插入通知动态
      * @param noticeArt 通知动态文档
-     * @return 插入成功与否
+     * @return NoticeArt
      */
-    boolean insertNoticeArt(NoticeArt noticeArt);
+    NoticeArt insertNoticeArt(NoticeArt noticeArt);
 }

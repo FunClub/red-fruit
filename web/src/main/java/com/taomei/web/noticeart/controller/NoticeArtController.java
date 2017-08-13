@@ -22,6 +22,7 @@ public class NoticeArtController {
     @PostMapping("/")
     @SetUserId
     public ResultView selectNoticeArt(String userId, @RequestBody SelectNoticeArtConditionDto dto){
+        dto.setUserId(userId);
         return ResultViewUtil.success(noticeArtService.selectNoticeArt(dto));
     }
 }

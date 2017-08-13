@@ -1,5 +1,6 @@
 package com.taomei.dao.dtos.noticeart;
 
+import com.taomei.dao.dtos.discussion.ShowParentDiscussionDto;
 import com.taomei.dao.entities.discussion.ParentDiscussion;
 
 /**
@@ -10,6 +11,7 @@ public class ShowNoticeArtDto {
     private String generateNickname;
     private String generateProfileImg;
     private String artId;
+    private String artUserId;
     private String originalArtId;
     private String originalUserId;
     private Boolean original;
@@ -20,7 +22,8 @@ public class ShowNoticeArtDto {
     private String artNickname;
     private String firstArtImg;
     private String artContent;
-    private ParentDiscussion discussion;
+    private String currentContent;
+    private ShowParentDiscussionDto discussion;
 
     public String getGenerateNickname() {
         return generateNickname;
@@ -44,6 +47,14 @@ public class ShowNoticeArtDto {
 
     public void setGenerateProfileImg(String generateProfileImg) {
         this.generateProfileImg = generateProfileImg;
+    }
+
+    public String getArtUserId() {
+        return artUserId;
+    }
+
+    public void setArtUserId(String artUserId) {
+        this.artUserId = artUserId;
     }
 
     public String getArtType() {
@@ -102,9 +113,7 @@ public class ShowNoticeArtDto {
         this.artContent = artContent;
     }
 
-    public ParentDiscussion getDiscussion() {
-        return discussion;
-    }
+
 
     public String getArtId() {
         return artId;
@@ -138,7 +147,19 @@ public class ShowNoticeArtDto {
         this.original = original;
     }
 
-    public void setDiscussion(ParentDiscussion discussion) {
+    public ShowParentDiscussionDto getDiscussion() {
+        return discussion;
+    }
+
+    public void setDiscussion(ShowParentDiscussionDto discussion) {
         this.discussion = discussion;
+    }
+
+    public String getCurrentContent() {
+        return currentContent;
+    }
+
+    public void setCurrentContent(String currentContent) {
+        this.currentContent = currentContent;
     }
 }

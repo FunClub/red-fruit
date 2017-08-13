@@ -3,6 +3,7 @@ package com.taomei.dao.dtos.discussion;
 public class ShowSubDiscussionDto {
     private String userId;
     private String nickname;
+    private String profileImg;
     private String content;
     private String sortDate;
     private String shortDate;
@@ -58,5 +59,11 @@ public class ShowSubDiscussionDto {
         this.content = content;
     }
 
+    public String getProfileImg() {
+        return profileImg;
+    }
 
+    public void setProfileImg(String profileImg) {
+        this.profileImg = profileImg;
+    }
 }

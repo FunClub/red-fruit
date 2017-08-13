@@ -1,5 +1,6 @@
 package com.taomei.dao.entities.discussion;
 
+import com.taomei.dao.entities.DiscussionNoticeArtFlag;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,6 +13,7 @@ import java.util.List;
 public class ParentDiscussion extends SubDiscussion{
     @Id
     private String discussionId;
+
     /**
      * 动态Id,比如心情等
      */
@@ -22,7 +24,7 @@ public class ParentDiscussion extends SubDiscussion{
     private Long subDiscussionsLength;
     private List<SubDiscussion> subDiscussions;
     private List<String> thumbsUpUserIds;
-
+    private List<DiscussionNoticeArtFlag> noticeArtFlags;
     public String getDiscussionId() {
         return discussionId;
     }
@@ -61,5 +63,13 @@ public class ParentDiscussion extends SubDiscussion{
 
     public void setThumbsUpUserIds(List<String> thumbsUpUserIds) {
         this.thumbsUpUserIds = thumbsUpUserIds;
+    }
+
+    public List<DiscussionNoticeArtFlag> getNoticeArtFlags() {
+        return noticeArtFlags;
+    }
+
+    public void setNoticeArtFlags(List<DiscussionNoticeArtFlag> noticeArtFlags) {
+        this.noticeArtFlags = noticeArtFlags;
     }
 }
