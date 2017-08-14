@@ -21,7 +21,7 @@ public class ImageService {
     private static final String ENDPOINT="http://oss-cn-shenzhen.aliyuncs.com";
     private static final String ACCESS_KEY_ID= "LTAIseZOgs0quMxr";
     private static final String ACCESS_KEY_SECRET = "duoh4gnCVAIu8gvDJ1p7vE1pg0ARuw";
-    public static final String BUCKET_NAME ="red-fruit";
+    private static final String BUCKET_NAME ="red-fruit";
     private OSSClient client;
     public ImageService() {
         client =new OSSClient(ENDPOINT, ACCESS_KEY_ID, ACCESS_KEY_SECRET);
@@ -33,17 +33,14 @@ public class ImageService {
      * @param imgPath 路片路径集合
      * @return 统一对象
      */
-   public boolean deleteImg( List<String> imgPath) throws Exception {
-       int i=0;
+   public void deleteImgs( List<String> imgPath) throws Exception {
        for(String path:imgPath){
-           client.deleteObject(BUCKET_NAME,path);
-           i++;
+           deleteImg(path);
        }
-       if(i!=imgPath.size()){
-            throw new Exception("删除图片失败");
-       }
-       return true;
+   }
 
+   public void deleteImg(String path) {
+       client.deleteObject(BUCKET_NAME, path);
    }
 
 
@@ -53,17 +50,22 @@ public class ImageService {
      * @return 图片地址集合
      * @throws IOException 文件IO异常
      */
-    public List<String> generateImgPath(List<MultipartFile> files,String folder) throws IOException {
+    public List<String> generateImgPaths(List<MultipartFile> files,String folder) throws IOException {
         List<String> imgPath = new ArrayList<>();
         ObjectMetadata meta = new ObjectMetadata();
         for(MultipartFile file:files){
-            InputStream inputStream = file.getInputStream();
-            String imageName =folder+"/"+ TimeUtil.getFileTime()+file.getOriginalFilename();
-            meta.setContentLength(file.getBytes().length);
-            client.putObject(BUCKET_NAME,imageName,inputStream,meta);
-            imgPath.add(imageName);
+            imgPath.add(generateImgPath(file,folder));
         }
         return imgPath;
+    }
+
+    public String generateImgPath (MultipartFile file,String folder) throws IOException {
+        ObjectMetadata meta = new ObjectMetadata();
+        InputStream inputStream = file.getInputStream();
+        String imageName =folder+"/"+ TimeUtil.getFileTime()+file.getOriginalFilename();
+        meta.setContentLength(file.getBytes().length);
+        client.putObject(BUCKET_NAME,imageName,inputStream,meta);
+        return imageName;
     }
 
 }

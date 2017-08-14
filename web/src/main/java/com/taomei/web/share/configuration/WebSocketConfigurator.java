@@ -16,10 +16,10 @@ public class WebSocketConfigurator {
         * spring boot内置tomcat需要此bean,如果使用外部tomcat,取消注册此bean即可
         * TEST时也不用此bean
         * @return*/
+
     @Bean
     public ServerEndpointExporter serverEndpointExporter() {
         return new ServerEndpointExporter();
     }
-
 
 }

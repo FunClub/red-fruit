@@ -54,12 +54,12 @@ public class ShareController {
 
     @PutMapping("img/{folder}")
     public ResultView upload(@PathParam("imgs") List<MultipartFile> imgs, @PathVariable("folder") String folder) throws IOException {
-        return ResultViewUtil.success(imageService.generateImgPath(imgs,folder));
+        return ResultViewUtil.success(imageService.generateImgPaths(imgs,folder));
     }
     @PatchMapping("img")
     public ResultView delete(@RequestBody List<String> moodImgs) throws Exception {
-
-     return ResultViewUtil.success(imageService.deleteImg(moodImgs));
+        imageService.deleteImgs(moodImgs);
+     return ResultViewUtil.success(true);
 
     }
 }

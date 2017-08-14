@@ -1,12 +1,12 @@
 package com.taomei.service.share.enums;
 
-public enum ImageFolder {
+public enum FileFolder {
     MOOD("mood"),
     PROFILE("profile")
     ;
     private String folder;
 
-    ImageFolder(String folder) {
+    FileFolder(String folder) {
         this.folder = folder;
     }
 

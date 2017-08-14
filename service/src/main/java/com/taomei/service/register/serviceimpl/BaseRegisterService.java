@@ -36,8 +36,8 @@ public class BaseRegisterService implements IBaseRegisterService {
         users.setPasswords(encryptPass);
         /*设置默认的随机昵称*/
         users.setNickname(RegisterUtil.generateRandomNickName());
-        users.setProfileImg("assets/img/defaultMeImg.png");
-        users.setOriginalProfileImg("assets/img/defaultMeImg.png");
+        users.setProfileImg("profile/defaultMeImg.png");
+        users.setOriginalProfileImg("profile/defaultMeImg.png");
         int count = userMapper.insert(users);
         if(count>0){
             return true;
