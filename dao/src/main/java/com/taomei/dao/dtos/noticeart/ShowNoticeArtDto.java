@@ -11,6 +11,7 @@ public class ShowNoticeArtDto {
     private String generateNickname;
     private String generateProfileImg;
     private String artId;
+    private String noticeArtId;
     private String artUserId;
     private String originalArtId;
     private String originalUserId;
@@ -24,6 +25,14 @@ public class ShowNoticeArtDto {
     private String artContent;
     private String currentContent;
     private ShowParentDiscussionDto discussion;
+
+    public String getNoticeArtId() {
+        return noticeArtId;
+    }
+
+    public void setNoticeArtId(String noticeArtId) {
+        this.noticeArtId = noticeArtId;
+    }
 
     public String getGenerateNickname() {
         return generateNickname;

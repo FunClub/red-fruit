@@ -2,6 +2,7 @@ package com.taomei.service.noticeart.service;
 
 import com.taomei.dao.dtos.base.UserNPInfoDto;
 import com.taomei.dao.dtos.discussion.ShowParentDiscussionDto;
+import com.taomei.dao.dtos.noticeart.DeleteNoticeArtDto;
 import com.taomei.dao.dtos.noticeart.SelectNoticeArtConditionDto;
 import com.taomei.dao.dtos.noticeart.ShowNoticeArtDto;
 import com.taomei.dao.dtos.noticeart.ShowPagedNoticeArtDto;
@@ -18,6 +19,7 @@ import com.taomei.service.share.enums.ArtType;
 import com.taomei.service.share.enums.NoticeArtType;
 import com.taomei.service.share.utils.DiscussionUtil;
 import com.taomei.service.share.utils.TimeUtil;
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -40,16 +42,40 @@ import java.util.List;
 public class BaseNoticeArtService implements INoticeArtService {
     private final NoticeArtRepository artRepository;
     private final MongoOperations mongoOperations;
-    private final MoodRepository moodRepository;
     private final UserMapper userMapper;
     private final DiscussionRepository discussionRepository;
     @Autowired
-    public BaseNoticeArtService(NoticeArtRepository artRepository, MongoOperations mongoOperations, MoodRepository moodRepository, UserMapper userMapper, DiscussionRepository discussionRepository) {
+    public BaseNoticeArtService(NoticeArtRepository artRepository, MongoOperations mongoOperations,
+                                UserMapper userMapper, DiscussionRepository discussionRepository) {
         this.artRepository = artRepository;
         this.mongoOperations = mongoOperations;
-        this.moodRepository = moodRepository;
+
         this.userMapper = userMapper;
         this.discussionRepository = discussionRepository;
+    }
+
+    /**
+     * 删除动态通知
+     * @param dto
+     * @return
+     */
+    @Override
+    public boolean deleteNoticeArt(DeleteNoticeArtDto dto) {
+        //删除动态通知
+        artRepository.delete(dto.getNoticeArtId());
+
+        //删除动态通知的评论中保存动态通知标记
+        int count=0;
+        if(dto.getDiscussionId()!=null){//如果删除的动态中有评论
+            Document document = new Document();
+            document.append("noticeUserId",dto.getNoticeArtUserId());
+            document.append("noticeArtId",dto.getNoticeArtId());
+            Query query =Query.query(where("discussionId").is(dto.getDiscussionId()));
+            Update update = new Update();
+            update.pull("noticeArtFlags",document);
+            count=mongoOperations.updateFirst(query,update,ParentDiscussion.class,"discussion").getN();
+        }
+        return count>0;
     }
 
     /**
@@ -72,6 +98,7 @@ public class BaseNoticeArtService implements INoticeArtService {
         for(NoticeArt noticeArt:page){
             noticeArtDto= new ShowNoticeArtDto();
             //设置基本信息
+            noticeArtDto.setNoticeArtId(noticeArt.getNoticeArtId());
             noticeArtDto.setGenerateUserId(noticeArt.getGenerateUserId());
             noticeArtDto.setArtType(noticeArt.getArtType());
             noticeArtDto.setArtId(noticeArt.getArtId());
