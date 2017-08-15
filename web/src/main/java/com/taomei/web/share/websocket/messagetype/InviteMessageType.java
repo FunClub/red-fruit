@@ -1,4 +1,4 @@
-package com.taomei.web.share.websocket;
+package com.taomei.web.share.websocket.messagetype;
 
 public enum InviteMessageType {
     /**

@@ -4,7 +4,7 @@ import com.taomei.dao.entities.Half;
 import com.taomei.dao.repository.HalfRepository;
 import com.taomei.dao.repository.InvitationRepository;
 import com.taomei.web.share.configuration.CustomSpringConfigurator;
-import com.taomei.web.share.websocket.InviteMessageType;
+import com.taomei.web.share.websocket.messagetype.InviteMessageType;
 import com.taomei.web.share.websocket.decode.InviteMessageEncoder;
 import com.taomei.web.share.websocket.encode.InviteMessageDecoder;
 import com.taomei.web.share.websocket.message.InviteMessage;
@@ -30,7 +30,7 @@ import java.util.Map;
 )
 @Component
 public class InviteEndPoint {
-    private final  static Logger LOGGER = LoggerFactory.getLogger(InviteMessageDecoder.class);
+    private final  static Logger LOGGER = LoggerFactory.getLogger(InviteEndPoint.class);
     /**
      * 保存会话
      */
@@ -93,7 +93,6 @@ public class InviteEndPoint {
                         LOGGER.error("发送接受邀请信息时出错");
                         e.printStackTrace();
                     }
-
         }
 
     }
