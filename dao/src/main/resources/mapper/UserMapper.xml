@@ -73,7 +73,7 @@
       SELECT nickname,profile_img FROM users WHERE user_id=#{value}
   </select>
 
-  <insert id="insert" parameterType="com.taomei.dao.entities.Users">
+  <insert id="insert" parameterType="com.taomei.dao.entities.Users" useGeneratedKeys="true" keyProperty="userId">
     insert into users (account,nickName, passwords,born, sex,city,profile_img,original_profile_img)
     values (#{account,jdbcType=VARCHAR},#{nickname},#{passwords,jdbcType=VARCHAR},#{born,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{city,jdbcType=VARCHAR},#{profileImg},#{originalProfileImg})
   </insert>

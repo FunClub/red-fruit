@@ -1,10 +1,13 @@
 package com.taomei.service.register.serviceimpl;
 
 import com.taomei.dao.dtos.register.RegisterDto;
-import com.taomei.dao.entities.ResultView;
+import com.taomei.dao.entities.Settings;
 import com.taomei.dao.entities.Users;
 import com.taomei.dao.mapper.UserMapper;
+import com.taomei.dao.repository.SettingsRepository;
 import com.taomei.service.register.iservice.IBaseRegisterService;
+import com.taomei.service.share.enums.AlbumSortType;
+import com.taomei.service.share.enums.AlbumViewType;
 import com.taomei.service.share.utils.RegisterUtil;
 
 import com.taomei.service.share.utils.ShareUtil;
@@ -17,11 +20,13 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class BaseRegisterService implements IBaseRegisterService {
+    private final SettingsRepository settingsRepository;
     private final UserMapper userMapper;
 
     @Autowired
-    public BaseRegisterService(UserMapper userMapper) {
+    public BaseRegisterService(UserMapper userMapper, SettingsRepository settingsRepository) {
         this.userMapper = userMapper;
+        this.settingsRepository = settingsRepository;
     }
 
     /**
@@ -36,10 +41,16 @@ public class BaseRegisterService implements IBaseRegisterService {
         users.setPasswords(encryptPass);
         /*设置默认的随机昵称*/
         users.setNickname(RegisterUtil.generateRandomNickName());
-        users.setProfileImg("profile/defaultMeImg.png");
-        users.setOriginalProfileImg("profile/defaultMeImg.png");
+        users.setProfileImg("static/defaultMeImg.png");
+        users.setOriginalProfileImg("static/defaultMeImg.png");
         int count = userMapper.insert(users);
         if(count>0){
+            //插入用户配置文档
+            Settings settings = new Settings();
+            settings.setUserId(users.getUserId());
+            settings.setAlbumSortType(AlbumSortType.LATEST_UPLOAD.getType());
+            settings.setAlbumViewType(AlbumViewType.COMMON.getType());
+            settingsRepository.insert(settings);
             return true;
         }else{
             throw new Exception("注册失败！");

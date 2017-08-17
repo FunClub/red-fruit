@@ -9,10 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import javax.websocket.EncodeException;
-import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
+import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
@@ -56,6 +53,25 @@ public class NoticeEndPoint {
             if (LOGGER.isDebugEnabled()){
                 LOGGER.error("发送通知消息失败");
             }
+        }
+    }
+    @OnClose
+    public void close(Session session,CloseReason  closeReason,@PathParam("userId")String userId){
+        try {
+            session.close();
+            noticeSessionMap.remove(userId);
+        } catch (IOException e) {
+            LOGGER.error(session.getId()+"close socket failed");
+        }
+        LOGGER.info(closeReason.getReasonPhrase()+","+session.getId()+"close socket");
+    }
+    @OnError
+    public void error(Throwable throwable,Session session,@PathParam("userId")String userId){
+        try {
+            session.close();
+            noticeSessionMap.remove(userId);
+        } catch (IOException e) {
+            LOGGER.error(session.getId()+"发生错误"+throwable.getMessage());
         }
     }
 }

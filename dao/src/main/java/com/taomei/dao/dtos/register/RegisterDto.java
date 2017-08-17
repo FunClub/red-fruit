@@ -1,5 +1,6 @@
 package com.taomei.dao.dtos.register;
 
+import com.taomei.dao.entities.Settings;
 import com.taomei.dao.entities.Users;
 
 /**
@@ -8,6 +9,8 @@ import com.taomei.dao.entities.Users;
 public class RegisterDto{
     private Users user;
     private String verificationCode;
+
+
 
     public Users getUser() {
         return user;
