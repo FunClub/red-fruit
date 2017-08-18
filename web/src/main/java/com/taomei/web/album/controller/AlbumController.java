@@ -23,7 +23,10 @@ public class AlbumController {
     public AlbumController(@Qualifier("baseAlbumService") IAlbumService albumService) {
         this.albumService = albumService;
     }
+    @PostMapping("/photo")
+    public void uploadPhoto(){
 
+    }
     /**
      * 创建相册额
      * @param halfId 情侣id
