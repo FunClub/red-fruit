@@ -2,14 +2,17 @@ package com.taomei.service.share;
 
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.model.ObjectMetadata;
-import com.taomei.dao.entities.ResultView;
-
+import com.taomei.dao.dtos.album.ShowUploadPhotoDto;
 import com.taomei.service.share.utils.TimeUtil;
-
+import org.bouncycastle.util.encoders.UrlBase64;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +30,83 @@ public class ImageService {
         client =new OSSClient(ENDPOINT, ACCESS_KEY_ID, ACCESS_KEY_SECRET);
     }
 
+    /**
+     * 生成base64URL
+     * @param code 等待加密的字符串
+     * @return
+     * @throws UnsupportedEncodingException
+     */
+    public String generateBase64Url(String code) throws UnsupportedEncodingException {
+        byte[] b= UrlBase64.encode(code.getBytes("UTF-8"));
+        String base64Url=new String(b,"UTF-8");
+        StringBuilder sb = new StringBuilder(base64Url);
+
+        /*去除点*/
+        int index=sb.indexOf(".");
+        if(index!=-1){
+            sb=sb.delete(index,base64Url.length());
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 生成上传相片的预览
+     * @param files 文件jihe
+     * @param folder 文件夹
+     * @return
+     * @throws IOException
+     */
+    public List<ShowUploadPhotoDto> generateUpLoadPhotoDto(List<MultipartFile> files,String folder) throws IOException {
+        List<ShowUploadPhotoDto> dtos = new ArrayList<>();
+        for(MultipartFile file:files){
+            ShowUploadPhotoDto dto = new ShowUploadPhotoDto();
+            //生成图片的路径
+            String path = generateImgPath(file,folder);
+
+            //得到高度
+            InputStream in = file.getInputStream();
+            BufferedImage bi = ImageIO.read(in);
+            int width = bi.getWidth();
+            int height = bi.getHeight();
+
+            //计算水印字体大小
+            double orFontSize=20;//图片大小为300X400
+            //图片大小过小就不添加水印
+            dto.setZoomSize(100);
+            if(height>=400&&width>=300 ||height>=300&&width>400){
+                if(height>width){
+                    double i = ((height-400)/88.0)*0.5;
+                    orFontSize+=i;
+                    i=((width-300)/66.0)*0.5;
+                    orFontSize+=i;
+                }else{
+                    double i = ((width-400)/88.0)*0.5;
+                    orFontSize+=i;
+                    i=((height-300)/66.0)*0.5;
+                    orFontSize+=i;
+                }
+                dto.setFontSize((int) orFontSize);
+                dto.setZoomSize(calculateZoomSize(width,height));
+            }
+
+            dto.setPath(path);
+            dto.setHeight(height);
+            dto.setWidth(width);
+            dto.setFileName(file.getOriginalFilename());
+            dtos.add(dto);
+        }
+        return dtos;
+    }
+
+    private int calculateZoomSize(int width,int height){
+        int p;
+        if(height>width){
+            p = (int) ((480.0/width)*100);
+        }else{
+            p= (int) ((330.0/height)*100);
+        }
+        return p;
+    }
     /**
      * 删除图片
      *
@@ -67,5 +147,6 @@ public class ImageService {
         client.putObject(BUCKET_NAME,imageName,inputStream,meta);
         return imageName;
     }
+
 
 }

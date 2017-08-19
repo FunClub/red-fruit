@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.websocket.server.PathParam;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -60,6 +61,16 @@ public class ShareController {
     public ResultView delete(@RequestBody List<String> moodImgs) throws Exception {
         imageService.deleteImgs(moodImgs);
      return ResultViewUtil.success(true);
+    }
 
+    /**
+     * 生成base64URL
+     * @param code 等待加密的字符串
+     * @return
+     * @throws UnsupportedEncodingException
+     */
+    @PostMapping("base64-url")
+    public ResultView generateBase64Url(String code) throws UnsupportedEncodingException {
+       return ResultViewUtil.success(imageService.generateBase64Url(code));
     }
 }

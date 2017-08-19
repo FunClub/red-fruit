@@ -109,7 +109,8 @@ public class BaseAlbumService implements IAlbumService{
     }
 
     public static void main(String[] args) throws UnsupportedEncodingException {
-        String data="panda.png?x-oss-process=image/resize,P_100";
+        String data="static/water-logo.png?x-oss-process=image/resize,p_25";
+        String txt = "红果情侣";
         byte[] b= UrlBase64.encode(data.getBytes("UTF-8"));
         System.out.println(new String(b,"UTF-8"));;
     }
