@@ -71,8 +71,8 @@ public class ImageService {
 
             //计算水印字体大小
             double orFontSize=20;//图片大小为300X400
-            //图片大小过小就不添加水印
-            dto.setZoomSize(100);
+
+            //如过图片过小就设置不缩放,水印字体大小为12否则就计算。
             if(height>=400&&width>=300 ||height>=300&&width>400){
                 if(height>width){
                     double i = ((height-400)/88.0)*0.5;
@@ -87,6 +87,9 @@ public class ImageService {
                 }
                 dto.setFontSize((int) orFontSize);
                 dto.setZoomSize(calculateZoomSize(width,height));
+            }else{
+                dto.setFontSize(12);
+                dto.setZoomSize(100);
             }
 
             dto.setPath(path);
@@ -103,7 +106,7 @@ public class ImageService {
         if(height>width){
             p = (int) ((480.0/width)*100);
         }else{
-            p= (int) ((330.0/height)*100);
+            p= (int) ((380.0/height)*100);
         }
         return p;
     }
