@@ -1,5 +1,6 @@
 package com.taomei.service.album.iservice;
 
+import com.taomei.dao.dtos.album.AddPhotoDto;
 import com.taomei.dao.dtos.album.SelectHalfAlbumDto;
 import com.taomei.dao.dtos.album.ShowAllAlbumDto;
 import com.taomei.dao.dtos.base.IdsDto;
@@ -10,6 +11,12 @@ import com.taomei.dao.entities.album.Album;
  */
 public interface IAlbumService {
 
+    /**
+     * 添加相片
+     * @param dto 添加相片dto
+     * @return
+     */
+    boolean insertPhotos(AddPhotoDto dto);
     /**
      * 插入相册
      * @param album 相册文档

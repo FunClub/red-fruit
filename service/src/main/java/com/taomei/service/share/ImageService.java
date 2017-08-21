@@ -95,7 +95,7 @@ public class ImageService {
             dto.setPath(path);
             dto.setHeight(height);
             dto.setWidth(width);
-            dto.setFileName(file.getOriginalFilename());
+            dto.setName(file.getOriginalFilename());
             dtos.add(dto);
         }
         return dtos;

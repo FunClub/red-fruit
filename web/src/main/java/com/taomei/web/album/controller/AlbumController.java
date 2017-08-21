@@ -1,5 +1,6 @@
 package com.taomei.web.album.controller;
 
+import com.taomei.dao.dtos.album.AddPhotoDto;
 import com.taomei.dao.dtos.base.IdsDto;
 import com.taomei.dao.entities.ResultView;
 import com.taomei.dao.entities.album.Album;
@@ -29,9 +30,27 @@ public class AlbumController {
         this.albumService = albumService;
         this.imageService = imageService;
     }
+
+    /**
+     * 上传相片
+     * @param folder 相片文件夹
+     * @param imgs 文件集合
+     * @return
+     * @throws IOException
+     */
     @PostMapping("/{folder}/photo")
     public ResultView uploadPhoto(@PathVariable("folder") String folder, @RequestBody List<MultipartFile> imgs) throws IOException {
         return  ResultViewUtil.success(imageService.generateUpLoadPhotoDto(imgs,folder));
+    }
+
+    /**
+     * 添加相片
+     * @param dto 添加相片dto
+     * @return
+     */
+    @PostMapping("/photo")
+    public ResultView addPhoto(@RequestBody AddPhotoDto dto){
+        return ResultViewUtil.success(albumService.insertPhotos(dto));
     }
     /**
      * 创建相册额

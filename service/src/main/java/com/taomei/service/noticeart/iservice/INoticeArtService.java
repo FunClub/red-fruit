@@ -21,6 +21,7 @@ public interface INoticeArtService {
      * @return 分页的动态信息
      */
     ShowPagedNoticeArtDto selectNoticeArt(SelectNoticeArtConditionDto dto);
+
     /**
      * 插入通知动态
      * @param noticeArt 通知动态文档

@@ -10,14 +10,15 @@ public class ShowUploadPhotoDto {
     private int width;
     private int height;
     private int fontSize;
-    private String fileName;
+    private String name;
     private int zoomSize;
-    public String getFileName() {
-        return fileName;
+
+    public String getName() {
+        return name;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPath() {
