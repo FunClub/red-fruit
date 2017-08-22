@@ -3,6 +3,8 @@ package com.taomei.dao.entities.album;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 @Document(collection = "photo")
 public class Photo {
     @Id
@@ -16,6 +18,24 @@ public class Photo {
     private Integer sharpen;
     private Integer blurR;
     private Integer blurS;
+    private List<String> thumbsUpUserId;
+    private Long discussionCount;
+
+    public Long getDiscussionCount() {
+        return discussionCount;
+    }
+
+    public void setDiscussionCount(Long discussionCount) {
+        this.discussionCount = discussionCount;
+    }
+
+    public List<String> getThumbsUpUserId() {
+        return thumbsUpUserId;
+    }
+
+    public void setThumbsUpUserId(List<String> thumbsUpUserId) {
+        this.thumbsUpUserId = thumbsUpUserId;
+    }
 
     public String getAlbumId() {
         return albumId;

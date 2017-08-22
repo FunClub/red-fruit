@@ -24,8 +24,6 @@ public class Album {
     private String createDate;
     private String updateDate;
     private Long photoCount;
-    private Long thumbsUpCount;
-
     public String getUpdateDate() {
         return updateDate;
     }
@@ -88,14 +86,6 @@ public class Album {
 
     public void setPhotoCount(Long photoCount) {
         this.photoCount = photoCount;
-    }
-
-    public Long getThumbsUpCount() {
-        return thumbsUpCount;
-    }
-
-    public void setThumbsUpCount(Long thumbsUpCount) {
-        this.thumbsUpCount = thumbsUpCount;
     }
 
     public String getCoverImg() {

@@ -1,8 +1,6 @@
 package com.taomei.service.album.service;
 
-import com.taomei.dao.dtos.album.AddPhotoDto;
-import com.taomei.dao.dtos.album.SelectHalfAlbumDto;
-import com.taomei.dao.dtos.album.ShowAllAlbumDto;
+import com.taomei.dao.dtos.album.*;
 import com.taomei.dao.dtos.base.IdsDto;
 import com.taomei.dao.entities.Settings;
 import com.taomei.dao.entities.album.Album;
@@ -29,6 +27,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,6 +45,50 @@ public class BaseAlbumService implements IAlbumService{
         this.settingsRepository = settingsRepository;
         this.mongoOperations = mongoOperations;
         this.photoRepository = photoRepository;
+    }
+
+    /**
+     * 查询一个相册及其相片
+     * @param selectDto 查询条件dto
+     * @return 显示一个相册及其相片的dto
+     */
+    @Override
+    public ShowAlbumPhotoDto selectPhotos(SelectAlbumPhotoDto selectDto) {
+        String albumId = selectDto.getAlbumId();
+        String userId = selectDto.getUserId();
+        ShowAlbumPhotoDto showDto = new ShowAlbumPhotoDto();
+        ShowHalfAlbumDto albumDto = new ShowHalfAlbumDto();
+        //查询相册信息
+        Album album = albumRepository.findOne(albumId);
+        //填充相册信息
+        albumDto.setAlbumId(album.getAlbumId());
+        albumDto.setAlbumName(album.getAlbumName());
+        albumDto.setCoverImg(album.getCoverImg());
+        albumDto.setLimit(album.getLimit());
+        album.setPhotoCount(album.getPhotoCount());
+        showDto.setAlbum(albumDto);
+        //查询相片
+        List<Photo> photos = photoRepository.findByAlbumId(albumId);
+        //填充相片数据
+        ShowPhotoDto photoDto = null;
+        List<ShowPhotoDto> showPhotoDtos = new ArrayList<>();
+        for (Photo photo:photos){
+            photoDto = new ShowPhotoDto();
+            photoDto.setDiscussionCount(photo.getDiscussionCount());
+            photoDto.setName(photo.getName());
+            photoDto.setPath(photo.getPath());
+            List<String> upUserIds = photo.getThumbsUpUserId();
+            if(upUserIds!=null){
+                photoDto.setThumbsUpCount((long) upUserIds.size());
+                photoDto.setThumbsUpAble(!upUserIds.contains(userId));
+            }else {
+                photoDto.setThumbsUpAble(true);
+            }
+            photoDto.setPhotoId(photo.getPhotoId());
+            showPhotoDtos.add(photoDto);
+        }
+        showDto.setPhotos(showPhotoDtos);
+        return showDto;
     }
 
     /**
@@ -143,19 +186,26 @@ public class BaseAlbumService implements IAlbumService{
            /* List<Album> albums= albumRepository.findAll(Example.of(selectAlbum),sort);*/
 
             //填充数据
-            long totalPhoto=0,totalThumbsUp=0;
+            long totalPhoto=0;
+            List<ShowHalfAlbumDto> dtos = new ArrayList<>();
+            ShowHalfAlbumDto albumDto =null;
             for (Album album:albums){
+                albumDto = new ShowHalfAlbumDto();
                 if(album.getPhotoCount()!=null){
                     totalPhoto+=album.getPhotoCount();
                 }
-                if(album.getThumbsUpCount()!=null){
-                    totalThumbsUp+=album.getThumbsUpCount();
-                }
+
+                albumDto.setAlbumId(album.getAlbumId());
+                albumDto.setAlbumName(album.getAlbumName());
+                albumDto.setCoverImg(album.getCoverImg());
+                albumDto.setLimit(album.getLimit());
+                albumDto.setPhotoCount(album.getPhotoCount());
+                dtos.add(albumDto);
             }
+
             ShowAllAlbumDto showAllAlbumDto = new ShowAllAlbumDto();
-            showAllAlbumDto.setAlbums(albums);
             showAllAlbumDto.setTotalPhoto(totalPhoto);
-            showAllAlbumDto.setTotalThumbsUp(totalThumbsUp);
+            showAllAlbumDto.setAlbums(dtos);
             return  showAllAlbumDto;
         }
         return null;

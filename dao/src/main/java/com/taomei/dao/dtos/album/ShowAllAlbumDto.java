@@ -9,8 +9,7 @@ import java.util.List;
  */
 public class ShowAllAlbumDto {
     private Long totalPhoto;
-    private Long totalThumbsUp;
-    private List<Album> albums;
+    private List<ShowHalfAlbumDto> albums;
 
     public Long getTotalPhoto() {
         return totalPhoto;
@@ -20,19 +19,11 @@ public class ShowAllAlbumDto {
         this.totalPhoto = totalPhoto;
     }
 
-    public Long getTotalThumbsUp() {
-        return totalThumbsUp;
-    }
-
-    public void setTotalThumbsUp(Long totalThumbsUp) {
-        this.totalThumbsUp = totalThumbsUp;
-    }
-
-    public List<Album> getAlbums() {
+    public List<ShowHalfAlbumDto> getAlbums() {
         return albums;
     }
 
-    public void setAlbums(List<Album> albums) {
+    public void setAlbums(List<ShowHalfAlbumDto> albums) {
         this.albums = albums;
     }
 }

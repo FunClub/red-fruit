@@ -1,6 +1,7 @@
 package com.taomei.web.album.controller;
 
 import com.taomei.dao.dtos.album.AddPhotoDto;
+import com.taomei.dao.dtos.album.SelectAlbumPhotoDto;
 import com.taomei.dao.dtos.base.IdsDto;
 import com.taomei.dao.entities.ResultView;
 import com.taomei.dao.entities.album.Album;
@@ -8,6 +9,7 @@ import com.taomei.service.album.iservice.IAlbumService;
 import com.taomei.service.share.ImageService;
 import com.taomei.web.share.anotaions.SetHalfId;
 import com.taomei.web.share.anotaions.SetId;
+import com.taomei.web.share.anotaions.SetUserId;
 import com.taomei.web.share.utils.ResultViewUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,6 +33,20 @@ public class AlbumController {
         this.imageService = imageService;
     }
 
+    /**
+     * 查询一个相册及其相片
+     * @param userId 用户id
+     * @param albumId 相册id
+     * @return 统一数据对象
+     */
+    @GetMapping("/{albumId}/photos")
+    @SetUserId
+    public ResultView selectPhotos(String userId,@PathVariable("albumId") String albumId){
+        SelectAlbumPhotoDto dto = new SelectAlbumPhotoDto();
+        dto.setAlbumId(albumId);
+        dto.setUserId(userId);
+        return ResultViewUtil.success(albumService.selectPhotos(dto));
+    }
     /**
      * 上传相片
      * @param folder 相片文件夹

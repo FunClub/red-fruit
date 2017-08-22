@@ -1,8 +1,6 @@
 package com.taomei.service.album.iservice;
 
-import com.taomei.dao.dtos.album.AddPhotoDto;
-import com.taomei.dao.dtos.album.SelectHalfAlbumDto;
-import com.taomei.dao.dtos.album.ShowAllAlbumDto;
+import com.taomei.dao.dtos.album.*;
 import com.taomei.dao.dtos.base.IdsDto;
 import com.taomei.dao.entities.album.Album;
 
@@ -11,6 +9,12 @@ import com.taomei.dao.entities.album.Album;
  */
 public interface IAlbumService {
 
+    /**
+     * 查询一个相册及其相片
+     * @param dto 查询条件dto
+     * @return 显示一个相册及其相片的dto
+     */
+    ShowAlbumPhotoDto selectPhotos(SelectAlbumPhotoDto dto);
     /**
      * 添加相片
      * @param dto 添加相片dto
