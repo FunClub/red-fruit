@@ -6,7 +6,7 @@ package com.taomei.dao.dtos.album;
 public class SelectAlbumPhotoDto {
     private String userId;
     private String albumId;
-
+    private String halfId;
     public String getUserId() {
         return userId;
     }
@@ -21,5 +21,13 @@ public class SelectAlbumPhotoDto {
 
     public void setAlbumId(String albumId) {
         this.albumId = albumId;
+    }
+
+    public String getHalfId() {
+        return halfId;
+    }
+
+    public void setHalfId(String halfId) {
+        this.halfId = halfId;
     }
 }

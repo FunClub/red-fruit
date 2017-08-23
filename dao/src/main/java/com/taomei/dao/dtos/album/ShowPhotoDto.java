@@ -10,6 +10,16 @@ public class ShowPhotoDto {
     private Long thumbsUpCount;
     private Long discussionCount;
     private Boolean thumbsUpAble;
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getPhotoId() {
         return photoId;
     }

@@ -2,6 +2,8 @@ package com.taomei.web.album.controller;
 
 import com.taomei.dao.dtos.album.AddPhotoDto;
 import com.taomei.dao.dtos.album.SelectAlbumPhotoDto;
+import com.taomei.dao.dtos.album.UpdateAlbumCoverDto;
+import com.taomei.dao.dtos.album.UpdatePhotoInfoDto;
 import com.taomei.dao.dtos.base.IdsDto;
 import com.taomei.dao.entities.ResultView;
 import com.taomei.dao.entities.album.Album;
@@ -34,17 +36,36 @@ public class AlbumController {
     }
 
     /**
+     * 修改相册封面
+     * @param dto 修改相册封面 dto
+     * @return 统一数据对象
+     */
+    @PutMapping("/cover")
+    public ResultView updateAlbumCover(@RequestBody UpdateAlbumCoverDto dto){
+        return ResultViewUtil.success(albumService.updateAlbumCover(dto));
+    }
+    /**
+     * 修改相片信息
+     * @param dto 修改信息dto
+     * @return 统一数据对象
+     */
+    @PutMapping("/photo-info")
+    public ResultView updatePhotoInfo(@RequestBody UpdatePhotoInfoDto dto){
+        return ResultViewUtil.success(albumService.updatePhotoInfo(dto));
+    }
+    /**
      * 查询一个相册及其相片
      * @param userId 用户id
      * @param albumId 相册id
      * @return 统一数据对象
      */
     @GetMapping("/{albumId}/photos")
-    @SetUserId
-    public ResultView selectPhotos(String userId,@PathVariable("albumId") String albumId){
+    @SetId
+    public ResultView selectPhotos(String userId,String halfId,@PathVariable("albumId") String albumId){
         SelectAlbumPhotoDto dto = new SelectAlbumPhotoDto();
         dto.setAlbumId(albumId);
         dto.setUserId(userId);
+        dto.setHalfId(halfId);
         return ResultViewUtil.success(albumService.selectPhotos(dto));
     }
     /**
@@ -65,7 +86,7 @@ public class AlbumController {
      * @return
      */
     @PostMapping("/photo")
-    public ResultView addPhoto(@RequestBody AddPhotoDto dto){
+    public ResultView addPhoto(@RequestBody AddPhotoDto dto) throws Exception {
         return ResultViewUtil.success(albumService.insertPhotos(dto));
     }
     /**

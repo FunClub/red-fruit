@@ -9,5 +9,6 @@ public interface PhotoRepository extends MongoRepository<Photo,String> {
      * @param albumId 相册id
      * @return
      */
-    public List<Photo> findByAlbumId(String albumId);
+    public List<Photo> findByAlbumIdOrderByUploadDateDesc(String albumId);
+
 }

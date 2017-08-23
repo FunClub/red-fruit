@@ -20,6 +20,24 @@ public class Photo {
     private Integer blurS;
     private List<String> thumbsUpUserId;
     private Long discussionCount;
+    private String uploadDate;
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getUploadDate() {
+        return uploadDate;
+    }
+
+    public void setUploadDate(String uploadDate) {
+        this.uploadDate = uploadDate;
+    }
 
     public Long getDiscussionCount() {
         return discussionCount;
