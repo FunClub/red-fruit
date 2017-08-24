@@ -1,9 +1,6 @@
 package com.taomei.web.album.controller;
 
-import com.taomei.dao.dtos.album.AddPhotoDto;
-import com.taomei.dao.dtos.album.SelectAlbumPhotoDto;
-import com.taomei.dao.dtos.album.UpdateAlbumCoverDto;
-import com.taomei.dao.dtos.album.UpdatePhotoInfoDto;
+import com.taomei.dao.dtos.album.*;
 import com.taomei.dao.dtos.base.IdsDto;
 import com.taomei.dao.entities.ResultView;
 import com.taomei.dao.entities.album.Album;
@@ -35,6 +32,15 @@ public class AlbumController {
         this.imageService = imageService;
     }
 
+    /**
+     * 移动相片到其他相册
+     * @param dto MoveAlbumPhotoDto
+     * @return 统一数据对象
+     */
+    @PutMapping("/photo/albumId")
+    public ResultView moveAlbumPhoto(@RequestBody MoveAlbumPhotoDto dto){
+        return ResultViewUtil.success(albumService.moveAlbumPhoto(dto));
+    }
     /**
      * 修改相册封面
      * @param dto 修改相册封面 dto

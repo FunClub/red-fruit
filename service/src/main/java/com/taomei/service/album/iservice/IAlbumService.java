@@ -12,6 +12,12 @@ import java.util.List;
  */
 public interface IAlbumService {
     /**
+     * 移动相片到其他相册
+     * @param dto MoveAlbumPhotoDto
+     * @return 成功与否
+     */
+    boolean moveAlbumPhoto(MoveAlbumPhotoDto dto);
+    /**
      * 更新相册封面
      * @param dto 更新相册封面dto
      * @return 成功与否

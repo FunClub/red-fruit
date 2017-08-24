@@ -43,6 +43,25 @@ public class BaseAlbumService implements IAlbumService {
     }
 
     /**
+     * 移动相片到其他相册
+     * @param dto MoveAlbumPhotoDto
+     * @return 成功与否
+     */
+    @Override
+    public boolean moveAlbumPhoto(MoveAlbumPhotoDto dto) {
+        List<String> photoIds = dto.getPhotoIds();
+        String movedAlbumId = dto.getMovedAlbumId();
+        String targetAlbumId = dto.getTarGetAlbumId();
+        Query query = Query.query(where("photoId").in(photoIds));
+        Update update =Update.update("albumId",targetAlbumId);
+        int count =mongoOperations.updateFirst(query,update,Photo.class,"photo").getN();
+        //更新相册数量
+        boolean updateMovedAlbumPhotoCount=updatePhotoCount(movedAlbumId,-(photoIds.size()));
+        boolean updateTargetAlbumPhotoCount=updatePhotoCount(targetAlbumId,(photoIds.size()));
+        return count==photoIds.size()&&updateTargetAlbumPhotoCount&&updateMovedAlbumPhotoCount;
+    }
+
+    /**
      * 更新相册封面
      * @param dto 更新相册封面dto
      * @return 成功与否
