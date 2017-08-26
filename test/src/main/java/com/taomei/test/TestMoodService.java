@@ -5,6 +5,7 @@ import com.taomei.dao.entities.Mood;
 import com.taomei.dao.entities.discussion.ParentDiscussion;
 import com.taomei.dao.entities.discussion.SubDiscussion;
 import com.taomei.dao.repository.MoodRepository;
+import com.taomei.dao.repository.PhotoRepository;
 import com.taomei.service.share.ImageService;
 import org.bson.Document;
 import org.junit.Test;
@@ -27,12 +28,21 @@ import static org.assertj.core.api.Assertions.*;
 public class TestMoodService {
     @Autowired
     private MoodRepository moodRepository;
+
+    @Autowired
+    PhotoRepository photoRepository;
     @Autowired
     ImageService imageService;
-
+    @Autowired
+    MongoOperations mongoOperations;
 
     @Test
     public void name() throws Exception {
-        this.imageService.deleteImg("profile/defaultMeImg.png");
+            Query query =Query.query(where("_class").is("com.taomei.dao.entities.album.Photo"));
+            Update update =Update.update("userId","201321");
+            for(int i=0;i<80;i++){
+                mongoOperations.updateFirst(query,update,"photo");
+            }
+
     }
 }

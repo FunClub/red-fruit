@@ -10,6 +10,15 @@ import java.util.List;
 public class AddPhotoDto {
     private List<Photo> photos;
     private String albumId;
+    private String userId;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public List<Photo> getPhotos() {
         return photos;

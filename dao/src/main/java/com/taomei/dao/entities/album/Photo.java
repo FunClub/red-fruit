@@ -10,6 +10,7 @@ public class Photo {
     @Id
     private String photoId;
     private String albumId;
+    private String userId;
     private String path;
     private String name;
     private String waterMark;
@@ -22,6 +23,14 @@ public class Photo {
     private Long discussionCount;
     private String uploadDate;
     private String description;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getDescription() {
         return description;

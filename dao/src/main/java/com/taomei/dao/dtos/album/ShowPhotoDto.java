@@ -5,12 +5,21 @@ package com.taomei.dao.dtos.album;
  */
 public class ShowPhotoDto {
     private String photoId;
+    private String userId;
     private String name;
     private String path;
     private Long thumbsUpCount;
     private Long discussionCount;
     private Boolean thumbsUpAble;
     private String description;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getDescription() {
         return description;

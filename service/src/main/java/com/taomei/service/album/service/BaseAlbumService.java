@@ -144,6 +144,7 @@ public class BaseAlbumService implements IAlbumService {
         photoDto.setName(photo.getName());
         photoDto.setPath(photo.getPath());
         photoDto.setDescription(photo.getDescription());
+        photoDto.setUserId(photo.getUserId());
         List<String> upUserIds = photo.getThumbsUpUserId();
         if (upUserIds != null) {
             photoDto.setThumbsUpCount((long) upUserIds.size());
@@ -164,11 +165,13 @@ public class BaseAlbumService implements IAlbumService {
     public  List<ShowPhotoDto> insertPhotos(AddPhotoDto dto) throws Exception {
         //插入相片
         String albumId = dto.getAlbumId();
+        String userId = dto.getUserId();
         List<Photo> photos = dto.getPhotos();
         Photo photo=null;
         for(int i=photos.size()-1;i>=0;i--){
             photo= photos.get(i);
             photo.setUploadDate(TimeUtil.getSimpleTime());
+            photo.setUserId(userId);
         }
         photos = photoRepository.insert(photos);
         //更新相册更新时间

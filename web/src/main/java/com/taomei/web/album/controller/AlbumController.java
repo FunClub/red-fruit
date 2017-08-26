@@ -92,7 +92,9 @@ public class AlbumController {
      * @return
      */
     @PostMapping("/photo")
-    public ResultView addPhoto(@RequestBody AddPhotoDto dto) throws Exception {
+    @SetUserId
+    public ResultView addPhoto(String userId,@RequestBody AddPhotoDto dto) throws Exception {
+        dto.setUserId(userId);
         return ResultViewUtil.success(albumService.insertPhotos(dto));
     }
     /**
