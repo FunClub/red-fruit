@@ -143,8 +143,7 @@ public class BaseDiscussionService implements IDiscussionService {
             DiscussionNoticeArtFlag flag = new DiscussionNoticeArtFlag();
             flag.setNoticeUserId(dto.getNoticeArt().getNoticeArtUserId());
             flag.setNoticeArtId(noticeArt.getNoticeArtId());
-            update.addToSet("noticeArtFlags", flag)
-                    .set("currentConten",discussion.getContent());
+            update.addToSet("noticeArtFlags", flag);
             mongoOperations.updateFirst(query, update, ParentDiscussion.class, "discussion");
             return DiscussionUtil.generateParentDiscussionDto(parentDiscussion, userMapper, discussion.getUserId());
         }

@@ -2,23 +2,32 @@ package com.taomei.service.album.service;
 
 import com.taomei.dao.dtos.album.*;
 import com.taomei.dao.dtos.base.IdsDto;
+import com.taomei.dao.dtos.base.UserNPInfoDto;
+import com.taomei.dao.entities.NoticeArt;
 import com.taomei.dao.entities.Settings;
 import com.taomei.dao.entities.album.Album;
 import com.taomei.dao.entities.album.Photo;
+import com.taomei.dao.entities.discussion.ParentDiscussion;
+import com.taomei.dao.mapper.UserMapper;
 import com.taomei.dao.repository.AlbumRepository;
+import com.taomei.dao.repository.DiscussionRepository;
 import com.taomei.dao.repository.PhotoRepository;
 import com.taomei.dao.repository.SettingsRepository;
 import com.taomei.service.album.iservice.IAlbumService;
+import com.taomei.service.share.anotaions.InsertArtThumbsUpNoticeArt;
 import com.taomei.service.share.enums.AlbumSortType;
 import com.taomei.service.share.enums.AlbumViewType;
 import com.taomei.service.share.utils.TimeUtil;
+import org.bouncycastle.util.encoders.UrlBase64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,13 +42,31 @@ public class BaseAlbumService implements IAlbumService {
     private final SettingsRepository settingsRepository;
     private final MongoOperations mongoOperations;
     private final PhotoRepository photoRepository;
-
+    private final UserMapper userMapper;
     @Autowired
-    public BaseAlbumService(AlbumRepository albumRepository, SettingsRepository settingsRepository, MongoOperations mongoOperations, PhotoRepository photoRepository) {
+    DiscussionRepository discussionRepository;
+    @Autowired
+    public BaseAlbumService(AlbumRepository albumRepository, SettingsRepository settingsRepository, MongoOperations mongoOperations, PhotoRepository photoRepository, UserMapper userMapper) {
         this.albumRepository = albumRepository;
         this.settingsRepository = settingsRepository;
         this.mongoOperations = mongoOperations;
         this.photoRepository = photoRepository;
+        this.userMapper = userMapper;
+    }
+
+    /**
+     * 点赞
+     * @param noticeArt 点赞dto
+     * @return
+     */
+    @Override
+    @InsertArtThumbsUpNoticeArt
+    public boolean thumbsUp(NoticeArt noticeArt) {
+        Query query =Query.query(where("photoId").is(noticeArt.getArtId()));
+        Update update = new Update();
+        update.addToSet("thumbsUpUserIds",noticeArt.getGenerateUserId());
+        int count= mongoOperations.updateFirst(query,update,Photo.class,"photo").getN();
+        return count>0;
     }
 
     /**
@@ -125,9 +152,20 @@ public class BaseAlbumService implements IAlbumService {
         List<Photo> photos = photoRepository.findByAlbumIdOrderByUploadDateDesc(albumId);
         //填充相片数据
         List<ShowPhotoDto> showPhotoDtos = new ArrayList<>();
+        ShowPhotoDto showPhotoDto=null;
+        Long thumbsUpCount=0L,discussionCount=0L;
         for (Photo photo : photos) {
-            showPhotoDtos.add(generateShowPhotoDto(photo,userId));
+            showPhotoDto = generateShowPhotoDto(photo,userId);
+            showPhotoDtos.add(showPhotoDto);
+            if(showPhotoDto.getThumbsUpCount()!=null){
+                thumbsUpCount+=showPhotoDto.getThumbsUpCount();
+            }
+            if(showPhotoDto.getDiscussionCount()!=null){
+                discussionCount+=showPhotoDto.getDiscussionCount();
+            }
         }
+        currentAlbum.setThumbsUpCount(thumbsUpCount);
+        currentAlbum.setDiscussionCount(discussionCount);
         showDto.setPhotos(showPhotoDtos);
         return showDto;
     }
@@ -145,7 +183,23 @@ public class BaseAlbumService implements IAlbumService {
         photoDto.setPath(photo.getPath());
         photoDto.setDescription(photo.getDescription());
         photoDto.setUserId(photo.getUserId());
-        List<String> upUserIds = photo.getThumbsUpUserId();
+        List<String> upUserIds = photo.getThumbsUpUserIds();
+        UserNPInfoDto dto = userMapper.selectUserNPInfo(photo.getUserId());
+        photoDto.setNickname(dto.getNickname());
+        photoDto.setProfile(dto.getProfileImg());
+        photoDto.setUploadDate(photo.getUploadDate());
+        photoDto.setDescription(photo.getDescription());
+        photoDto.setWaterMark(photo.getWaterMark());
+        photoDto.setBlurR(photo.getBlurR());
+        photoDto.setBlurS(photo.getBlurS());
+        photoDto.setBright(photo.getBright());
+        photoDto.setContrast(photo.getContrast());
+        photoDto.setSharpen(photo.getSharpen());
+        photoDto.setZoomSize(photo.getZoomSize());
+        ParentDiscussion parentDiscussion = new ParentDiscussion();
+        parentDiscussion.setArtId(photo.getPhotoId());
+        Long discussionCount = discussionRepository.count(Example.of(parentDiscussion));
+        photoDto.setDiscussionCount(discussionCount);
         if (upUserIds != null) {
             photoDto.setThumbsUpCount((long) upUserIds.size());
             photoDto.setThumbsUpAble(!upUserIds.contains(userId));
@@ -172,6 +226,22 @@ public class BaseAlbumService implements IAlbumService {
             photo= photos.get(i);
             photo.setUploadDate(TimeUtil.getSimpleTime());
             photo.setUserId(userId);
+            /*效果默认值不保存*/
+            if(photo.getBlurR()==0){
+                photo.setBlurR(null);
+            }
+            if(photo.getBlurS()==0){
+                photo.setBlurS(null);
+            }
+            if(photo.getContrast()==0){
+                photo.setContrast(null);
+            }
+            if(photo.getSharpen()==50){
+                photo.setSharpen(null);
+            }
+            if(photo.getBright()==0){
+                photo.setBright(null);
+            }
         }
         photos = photoRepository.insert(photos);
         //更新相册更新时间
@@ -298,10 +368,10 @@ public class BaseAlbumService implements IAlbumService {
         return null;
     }
 
-   /* public static void main(String[] args) throws UnsupportedEncodingException {
-        String data="static/water-logo.png?x-oss-process=image/resize,p_40";
+    public static void main(String[] args) throws UnsupportedEncodingException {
+        String data="static/water-logo.png?x-oss-process=image/resize,P_3";
         String txt = "红果情侣";
         byte[] b= UrlBase64.encode(data.getBytes("UTF-8"));
         System.out.println(new String(b,"UTF-8"));;
-    }*/
+    }
 }

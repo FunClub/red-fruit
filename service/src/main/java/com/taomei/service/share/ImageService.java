@@ -70,7 +70,7 @@ public class ImageService {
             int height = bi.getHeight();
 
             //计算水印字体大小
-            double orFontSize=20;//图片大小为300X400
+            double orFontSize=15;//图片大小为300X400
 
             //如过图片过小就设置不缩放,水印字体大小为12否则就计算。
             if(height>=400&&width>=300 ||height>=300&&width>400){

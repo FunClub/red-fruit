@@ -19,10 +19,19 @@ public class Photo {
     private Integer sharpen;
     private Integer blurR;
     private Integer blurS;
-    private List<String> thumbsUpUserId;
+    private Integer zoomSize;
+    private List<String> thumbsUpUserIds;
     private Long discussionCount;
     private String uploadDate;
     private String description;
+
+    public Integer getZoomSize() {
+        return zoomSize;
+    }
+
+    public void setZoomSize(Integer zoomSize) {
+        this.zoomSize = zoomSize;
+    }
 
     public String getUserId() {
         return userId;
@@ -56,12 +65,12 @@ public class Photo {
         this.discussionCount = discussionCount;
     }
 
-    public List<String> getThumbsUpUserId() {
-        return thumbsUpUserId;
+    public List<String> getThumbsUpUserIds() {
+        return thumbsUpUserIds;
     }
 
-    public void setThumbsUpUserId(List<String> thumbsUpUserId) {
-        this.thumbsUpUserId = thumbsUpUserId;
+    public void setThumbsUpUserIds(List<String> thumbsUpUserIds) {
+        this.thumbsUpUserIds = thumbsUpUserIds;
     }
 
     public String getAlbumId() {

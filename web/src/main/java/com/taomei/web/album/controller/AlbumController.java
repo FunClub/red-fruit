@@ -2,6 +2,7 @@ package com.taomei.web.album.controller;
 
 import com.taomei.dao.dtos.album.*;
 import com.taomei.dao.dtos.base.IdsDto;
+import com.taomei.dao.entities.NoticeArt;
 import com.taomei.dao.entities.ResultView;
 import com.taomei.dao.entities.album.Album;
 import com.taomei.service.album.iservice.IAlbumService;
@@ -31,7 +32,17 @@ public class AlbumController {
         this.albumService = albumService;
         this.imageService = imageService;
     }
-
+    /**
+     * 点赞
+     * @param noticeArt 通知动态文档
+     * @return 统一数据对象
+     */
+    @PutMapping("/photo/thumbsUpUserIds")
+    @SetUserId
+    public  ResultView updateThumbsUpUserIds(String userId,@RequestBody NoticeArt noticeArt){
+        noticeArt.setGenerateUserId(userId);
+        return ResultViewUtil.success(albumService.thumbsUp(noticeArt));
+    }
     /**
      * 移动相片到其他相册
      * @param dto MoveAlbumPhotoDto

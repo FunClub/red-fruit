@@ -5,20 +5,38 @@ import com.taomei.dao.entities.album.Album;
 /**
  * 显示单个相册的dto
  */
-public class ShowHalfAlbumDto{
-   private String albumId;
-   private String halfId;
-   private String coverImg;
-   private String albumName;
+public class ShowHalfAlbumDto {
+    private String albumId;
+    private String halfId;
+    private String coverImg;
+    private String albumName;
     /**
      * 分类
      */
-   private String sort;
+    private String sort;
     /**
      * 权限
      */
     private Integer limit;
-   private Long photoCount;
+    private Long photoCount;
+    private Long thumbsUpCount;
+    private Long discussionCount;
+
+    public Long getThumbsUpCount() {
+        return thumbsUpCount;
+    }
+
+    public void setThumbsUpCount(Long thumbsUpCount) {
+        this.thumbsUpCount = thumbsUpCount;
+    }
+
+    public Long getDiscussionCount() {
+        return discussionCount;
+    }
+
+    public void setDiscussionCount(Long discussionCount) {
+        this.discussionCount = discussionCount;
+    }
 
     public String getAlbumId() {
         return albumId;

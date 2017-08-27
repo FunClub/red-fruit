@@ -46,6 +46,7 @@ public class NoticeEndPoint {
     public void message(Session session, NoticeMessage noticeMessage) {
         String recevieUserId = noticeMessage.getReceivedUserId();
         Session receiveUserSession = noticeSessionMap.get(recevieUserId);
+        if(receiveUserSession==null)return;
         try {
             receiveUserSession.getBasicRemote().sendObject(noticeMessage);
         } catch (Exception e) {

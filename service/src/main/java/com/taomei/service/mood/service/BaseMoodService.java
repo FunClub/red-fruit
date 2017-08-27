@@ -78,6 +78,6 @@ public class BaseMoodService implements IMoodService {
         Update update = new Update();
         update.addToSet("thumbsUpUserIds",noticeArt.getGenerateUserId());
         int count= mongoOperations.updateFirst(query,update,Mood.class,"mood").getN();
-        return true;
+        return count>0;
     }
 }
