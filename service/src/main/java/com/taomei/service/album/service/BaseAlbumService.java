@@ -19,7 +19,6 @@ import com.taomei.service.share.enums.AlbumSortType;
 import com.taomei.service.share.enums.AlbumViewType;
 import com.taomei.service.share.utils.TimeUtil;
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.ibatis.jdbc.Null;
 import org.bouncycastle.util.encoders.UrlBase64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -30,7 +29,6 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -189,7 +187,7 @@ public class BaseAlbumService implements IAlbumService {
         List<Photo> photos = photoRepository.findByAlbumIdOrderByUploadDateDesc(albumId);
         //填充相片数据
         List<ShowPhotoDto> showPhotoDtos = new ArrayList<>();
-        ShowPhotoDto showPhotoDto=null;
+        ShowPhotoDto showPhotoDto;
         Long thumbsUpCount=0L,discussionCount=0L;
         for (Photo photo : photos) {
             showPhotoDto = generateShowPhotoDto(photo,userId);
