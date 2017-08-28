@@ -22,6 +22,25 @@ public class ShowPhotoDto {
     private Integer blurR;
     private Integer blurS;
     private Integer zoomSize;
+    private Integer fontSize;
+    private Integer quality;
+
+    public Integer getQuality() {
+        return quality;
+    }
+
+    public void setQuality(Integer quality) {
+        this.quality = quality;
+    }
+
+    public Integer getFontSize() {
+        return fontSize;
+    }
+
+    public void setFontSize(Integer fontSize) {
+        this.fontSize = fontSize;
+    }
+
     public String getNickname() {
         return nickname;
     }

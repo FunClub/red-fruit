@@ -20,10 +20,28 @@ public class Photo {
     private Integer blurR;
     private Integer blurS;
     private Integer zoomSize;
+    private Integer fontSize;
+    private Integer quality;
     private List<String> thumbsUpUserIds;
     private Long discussionCount;
     private String uploadDate;
     private String description;
+
+    public Integer getFontSize() {
+        return fontSize;
+    }
+
+    public Integer getQuality() {
+        return quality;
+    }
+
+    public void setQuality(Integer quality) {
+        this.quality = quality;
+    }
+
+    public void setFontSize(Integer fontSize) {
+        this.fontSize = fontSize;
+    }
 
     public Integer getZoomSize() {
         return zoomSize;

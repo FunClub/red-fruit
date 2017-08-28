@@ -4,6 +4,7 @@ import com.taomei.dao.dtos.album.*;
 import com.taomei.dao.dtos.base.IdsDto;
 import com.taomei.dao.entities.NoticeArt;
 import com.taomei.dao.entities.album.Album;
+import com.taomei.dao.entities.album.Photo;
 
 import java.util.List;
 
@@ -11,6 +12,18 @@ import java.util.List;
  * 相册接口服务
  */
 public interface IAlbumService {
+    /**
+     * 删除相片
+     * @param photos 删除的相片
+     * @return 成功与否
+     */
+    boolean deletePhotos(List<Photo> photos);
+    /**
+     * 更新水印
+     * @param photos 相片列表
+     * @return
+     */
+    boolean updateWaterMark(List<Photo> photos);
     /**
      * 点赞
      * @param noticeArt 点赞dto

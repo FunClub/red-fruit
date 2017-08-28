@@ -18,6 +18,8 @@ import com.taomei.service.share.anotaions.InsertArtThumbsUpNoticeArt;
 import com.taomei.service.share.enums.AlbumSortType;
 import com.taomei.service.share.enums.AlbumViewType;
 import com.taomei.service.share.utils.TimeUtil;
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.ibatis.jdbc.Null;
 import org.bouncycastle.util.encoders.UrlBase64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -28,6 +30,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,15 +46,49 @@ public class BaseAlbumService implements IAlbumService {
     private final MongoOperations mongoOperations;
     private final PhotoRepository photoRepository;
     private final UserMapper userMapper;
+    private final DiscussionRepository discussionRepository;
     @Autowired
-    DiscussionRepository discussionRepository;
-    @Autowired
-    public BaseAlbumService(AlbumRepository albumRepository, SettingsRepository settingsRepository, MongoOperations mongoOperations, PhotoRepository photoRepository, UserMapper userMapper) {
+    public BaseAlbumService(AlbumRepository albumRepository, SettingsRepository settingsRepository, MongoOperations mongoOperations, PhotoRepository photoRepository, UserMapper userMapper, DiscussionRepository discussionRepository) {
         this.albumRepository = albumRepository;
         this.settingsRepository = settingsRepository;
         this.mongoOperations = mongoOperations;
         this.photoRepository = photoRepository;
         this.userMapper = userMapper;
+        this.discussionRepository = discussionRepository;
+    }
+
+    @Override
+    public boolean deletePhotos(List<Photo> photos) {
+        /*删除相片*/
+        photoRepository.delete(photos);
+        /*删除相片评论*/
+        Query query=null;
+        for(Photo photo:photos){
+            query=Query.query(where("artId").is(photo.getPhotoId()));
+            mongoOperations.remove(query,"discussion");
+        }
+        return true;
+    }
+
+    /**
+     * 更新水印
+     * @param photos 相片列表
+     * @return
+     */
+    @Override
+    public boolean updateWaterMark(List<Photo> photos) {
+        int count=0;
+        for (Photo photo :photos){
+            Query query = Query.query(where("photoId").is(photo.getPhotoId()));
+            Update update = Update.update("waterMark",photo.getWaterMark())
+                    .set("bright",photo.getBright())
+                    .set("contrast",photo.getContrast())
+                    .set("sharpen",photo.getSharpen())
+                    .set("blurR",photo.getBlurR())
+                    .set("blurS",photo.getBlurS());
+            count+=mongoOperations.upsert(query,update,Photo.class,"photo").getN();
+        }
+        return count==photos.size();
     }
 
     /**
@@ -178,26 +215,20 @@ public class BaseAlbumService implements IAlbumService {
      */
     private ShowPhotoDto generateShowPhotoDto(Photo photo,String userId){
         ShowPhotoDto photoDto = new ShowPhotoDto();
-        photoDto.setDiscussionCount(photo.getDiscussionCount());
-        photoDto.setName(photo.getName());
-        photoDto.setPath(photo.getPath());
-        photoDto.setDescription(photo.getDescription());
-        photoDto.setUserId(photo.getUserId());
+        try {
+            BeanUtils.copyProperties(photoDto,photo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         List<String> upUserIds = photo.getThumbsUpUserIds();
         UserNPInfoDto dto = userMapper.selectUserNPInfo(photo.getUserId());
         photoDto.setNickname(dto.getNickname());
         photoDto.setProfile(dto.getProfileImg());
-        photoDto.setUploadDate(photo.getUploadDate());
-        photoDto.setDescription(photo.getDescription());
-        photoDto.setWaterMark(photo.getWaterMark());
-        photoDto.setBlurR(photo.getBlurR());
-        photoDto.setBlurS(photo.getBlurS());
-        photoDto.setBright(photo.getBright());
-        photoDto.setContrast(photo.getContrast());
-        photoDto.setSharpen(photo.getSharpen());
-        photoDto.setZoomSize(photo.getZoomSize());
+
         ParentDiscussion parentDiscussion = new ParentDiscussion();
         parentDiscussion.setArtId(photo.getPhotoId());
+
         Long discussionCount = discussionRepository.count(Example.of(parentDiscussion));
         photoDto.setDiscussionCount(discussionCount);
         if (upUserIds != null) {

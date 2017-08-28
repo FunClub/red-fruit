@@ -5,6 +5,7 @@ import com.taomei.dao.dtos.base.IdsDto;
 import com.taomei.dao.entities.NoticeArt;
 import com.taomei.dao.entities.ResultView;
 import com.taomei.dao.entities.album.Album;
+import com.taomei.dao.entities.album.Photo;
 import com.taomei.service.album.iservice.IAlbumService;
 import com.taomei.service.share.ImageService;
 import com.taomei.web.share.anotaions.SetHalfId;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,6 +33,33 @@ public class AlbumController {
     public AlbumController(@Qualifier("baseAlbumService") IAlbumService albumService, ImageService imageService) {
         this.albumService = albumService;
         this.imageService = imageService;
+    }
+
+    /**
+     * 删除相片
+     * @param photos 删除的相片
+     * @return 统一数据对象
+     * @throws Exception
+     */
+    @PatchMapping("/photos")
+    public ResultView deletePhotos(@RequestBody List<Photo> photos) throws Exception {
+        List<String> paths = new ArrayList<>();
+        for(Photo photo:photos){
+            paths.add(photo.getPath());
+        }
+        if(albumService.deletePhotos(photos)){
+            imageService.deleteImgs(paths);
+        }
+        return ResultViewUtil.success(true);
+    }
+    /**
+     * 更新水印
+     * @param photos 相片列表
+     * @return 统一数据对象
+     */
+    @PutMapping("/photo/water-mark")
+    public ResultView updateWaterMark(@RequestBody List<Photo> photos){
+        return ResultViewUtil.success(albumService.updateWaterMark(photos));
     }
     /**
      * 点赞
