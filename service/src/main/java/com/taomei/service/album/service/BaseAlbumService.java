@@ -55,6 +55,29 @@ public class BaseAlbumService implements IAlbumService {
         this.discussionRepository = discussionRepository;
     }
 
+    /**
+     * 查询编辑器使用的相片
+     * @param halfId 情侣id
+     * @return 编辑器相片dto集合
+     */
+    public List<EditorPhotoDto> selectEditorPhotoDto(String halfId){
+        List<Album> albums = albumRepository.findByHalfIdOrderByUpdateDateDesc(halfId);
+        List<EditorPhotoDto> editorPhotoDtos = new ArrayList<>();
+        EditorPhotoDto editorPhotoDto=null;
+        for(Album album:albums){
+            String albumId = album.getAlbumId();
+            List<Photo> photos = photoRepository.findByAlbumIdOrderByUploadDateDesc(albumId);
+            for(Photo photo:photos){
+                editorPhotoDto = new EditorPhotoDto();
+                editorPhotoDto.setUrl("http://red-fruit.oss-cn-shenzhen.aliyuncs.com/"+photo.getPath());
+                editorPhotoDto.setThumb("http://red-fruit.oss-cn-shenzhen.aliyuncs.com/"+photo.getPath()+"?x-oss-process=style/album-cover");
+                editorPhotoDto.setTag(album.getAlbumName());
+                editorPhotoDtos.add(editorPhotoDto);
+            }
+        }
+        return editorPhotoDtos;
+    }
+
     @Override
     public boolean deletePhotos(List<Photo> photos) {
         /*删除相片*/

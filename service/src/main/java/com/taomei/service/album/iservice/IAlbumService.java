@@ -13,6 +13,12 @@ import java.util.List;
  */
 public interface IAlbumService {
     /**
+     * 查询编辑器使用的相片
+     * @param halfId 情侣id
+     * @return 编辑器相片dto集合
+     */
+    List<EditorPhotoDto> selectEditorPhotoDto(String halfId);
+    /**
      * 删除相片
      * @param photos 删除的相片
      * @return 成功与否

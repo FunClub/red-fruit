@@ -36,6 +36,16 @@ public class AlbumController {
     }
 
     /**
+     * 查询编辑器使用的相片
+     * @param halfId 情侣id
+     * @return 编辑器相片dto集合
+     */
+    @GetMapping("/editor-photo")
+    @SetHalfId
+    public List<EditorPhotoDto> selectEditorPhotoDto(String halfId){
+        return albumService.selectEditorPhotoDto(halfId);
+    }
+    /**
      * 删除相片
      * @param photos 删除的相片
      * @return 统一数据对象
