@@ -69,8 +69,8 @@ public class BaseAlbumService implements IAlbumService {
             List<Photo> photos = photoRepository.findByAlbumIdOrderByUploadDateDesc(albumId);
             for(Photo photo:photos){
                 editorPhotoDto = new EditorPhotoDto();
-                editorPhotoDto.setUrl("http://red-fruit.oss-cn-shenzhen.aliyuncs.com/"+photo.getPath());
-                editorPhotoDto.setThumb("http://red-fruit.oss-cn-shenzhen.aliyuncs.com/"+photo.getPath()+"?x-oss-process=style/album-cover");
+                editorPhotoDto.setUrl("http://taomei1314.com/"+photo.getPath());
+                editorPhotoDto.setThumb("http://taomei1314.com/"+photo.getPath()+"?x-oss-process=style/album-cover");
                 editorPhotoDto.setTag(album.getAlbumName());
                 editorPhotoDtos.add(editorPhotoDto);
             }
@@ -78,8 +78,15 @@ public class BaseAlbumService implements IAlbumService {
         return editorPhotoDtos;
     }
 
+    /**
+     * 删除相片
+     * @param dto 删除的相片DTO
+     * @return 成功与否
+     */
     @Override
-    public boolean deletePhotos(List<Photo> photos) {
+    public boolean deletePhotos(DeletePhotoDto dto) {
+        List<Photo> photos = dto.getPhotos();
+        String albumId = dto.getAlbumId();
         /*删除相片*/
         photoRepository.delete(photos);
         /*删除相片评论*/
@@ -88,6 +95,8 @@ public class BaseAlbumService implements IAlbumService {
             query=Query.query(where("artId").is(photo.getPhotoId()));
             mongoOperations.remove(query,"discussion");
         }
+        //更新相册相片数量
+        updatePhotoCount(albumId,-photos.size());
         return true;
     }
 

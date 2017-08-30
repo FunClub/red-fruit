@@ -20,10 +20,10 @@ public interface IAlbumService {
     List<EditorPhotoDto> selectEditorPhotoDto(String halfId);
     /**
      * 删除相片
-     * @param photos 删除的相片
+     * @param dto 删除的相片DTO
      * @return 成功与否
      */
-    boolean deletePhotos(List<Photo> photos);
+    boolean deletePhotos(DeletePhotoDto dto);
     /**
      * 更新水印
      * @param photos 相片列表

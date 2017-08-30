@@ -35,7 +35,7 @@ public class MoodUtils {
             userNPInfoDto = userMapper.selectUserNPInfo(mood.getUserId());
             showMoodDto=  new ShowMoodDto();
             showMoodDto.setMood(mood);
-            showMoodDto.setOriginal(mood.isOriginal());
+            showMoodDto.setOriginal(mood.getOriginal());
             showMoodDto.setMoodId(mood.getMoodId());
             //设置心情的额外属性
             showMoodDto.setNickname(userNPInfoDto.getNickname());

@@ -1,11 +1,11 @@
 package com.taomei.dao.dtos.mood;
 
-import com.taomei.dao.dtos.base.PageRequest;
+import com.taomei.dao.dtos.base.PageRequestDto;
 
 /**
  * 查询心情的条件
  */
-public class SelectMoodConditionDto extends PageRequest{
+public class SelectMoodConditionDto extends PageRequestDto {
     /**
      * 是否是情侣间查询
      */

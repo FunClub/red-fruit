@@ -1,11 +1,11 @@
 package com.taomei.dao.dtos.noticeart;
 
-import com.taomei.dao.dtos.base.PageRequest;
+import com.taomei.dao.dtos.base.PageRequestDto;
 
 /**
  * 查询通知动态的dto
  */
-public class SelectNoticeArtConditionDto extends PageRequest {
+public class SelectNoticeArtConditionDto extends PageRequestDto {
     private String userId;
 
     public String getUserId() {

@@ -25,6 +25,7 @@ public class ShowPhotoDto {
     private Integer fontSize;
     private Integer quality;
 
+
     public Integer getQuality() {
         return quality;
     }

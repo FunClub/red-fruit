@@ -1,11 +1,11 @@
 package com.taomei.dao.dtos.discussion;
 
-import com.taomei.dao.dtos.base.PageRequest;
+import com.taomei.dao.dtos.base.PageRequestDto;
 
 /**
  * 查询评论DTO
  */
-public class SelectDiscussionConditionDto extends PageRequest{
+public class SelectDiscussionConditionDto extends PageRequestDto {
     /**
      * 动态id
      */

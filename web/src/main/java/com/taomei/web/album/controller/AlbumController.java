@@ -47,17 +47,18 @@ public class AlbumController {
     }
     /**
      * 删除相片
-     * @param photos 删除的相片
+     * @param dto 删除的相片DTO
      * @return 统一数据对象
      * @throws Exception
      */
     @PatchMapping("/photos")
-    public ResultView deletePhotos(@RequestBody List<Photo> photos) throws Exception {
+    public ResultView deletePhotos(@RequestBody DeletePhotoDto dto) throws Exception {
+        List<Photo> photos = dto.getPhotos();
         List<String> paths = new ArrayList<>();
         for(Photo photo:photos){
             paths.add(photo.getPath());
         }
-        if(albumService.deletePhotos(photos)){
+        if(albumService.deletePhotos(dto)){
             imageService.deleteImgs(paths);
         }
         return ResultViewUtil.success(true);

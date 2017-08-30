@@ -1,6 +1,6 @@
 package com.taomei.dao.dtos.base;
 
-public class PageRequest {
+public class PageRequestDto {
     private int pageSize;
     private int pageIndex;
     /**
