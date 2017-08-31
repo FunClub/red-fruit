@@ -15,6 +15,12 @@ import java.lang.reflect.InvocationTargetException;
  */
 public interface INoteService {
     /**
+     * 更新日志
+     * @param note 日志文档
+     * @return 成功与否
+     */
+    boolean updateNote(Note note);
+    /**
      * 查询一篇日志
      * @param dto 查询一篇日志的dto
      * @return 日志内容

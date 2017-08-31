@@ -25,6 +25,15 @@ public class NoteController {
     }
 
     /**
+     * 更新日志
+     * @param note 日志文档
+     * @return 统一数据对象
+     */
+    @PutMapping("/")
+    public ResultView updateNote(@RequestBody Note note){
+        return ResultViewUtil.success(noteService.updateNote(note));
+    }
+    /**
      * 查询一篇日志
      * @param userId 用户id
      * @param noteId 日志id

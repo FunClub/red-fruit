@@ -23,6 +23,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.InvocationTargetException;
@@ -46,6 +47,22 @@ public class BaseNoteService implements INoteService {
         this.userMapper = userMapper;
         this.discussionRepository = discussionRepository;
         this.mongoOperations = mongoOperations;
+    }
+
+    /**
+     * 修改日志
+     * @param note 日志文档
+     * @return 成功与否
+     */
+    @Override
+    public boolean updateNote(Note note) {
+        Query query =Query.query(where("noteId").is(note.getNoteId()));
+        Update update = Update.update("title",note.getTitle())
+                .set("content",note.getContent())
+                .set("limit",note.getLimit())
+                .set("type",note.getType());
+       int count= mongoOperations.upsert(query,update,Note.class,"note").getN();
+       return count>0;
     }
 
     /**
