@@ -4,7 +4,9 @@ import com.taomei.dao.dtos.base.PageRequestDto;
 import com.taomei.dao.dtos.base.ShowPagedArtDto;
 import com.taomei.dao.dtos.base.UserNPInfoDto;
 import com.taomei.dao.dtos.note.SelectCatalogNoteCondition;
+import com.taomei.dao.dtos.note.SelectNoteDto;
 import com.taomei.dao.dtos.note.ShowCatalogNoteDto;
+import com.taomei.dao.dtos.note.ShowNoteDto;
 import com.taomei.dao.entities.Note;
 import com.taomei.dao.entities.discussion.ParentDiscussion;
 import com.taomei.dao.mapper.UserMapper;
@@ -47,12 +49,32 @@ public class BaseNoteService implements INoteService {
     }
 
     /**
+     * 查询一篇日志
+     * @param dto 查询一篇日志的dto
+     * @return
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     */
+    @Override
+    public ShowNoteDto selectNote(SelectNoteDto dto) throws InvocationTargetException, IllegalAccessException {
+        String userId = dto.getUserId();
+        String noteId = dto.getNoteId();
+        ShowNoteDto showNoteDto = new ShowNoteDto();
+        Note note = noteRepository.findOne(noteId);
+        ShowCatalogNoteDto catalogNoteDto = generateCatalogNote(note,userId);
+        BeanUtils.copyProperties(showNoteDto,catalogNoteDto);
+        showNoteDto.setContent(note.getContent());
+        return showNoteDto;
+    }
+
+    /**查询日志目录
      * @param condition 分页查询条件
      * @return
      */
     @Override
     public ShowPagedArtDto<ShowCatalogNoteDto> selectCatalogNote(SelectCatalogNoteCondition condition) throws InvocationTargetException, IllegalAccessException {
         PageRequestDto pageRequestDto = condition.getPageRequestDto();
+        String userId = condition.getUserId();
         ShowPagedArtDto showPagedArtDto = new ShowPagedArtDto();
         List<ShowCatalogNoteDto> showCatalogNoteDtos = new ArrayList<>();
         Boolean byHalf = condition.getByHalf();
@@ -82,43 +104,55 @@ public class BaseNoteService implements INoteService {
         Page<Note> notePage=noteRepository.findAll(Example.of(note),pageRequest);
         showPagedArtDto.setTotalElements(notePage.getTotalElements());
         List<Note> notes = notePage.getContent();
-        ShowCatalogNoteDto showCatalogNoteDto;
+
 
         for (Note note1:notes){
-            //填充数据
-            showCatalogNoteDto = new ShowCatalogNoteDto();
-            BeanUtils.copyProperties(showCatalogNoteDto,note1);
-            if(note1.getThumbsUpUserIds()!=null){
-                showCatalogNoteDto.setThumbsUpCount((long) note1.getThumbsUpUserIds().size());
-            }else{
-                showCatalogNoteDto.setThumbsUpCount(0L);
-            }
-            UserNPInfoDto npInfoDto = userMapper.selectUserNPInfo(note1.getUserId());
-            showCatalogNoteDto.setNickname(npInfoDto.getNickname());
-            showCatalogNoteDto.setProfile(npInfoDto.getProfileImg());
-            long discussionCount=mongoOperations.count(Query.query(where("artId").is(note1.getNoteId())), ParentDiscussion.class);
-            showCatalogNoteDto.setDiscussionCount(discussionCount);
-            showCatalogNoteDtos.add(showCatalogNoteDto);
+            showCatalogNoteDtos.add(generateCatalogNote(note1,userId));
         }
         showPagedArtDto.setContent(showCatalogNoteDtos);
         return showPagedArtDto;
     }
 
     /**
+     * 生成目录日志DTO
+     * @param note 日志文档
+     * @param userId 用户id
+     * @return
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     */
+    private ShowCatalogNoteDto generateCatalogNote(Note note, String userId) throws InvocationTargetException, IllegalAccessException {
+        ShowCatalogNoteDto showCatalogNoteDto = new ShowCatalogNoteDto();
+        BeanUtils.copyProperties(showCatalogNoteDto,note);
+        //填充数据
+        if(note.getThumbsUpUserIds()!=null){
+            showCatalogNoteDto.setThumbsUpCount((long) note.getThumbsUpUserIds().size());
+            showCatalogNoteDto.setThumbsUpAble(!note.getThumbsUpUserIds().contains(userId));
+        }else{
+            showCatalogNoteDto.setThumbsUpCount(0L);
+            showCatalogNoteDto.setThumbsUpAble(true);
+        }
+        UserNPInfoDto npInfoDto = userMapper.selectUserNPInfo(note.getUserId());
+        showCatalogNoteDto.setNickname(npInfoDto.getNickname());
+        showCatalogNoteDto.setProfile(npInfoDto.getProfileImg());
+        long discussionCount=mongoOperations.count(Query.query(where("artId").is(note.getNoteId())), ParentDiscussion.class);
+        showCatalogNoteDto.setDiscussionCount(discussionCount);
+        return showCatalogNoteDto;
+    }
+    /**
      * 插入一条日志
      *
      * @param note 日志文档
-     * @return 显示单个目录日志的dto
+     * @return 日志id
      * @throws InvocationTargetException
      * @throws IllegalAccessException
      */
     @Override
-    public ShowCatalogNoteDto inertNote(Note note) throws InvocationTargetException, IllegalAccessException {
+    public String inertNote(Note note) throws InvocationTargetException, IllegalAccessException {
         note.setDate(TimeUtil.getSimpleTime());
         note = noteRepository.insert(note);
-        ShowCatalogNoteDto dto = new ShowCatalogNoteDto();
-        BeanUtils.copyProperties(dto, note);
-        return dto;
+
+        return note.getNoteId();
     }
 
    /*public ShowCatalogNoteDto generateShowCatalogNoteDto(Note note){

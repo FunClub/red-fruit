@@ -1,5 +1,6 @@
 package com.taomei.dao.dtos.mood;
 
+import com.taomei.dao.dtos.base.ArtDto;
 import com.taomei.dao.entities.Mood;
 
 import java.util.List;
@@ -7,18 +8,14 @@ import java.util.List;
 /**
  * 用于显示单个心情的dto
  */
-public class ShowMoodDto {
+public class ShowMoodDto extends ArtDto{
     private Mood mood;
     private String moodId;
-    private String userId;
     private String nickname;
     private String profileImg;
-    private int thumbsUpCount;
+
     private boolean original;
-    /**
-     * 能否点赞
-     */
-    private boolean thumbsUpAble;
+
     /**
      * 多久之前发的
      */
@@ -37,32 +34,6 @@ public class ShowMoodDto {
      * 简短时间
      */
     private String shortDate;
-
-    private long discussionCount;
-
-    public long getDiscussionCount() {
-        return discussionCount;
-    }
-
-    public void setDiscussionCount(long discussionCount) {
-        this.discussionCount = discussionCount;
-    }
-
-    public int getThumbsUpCount() {
-        return thumbsUpCount;
-    }
-
-    public void setThumbsUpCount(int thumbsUpCount) {
-        this.thumbsUpCount = thumbsUpCount;
-    }
-
-    public boolean isThumbsUpAble() {
-        return thumbsUpAble;
-    }
-
-    public void setThumbsUpAble(boolean thumbsUpAble) {
-        this.thumbsUpAble = thumbsUpAble;
-    }
 
     public String getMoodId() {
         return moodId;
@@ -128,9 +99,6 @@ public class ShowMoodDto {
         this.profileImg = profileImg;
     }
 
-    public String getUserId() {
-        return userId;
-    }
 
     public boolean isOriginal() {
         return original;
@@ -140,7 +108,4 @@ public class ShowMoodDto {
         this.original = original;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 }

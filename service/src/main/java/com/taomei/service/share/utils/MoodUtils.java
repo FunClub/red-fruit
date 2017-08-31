@@ -56,9 +56,9 @@ public class MoodUtils {
             List<String> thumbsUpUserIds=mood.getThumbsUpUserIds();
             if(thumbsUpUserIds==null){
                 showMoodDto.setThumbsUpAble(true);
-                showMoodDto.setThumbsUpCount(0);
+                showMoodDto.setThumbsUpCount((long) 0);
             }else{
-                showMoodDto.setThumbsUpCount(thumbsUpUserIds.size());
+                showMoodDto.setThumbsUpCount((long) thumbsUpUserIds.size());
                 showMoodDto.setThumbsUpAble(!thumbsUpUserIds.contains(userId));
             }
             //清空点赞userId数组,前台不需要

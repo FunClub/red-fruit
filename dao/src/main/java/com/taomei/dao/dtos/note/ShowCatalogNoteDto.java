@@ -1,19 +1,19 @@
 package com.taomei.dao.dtos.note;
 
+import com.taomei.dao.dtos.base.ArtDto;
+
 /**
  * 显示单个目录日志的dto
  */
-public class ShowCatalogNoteDto{
+public class ShowCatalogNoteDto extends ArtDto{
     private String noteId;
     private String nickname;
     private String date;
     private String title;
     private String type;
-    private Long discussionCount;
-    private Long thumbsUpCount;
+
     private Integer limit;
     private String profile;
-
     public String getProfile() {
         return profile;
     }
@@ -30,21 +30,6 @@ public class ShowCatalogNoteDto{
         this.limit = limit;
     }
 
-    public Long getDiscussionCount() {
-        return discussionCount;
-    }
-
-    public void setDiscussionCount(Long discussionCount) {
-        this.discussionCount = discussionCount;
-    }
-
-    public Long getThumbsUpCount() {
-        return thumbsUpCount;
-    }
-
-    public void setThumbsUpCount(Long thumbsUpCount) {
-        this.thumbsUpCount = thumbsUpCount;
-    }
 
     public String getNoteId() {
         return noteId;
