@@ -8,13 +8,11 @@ import java.util.List;
 /**
  * 用于显示单个心情的dto
  */
-public class ShowMoodDto extends ArtDto{
+public class ShowMoodDto{
     private Mood mood;
     private String moodId;
     private String nickname;
     private String profileImg;
-
-    private boolean original;
 
     /**
      * 多久之前发的
@@ -34,6 +32,34 @@ public class ShowMoodDto extends ArtDto{
      * 简短时间
      */
     private String shortDate;
+
+    private Long discussionCount;
+    private Long thumbsUpCount;
+    private Boolean thumbsUpAble;
+
+    public Long getDiscussionCount() {
+        return discussionCount;
+    }
+
+    public void setDiscussionCount(Long discussionCount) {
+        this.discussionCount = discussionCount;
+    }
+
+    public Long getThumbsUpCount() {
+        return thumbsUpCount;
+    }
+
+    public void setThumbsUpCount(Long thumbsUpCount) {
+        this.thumbsUpCount = thumbsUpCount;
+    }
+
+    public Boolean getThumbsUpAble() {
+        return thumbsUpAble;
+    }
+
+    public void setThumbsUpAble(Boolean thumbsUpAble) {
+        this.thumbsUpAble = thumbsUpAble;
+    }
 
     public String getMoodId() {
         return moodId;
@@ -99,13 +125,5 @@ public class ShowMoodDto extends ArtDto{
         this.profileImg = profileImg;
     }
 
-
-    public boolean isOriginal() {
-        return original;
-    }
-
-    public void setOriginal(boolean original) {
-        this.original = original;
-    }
 
 }
