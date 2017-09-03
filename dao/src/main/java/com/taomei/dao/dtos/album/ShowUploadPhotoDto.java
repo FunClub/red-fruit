@@ -1,6 +1,6 @@
 package com.taomei.dao.dtos.album;
 
-import java.util.List;
+
 
 /**
  * 上传相片时的相片数据

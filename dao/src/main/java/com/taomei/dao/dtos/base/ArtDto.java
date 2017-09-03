@@ -8,7 +8,7 @@ public class ArtDto {
     /**
      * 原创用户id
      */
-    private  String originalUserId;
+    private String originalUserId;
 
     /**
      * 原创动态id
