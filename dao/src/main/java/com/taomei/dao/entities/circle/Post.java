@@ -13,18 +13,15 @@ import java.util.List;
 public class Post{
     @Id
     private String postId;
-    private String circleId;
+    private String circleName;
     private String userId;
     private String title;
     private String content;
-    private Boolean isAnonymous;
+    private Boolean anonymous;
     private List<String> imgs;
     private String date;
     private List<String> visitUserIds;
-    /**
-     * 更新时间,评论回复等
-     */
-    private String updateDate;
+    private Long discussionCount;
     private List<String> thumbsUpUserIds;
 
     public String getPostId() {
@@ -35,12 +32,12 @@ public class Post{
         this.postId = postId;
     }
 
-    public String getCircleId() {
-        return circleId;
+    public String getCircleName() {
+        return circleName;
     }
 
-    public void setCircleId(String circleId) {
-        this.circleId = circleId;
+    public void setCircleName(String circleName) {
+        this.circleName = circleName;
     }
 
     public String getUserId() {
@@ -59,6 +56,14 @@ public class Post{
         this.title = title;
     }
 
+    public Long getDiscussionCount() {
+        return discussionCount;
+    }
+
+    public void setDiscussionCount(Long discussionCount) {
+        this.discussionCount = discussionCount;
+    }
+
     public String getContent() {
         return content;
     }
@@ -68,11 +73,11 @@ public class Post{
     }
 
     public Boolean getAnonymous() {
-        return isAnonymous;
+        return anonymous;
     }
 
     public void setAnonymous(Boolean anonymous) {
-        isAnonymous = anonymous;
+        this.anonymous = anonymous;
     }
 
     public List<String> getImgs() {
@@ -99,13 +104,6 @@ public class Post{
         this.visitUserIds = visitUserIds;
     }
 
-    public String getUpdateDate() {
-        return updateDate;
-    }
-
-    public void setUpdateDate(String updateDate) {
-        this.updateDate = updateDate;
-    }
 
     public List<String> getThumbsUpUserIds() {
         return thumbsUpUserIds;

@@ -5,10 +5,19 @@ package com.taomei.dao.dtos.base;
  */
 public class ArtInfoDto {
     private String nickname;
-    private String profileImg;
+    private String profile;
     private Long discussionCount;
     private Long thumbsUpCount;
     private Boolean thumbsUpAble;
+    private String howLongAgo;
+
+    public String getHowLongAgo() {
+        return howLongAgo;
+    }
+
+    public void setHowLongAgo(String howLongAgo) {
+        this.howLongAgo = howLongAgo;
+    }
 
     public String getNickname() {
         return nickname;
@@ -18,12 +27,12 @@ public class ArtInfoDto {
         this.nickname = nickname;
     }
 
-    public String getProfileImg() {
-        return profileImg;
+    public String getProfile() {
+        return profile;
     }
 
-    public void setProfileImg(String profileImg) {
-        this.profileImg = profileImg;
+    public void setProfile(String profile) {
+        this.profile = profile;
     }
 
     public Long getDiscussionCount() {

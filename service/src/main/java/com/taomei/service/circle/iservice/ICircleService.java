@@ -1,5 +1,8 @@
 package com.taomei.service.circle.iservice;
 
+import com.taomei.dao.dtos.base.ShowPagedArtDto;
+import com.taomei.dao.dtos.circle.SelectPostConditionDto;
+import com.taomei.dao.dtos.circle.ShowPostDto;
 import com.taomei.dao.entities.circle.Post;
 
 
@@ -11,7 +14,14 @@ public interface ICircleService {
     /**
      * 添加帖子
      * @param post 帖子文档
-     * @return 新帖子
+     * @return 单个帖子dto
      */
-    Post insertPost(Post post);
+    ShowPostDto insertPost(Post post);
+
+    /**
+     * 查询帖子
+     * @param dto dto
+     * @return 分页的帖子列表
+     */
+    ShowPagedArtDto<ShowPostDto> selectPosts(SelectPostConditionDto dto);
 }
