@@ -3,6 +3,7 @@ package com.taomei.service.circle.service;
 import com.taomei.dao.dtos.base.ArtInfoDto;
 import com.taomei.dao.dtos.base.ShowPagedArtDto;
 import com.taomei.dao.dtos.base.UserNPInfoDto;
+import com.taomei.dao.dtos.circle.SelectOnePostDto;
 import com.taomei.dao.dtos.circle.SelectPostConditionDto;
 import com.taomei.dao.dtos.circle.ShowPostDto;
 import com.taomei.dao.entities.circle.Post;
@@ -37,6 +38,20 @@ public class BaseCircleService implements ICircleService {
         this.postRepository = postRepository;
         this.userMapper = userMapper;
         this.discussionRepository = discussionRepository;
+    }
+
+    /**
+     * 查询一个帖子
+     *
+     * @param dto 查询一个帖子的dto
+     * @return 显示一个帖子dto
+     */
+    @Override
+    public ShowPostDto selectPost(SelectOnePostDto dto) {
+        String postId = dto.getPostId();
+        String userId = dto .getUserId();
+        Post post = postRepository.findOne(postId);
+        return generateShowPostDto(post,userId);
     }
 
     /**
