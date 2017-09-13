@@ -75,4 +75,9 @@ public class NoticeEndPoint {
             LOGGER.error(session.getId()+"发生错误"+throwable.getMessage());
         }
     }
+
+    public Map<String, Session> getNoticeSessionMap() {
+        return noticeSessionMap;
+    }
+
 }

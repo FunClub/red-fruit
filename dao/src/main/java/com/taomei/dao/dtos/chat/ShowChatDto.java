@@ -1,25 +1,15 @@
-package com.taomei.web.share.websocket.message;
+package com.taomei.dao.dtos.chat;
 
 /**
- * 通知消息
+ * 显示消息DTO
  */
-public class NoticeMessage {
+public class ShowChatDto {
     private String sendUserId;
     private String receivedUserId;
-    private String sendNickname;
-    private String sendProfileImg;
+    private String nickname;
+    private String profileImg;
     private String content;
     private String date;
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-
 
     public String getSendUserId() {
         return sendUserId;
@@ -37,22 +27,21 @@ public class NoticeMessage {
         this.receivedUserId = receivedUserId;
     }
 
-    public String getSendNickname() {
-        return sendNickname;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setSendNickname(String sendNickname) {
-        this.sendNickname = sendNickname;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
-    public String getSendProfileImg() {
-        return sendProfileImg;
+    public String getProfileImg() {
+        return profileImg;
     }
 
-    public void setSendProfileImg(String sendProfileImg) {
-        this.sendProfileImg = sendProfileImg;
+    public void setProfileImg(String profileImg) {
+        this.profileImg = profileImg;
     }
-
 
     public String getContent() {
         return content;
@@ -60,5 +49,13 @@ public class NoticeMessage {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }
