@@ -7,8 +7,20 @@ import com.taomei.dao.entities.Users;
  */
 public class HomeInfoDto {
     private String userId;
+    private String halfId;
+    private String halfUserId;
     private String nickname;
+    private String halfNickname;
+    private String halfProfileImg;
     private String profileImg;
+
+    public String getHalfUserId() {
+        return halfUserId;
+    }
+
+    public void setHalfUserId(String halfUserId) {
+        this.halfUserId = halfUserId;
+    }
 
     public String getUserId() {
         return userId;
@@ -32,5 +44,29 @@ public class HomeInfoDto {
 
     public void setProfileImg(String profileImg) {
         this.profileImg = profileImg;
+    }
+
+    public String getHalfId() {
+        return halfId;
+    }
+
+    public void setHalfId(String halfId) {
+        this.halfId = halfId;
+    }
+
+    public String getHalfNickname() {
+        return halfNickname;
+    }
+
+    public void setHalfNickname(String halfNickname) {
+        this.halfNickname = halfNickname;
+    }
+
+    public String getHalfProfileImg() {
+        return halfProfileImg;
+    }
+
+    public void setHalfProfileImg(String halfProfileImg) {
+        this.halfProfileImg = halfProfileImg;
     }
 }

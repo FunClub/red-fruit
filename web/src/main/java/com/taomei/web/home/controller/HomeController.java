@@ -55,6 +55,6 @@ public class HomeController {
         if(loginDto.getHalf()==null){//如果用户是称为情侣再进入主界面就需要设置half对象
             loginDto.setHalf(loginService.getHalf(loginDto.getUserId()));
         }
-        return ResultViewUtil.success(homeService.getHomeInfo(loginDto.getUserId()));
+        return ResultViewUtil.success(homeService.getHomeInfo(loginDto));
     }
 }

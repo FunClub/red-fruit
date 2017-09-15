@@ -2,6 +2,7 @@ package com.taomei.service.chat.iservice;
 
 import com.taomei.dao.dtos.base.IdsDto;
 import com.taomei.dao.dtos.chat.ShowChatDto;
+import com.taomei.dao.entities.chat.Chat;
 
 import java.util.List;
 
@@ -12,4 +13,12 @@ public interface IChatService {
      * @return
      */
     public List<ShowChatDto> selectChats(IdsDto dto);
+
+    /**
+     *
+     * 插入聊天记录
+     * @param chat
+     * @return
+     */
+    Chat insertChat(Chat chat);
 }

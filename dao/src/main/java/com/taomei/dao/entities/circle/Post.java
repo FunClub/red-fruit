@@ -23,6 +23,15 @@ public class Post{
     private List<String> visitUserIds;
     private Long discussionCount;
     private List<String> thumbsUpUserIds;
+    private Boolean original;
+
+    public Boolean getOriginal() {
+        return original;
+    }
+
+    public void setOriginal(Boolean original) {
+        this.original = original;
+    }
 
     public String getPostId() {
         return postId;

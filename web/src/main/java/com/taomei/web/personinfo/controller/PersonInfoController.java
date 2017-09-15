@@ -57,7 +57,7 @@ public class PersonInfoController {
     @PutMapping("/profile-img")
     public ResultView updateProfileImg(String userId, MultipartFile profileImgFile,
                                        String originalProfileImg,String oldProfileImg) throws Exception {
-        if(!oldProfileImg.equals("profile/defaultMeImg.png")){
+        if(!oldProfileImg.equals("static/defaultMeImg.png")){
             imageService.deleteImg(oldProfileImg);
         }
         String filePath=imageService.generateImgPath(profileImgFile, FileFolder.PROFILE.getFolder());

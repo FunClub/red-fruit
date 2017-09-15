@@ -131,7 +131,7 @@ public class BaseCircleService implements ICircleService {
 
        //填充动态信息
        ArtInfoDto artInfoDto = new ArtInfoDto();
-       UserNPInfoDto npInfoDto = userMapper.selectUserNPInfo(userId);
+       UserNPInfoDto npInfoDto = userMapper.selectUserNPInfo(post.getUserId());
        artInfoDto.setHowLongAgo(TimeUtil.calculateHowLongAgo(post.getDate()));
        artInfoDto.setProfile(npInfoDto.getProfileImg());
        artInfoDto.setNickname(npInfoDto.getNickname());

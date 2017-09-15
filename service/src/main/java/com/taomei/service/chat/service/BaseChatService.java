@@ -9,6 +9,8 @@ import com.taomei.dao.repository.ChatRepository;
 import com.taomei.service.chat.iservice.IChatService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ public class BaseChatService implements IChatService {
         this.userMapper = userMapper;
     }
 
+    @Cacheable(value="app-cache",key="#dto.halfId")
     @Override
     public List<ShowChatDto> selectChats(IdsDto dto) {
         String halfId = dto.getHalfId();
@@ -35,8 +38,21 @@ public class BaseChatService implements IChatService {
             BeanUtils.copyProperties(chat,showChatDto);
             UserNPInfoDto userNPInfoDto = userMapper.selectUserNPInfo(chat.getSendUserId());
             BeanUtils.copyProperties(userNPInfoDto,showChatDto);
+            showChatDto.setSendProfileImg(userNPInfoDto.getProfileImg());
             showChatDtos.add(showChatDto);
         }
         return showChatDtos;
+    }
+
+    /**
+     * 插入聊天记录
+     *
+     * @param chat
+     * @return
+     */
+    @CacheEvict(value = "app-cache",key = "#chat.halfId")
+    @Override
+    public Chat insertChat(Chat chat) {
+        return chatRepository.insert(chat);
     }
 }

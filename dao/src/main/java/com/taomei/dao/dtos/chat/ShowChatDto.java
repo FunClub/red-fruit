@@ -1,13 +1,15 @@
 package com.taomei.dao.dtos.chat;
 
+import java.io.Serializable;
+
 /**
  * 显示消息DTO
  */
-public class ShowChatDto {
+public class ShowChatDto implements Serializable {
     private String sendUserId;
     private String receivedUserId;
     private String nickname;
-    private String profileImg;
+    private String sendProfileImg;
     private String content;
     private String date;
 
@@ -35,12 +37,12 @@ public class ShowChatDto {
         this.nickname = nickname;
     }
 
-    public String getProfileImg() {
-        return profileImg;
+    public String getSendProfileImg() {
+        return sendProfileImg;
     }
 
-    public void setProfileImg(String profileImg) {
-        this.profileImg = profileImg;
+    public void setSendProfileImg(String sendProfileImg) {
+        this.sendProfileImg = sendProfileImg;
     }
 
     public String getContent() {

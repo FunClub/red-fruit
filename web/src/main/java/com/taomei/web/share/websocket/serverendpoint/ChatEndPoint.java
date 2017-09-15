@@ -1,9 +1,7 @@
 package com.taomei.web.share.websocket.serverendpoint;
 
-import com.taomei.dao.dtos.login.LoginDto;
-import com.taomei.dao.entities.Half;
 import com.taomei.dao.entities.chat.Chat;
-import com.taomei.dao.repository.ChatRepository;
+import com.taomei.service.chat.iservice.IChatService;
 import com.taomei.service.share.utils.TimeUtil;
 import com.taomei.web.share.configuration.CustomSpringConfigurator;
 import com.taomei.web.share.websocket.decode.NoticeMessageEncoder;
@@ -13,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpSession;
@@ -37,23 +36,23 @@ public class ChatEndPoint {
      */
     private Map<String,Session> chatSessionMap;
     private final NoticeEndPoint noticeEndPoint;
-    private final ChatRepository chatRepository;
+    @Autowired
+    private final IChatService chatService;
     private final  static Logger LOGGER = LoggerFactory.getLogger(ChatEndPoint.class);
     private final HttpSession session;
     @Autowired
-    public ChatEndPoint( NoticeEndPoint noticeEndPoint, ChatRepository chatRepository, HttpSession session) {
+    public ChatEndPoint(NoticeEndPoint noticeEndPoint, @Qualifier("baseChatService") IChatService chatService, HttpSession session) {
+        this.chatService = chatService;
         this.chatSessionMap = new HashMap<>();
         this.noticeEndPoint = noticeEndPoint;
-        this.chatRepository = chatRepository;
+
         this.session = session;
     }
 
     @OnOpen
     public void open(Session session, @PathParam("userId")String userId) throws IOException {
         this.chatSessionMap.put(userId,session);
-        if (LOGGER.isDebugEnabled()){
-            LOGGER.info(session.getId()+"connected");
-        }
+        LOGGER.info(userId+"connected");
     }
 
     @OnMessage
@@ -64,12 +63,11 @@ public class ChatEndPoint {
         Session noticeSession = noticeSessionMap.get(receivedUserId);
         noticeMessage.setDate(TimeUtil.generateShortDate(TimeUtil.getSimpleTime()));
         Chat chat = new Chat();
-        LoginDto loginDto = (LoginDto) this.session.getAttribute("user");
-        String halfId = loginDto.getHalf().getHalfId();
-        chat.setHalfId(halfId);
         BeanUtils.copyProperties(noticeMessage,chat);
-        chatRepository.insert(chat);
+        chatService.insertChat(chat);
+
         if(noticeSession!=null){
+            noticeMessage.setType("chat");
             if(chatSession!=null){
                 chatSession.getBasicRemote().sendObject(noticeMessage);
             }else{
