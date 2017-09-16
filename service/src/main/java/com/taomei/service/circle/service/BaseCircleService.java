@@ -1,8 +1,8 @@
 package com.taomei.service.circle.service;
 
-import com.taomei.dao.dtos.base.ArtInfoDto;
-import com.taomei.dao.dtos.base.ShowPagedArtDto;
-import com.taomei.dao.dtos.base.UserNPInfoDto;
+import com.taomei.dao.dtos.share.ArtInfoDto;
+import com.taomei.dao.dtos.share.ShowPagedArtDto;
+import com.taomei.dao.dtos.share.UserNPInfoDto;
 import com.taomei.dao.dtos.circle.SelectOnePostDto;
 import com.taomei.dao.dtos.circle.SelectPostConditionDto;
 import com.taomei.dao.dtos.circle.ShowPostDto;
@@ -10,6 +10,7 @@ import com.taomei.dao.entities.circle.Post;
 import com.taomei.dao.entities.discussion.ParentDiscussion;
 import com.taomei.dao.mapper.UserMapper;
 import com.taomei.dao.repository.DiscussionRepository;
+import com.taomei.dao.repository.HalfRepository;
 import com.taomei.dao.repository.PostRepository;
 import com.taomei.service.circle.iservice.ICircleService;
 import com.taomei.service.share.enums.SortBy;
@@ -33,12 +34,17 @@ public class BaseCircleService implements ICircleService {
     private final UserMapper userMapper;
     private final PostRepository postRepository;
     private final DiscussionRepository discussionRepository;
+    private final HalfRepository halfRepository;
     @Autowired
-    public BaseCircleService(PostRepository postRepository, UserMapper userMapper, DiscussionRepository discussionRepository) {
+    public BaseCircleService(PostRepository postRepository, UserMapper userMapper,
+                             DiscussionRepository discussionRepository, HalfRepository halfRepository) {
         this.postRepository = postRepository;
         this.userMapper = userMapper;
         this.discussionRepository = discussionRepository;
+        this.halfRepository = halfRepository;
     }
+
+
 
     /**
      * 查询一个帖子

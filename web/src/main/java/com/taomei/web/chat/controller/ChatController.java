@@ -1,6 +1,6 @@
 package com.taomei.web.chat.controller;
 
-import com.taomei.dao.dtos.base.IdsDto;
+import com.taomei.dao.dtos.share.IdsDto;
 import com.taomei.dao.entities.ResultView;
 import com.taomei.service.chat.iservice.IChatService;
 import com.taomei.web.share.anotaions.SetId;

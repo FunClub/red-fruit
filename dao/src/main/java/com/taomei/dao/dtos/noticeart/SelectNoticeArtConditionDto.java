@@ -1,6 +1,6 @@
 package com.taomei.dao.dtos.noticeart;
 
-import com.taomei.dao.dtos.base.PageRequestDto;
+import com.taomei.dao.dtos.share.PageRequestDto;
 
 /**
  * 查询通知动态的dto

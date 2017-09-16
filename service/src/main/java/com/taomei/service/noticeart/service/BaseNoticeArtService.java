@@ -1,22 +1,18 @@
 package com.taomei.service.noticeart.service;
 
-import com.taomei.dao.dtos.base.UserNPInfoDto;
+import com.taomei.dao.dtos.share.UserNPInfoDto;
 import com.taomei.dao.dtos.discussion.ShowParentDiscussionDto;
 import com.taomei.dao.dtos.noticeart.DeleteNoticeArtDto;
 import com.taomei.dao.dtos.noticeart.SelectNoticeArtConditionDto;
 import com.taomei.dao.dtos.noticeart.ShowNoticeArtDto;
 import com.taomei.dao.dtos.noticeart.ShowPagedNoticeArtDto;
-import com.taomei.dao.entities.Mood;
 import com.taomei.dao.entities.NoticeArt;
 import com.taomei.dao.entities.discussion.ParentDiscussion;
 import com.taomei.dao.mapper.UserMapper;
 import com.taomei.dao.repository.DiscussionRepository;
-import com.taomei.dao.repository.MoodRepository;
 import com.taomei.dao.repository.NoticeArtRepository;
 
 import com.taomei.service.noticeart.iservice.INoticeArtService;
-import com.taomei.service.share.enums.ArtType;
-import com.taomei.service.share.enums.NoticeArtType;
 import com.taomei.service.share.utils.DiscussionUtil;
 import com.taomei.service.share.utils.TimeUtil;
 import org.bson.Document;

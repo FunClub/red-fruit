@@ -10,6 +10,11 @@ import java.util.List;
 public class UpdateProfileDto {
     private String userId;
     /**
+     * 情侣id用于删除聊聊天记录缓存
+     */
+    private String halfId;
+
+    /**
      * 缩略头像
      */
     private MultipartFile profileImgFile;
@@ -28,6 +33,13 @@ public class UpdateProfileDto {
         this.userId = userId;
     }
 
+    public String getHalfId() {
+        return halfId;
+    }
+
+    public void setHalfId(String halfId) {
+        this.halfId = halfId;
+    }
 
     public String getProfileImg() {
         return profileImg;

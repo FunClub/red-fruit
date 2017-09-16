@@ -1,4 +1,4 @@
-package com.taomei.dao.dtos.base;
+package com.taomei.dao.dtos.share;
 
 /**
  * 动态dto的通用属性

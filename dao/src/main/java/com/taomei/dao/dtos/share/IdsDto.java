@@ -1,4 +1,4 @@
-package com.taomei.dao.dtos.base;
+package com.taomei.dao.dtos.share;
 
 /**
  * 情侣Id和用户id dto

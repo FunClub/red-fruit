@@ -4,16 +4,14 @@ import com.taomei.dao.dtos.personinfo.BaseUserInfoDto;
 import com.taomei.dao.dtos.personinfo.UpdateProfileDto;
 import com.taomei.dao.entities.ResultView;
 import com.taomei.service.personinfo.serviceimpl.BasePersonInfoService;
-import com.taomei.service.share.ImageService;
+import com.taomei.service.share.service.ImageService;
 import com.taomei.service.share.enums.FileFolder;
+import com.taomei.web.share.anotaions.SetId;
 import com.taomei.web.share.anotaions.SetUserId;
 import com.taomei.web.share.utils.ResultViewUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.websocket.server.PathParam;
-import java.util.List;
 
 /**
  * 用户信息控制器
@@ -53,9 +51,9 @@ public class PersonInfoController {
      * @return 统一数据对象
      * @throws Exception 头像修改失败profileImg
      */
-    @SetUserId
+    @SetId
     @PutMapping("/profile-img")
-    public ResultView updateProfileImg(String userId, MultipartFile profileImgFile,
+    public ResultView updateProfileImg(String userId,String halfId, MultipartFile profileImgFile,
                                        String originalProfileImg,String oldProfileImg) throws Exception {
         if(!oldProfileImg.equals("static/defaultMeImg.png")){
             imageService.deleteImg(oldProfileImg);
@@ -66,6 +64,7 @@ public class PersonInfoController {
         dto.setUserId(userId);
         dto.setOriginalProfileImg(originalProfileImg);
         dto.setProfileImg(filePath);
+        dto.setHalfId(halfId);
         if(!personInfoService.updateUserProfile(dto)){throw new Exception("更新头像失败");}
         return ResultViewUtil.success(filePath);
     }

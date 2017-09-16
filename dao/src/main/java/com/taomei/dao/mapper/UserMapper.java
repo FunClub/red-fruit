@@ -1,7 +1,8 @@
 package com.taomei.dao.mapper;
 
+import com.taomei.dao.dtos.share.ShowCardUserDto;
 import com.taomei.dao.dtos.home.HomeInfoDto;
-import com.taomei.dao.dtos.base.UserNPInfoDto;
+import com.taomei.dao.dtos.share.UserNPInfoDto;
 import com.taomei.dao.dtos.personinfo.BaseUserInfoDto;
 import com.taomei.dao.dtos.personinfo.UpdateProfileDto;
 import com.taomei.dao.entities.Users;
@@ -11,7 +12,12 @@ import java.math.BigInteger;
 
 @Mapper
 public interface UserMapper {
-
+    /**
+     * 查询圈子名片
+     * @param userId 用户id
+     * @return 圈子名片上的用户信息dto
+     */
+    ShowCardUserDto selectCardUserDto(String userId);
     /**
      * 查询心情发布人的信息
      * @param userId 用户Id

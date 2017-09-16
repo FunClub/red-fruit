@@ -1,6 +1,6 @@
 package com.taomei.service.chat.iservice;
 
-import com.taomei.dao.dtos.base.IdsDto;
+import com.taomei.dao.dtos.share.IdsDto;
 import com.taomei.dao.dtos.chat.ShowChatDto;
 import com.taomei.dao.entities.chat.Chat;
 

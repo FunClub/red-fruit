@@ -1,6 +1,6 @@
 package com.taomei.dao.dtos.discussion;
 
-import com.taomei.dao.dtos.base.PageRequestDto;
+import com.taomei.dao.dtos.share.PageRequestDto;
 
 /**
  * 查询评论DTO

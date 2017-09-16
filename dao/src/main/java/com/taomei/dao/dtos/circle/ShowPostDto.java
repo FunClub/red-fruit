@@ -1,7 +1,6 @@
 package com.taomei.dao.dtos.circle;
 
-import com.taomei.dao.dtos.base.ArtInfoDto;
-import com.taomei.dao.entities.album.Photo;
+import com.taomei.dao.dtos.share.ArtInfoDto;
 import com.taomei.dao.entities.circle.Post;
 
 

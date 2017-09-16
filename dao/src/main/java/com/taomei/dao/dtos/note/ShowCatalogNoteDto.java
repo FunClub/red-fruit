@@ -1,6 +1,6 @@
 package com.taomei.dao.dtos.note;
 
-import com.taomei.dao.dtos.base.ArtDto;
+import com.taomei.dao.dtos.share.ArtDto;
 
 /**
  * 显示单个目录日志的dto

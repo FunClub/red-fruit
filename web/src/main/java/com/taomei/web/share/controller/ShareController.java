@@ -1,7 +1,9 @@
 package com.taomei.web.share.controller;
 
-import com.taomei.service.share.ImageService;
-import com.taomei.web.share.utils.ResultViewStatusUtil;
+import com.taomei.dao.entities.Attention;
+import com.taomei.service.share.service.ImageService;
+import com.taomei.service.share.service.ShareService;
+import com.taomei.web.share.anotaions.SetUserId;
 import com.taomei.web.share.utils.ResultViewUtil;
 import com.taomei.dao.entities.ResultView;
 import com.taomei.web.share.utils.ValidateUtil;
@@ -24,12 +26,37 @@ import java.util.List;
 @RequestMapping("/share")
 public class ShareController {
     private final ImageService imageService;
+    private final ShareService shareService;
 
     @Autowired
-    public ShareController(ImageService imageService) {
+    public ShareController(ImageService imageService, ShareService shareService) {
         this.imageService = imageService;
+        this.shareService = shareService;
     }
 
+    /**
+     * 添加关注
+     * @param userId 用户id
+     * @param attentionUserId 被关注用户的id
+     * @return
+     */
+    @PostMapping("/{attentionUserId}/attention")
+    @SetUserId
+    public ResultView addAttention(String userId,@PathVariable("attentionUserId") String attentionUserId){
+        Attention attention = new Attention();
+        attention.setUserId(userId);
+        attention.setAttentionUserId(attentionUserId);
+        return ResultViewUtil.success(shareService.addAttention(attention));
+    }
+    /**
+     * 查询用户card信息
+     * @param userId 用户id
+     * @return 统一数据对象
+     */
+    @GetMapping("/{userId}/card")
+    public ResultView selectShowCardUserDto(@PathVariable("userId") String userId){
+        return ResultViewUtil.success(shareService.selectCardUser(userId));
+    }
     /**
      * 向浏览器输入验证码
      * @param request javax.servlet.{@link HttpServletRequest}

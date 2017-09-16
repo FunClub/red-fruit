@@ -1,13 +1,13 @@
 package com.taomei.web.album.controller;
 
 import com.taomei.dao.dtos.album.*;
-import com.taomei.dao.dtos.base.IdsDto;
+import com.taomei.dao.dtos.share.IdsDto;
 import com.taomei.dao.entities.NoticeArt;
 import com.taomei.dao.entities.ResultView;
 import com.taomei.dao.entities.album.Album;
 import com.taomei.dao.entities.album.Photo;
 import com.taomei.service.album.iservice.IAlbumService;
-import com.taomei.service.share.ImageService;
+import com.taomei.service.share.service.ImageService;
 import com.taomei.web.share.anotaions.SetHalfId;
 import com.taomei.web.share.anotaions.SetId;
 import com.taomei.web.share.anotaions.SetUserId;

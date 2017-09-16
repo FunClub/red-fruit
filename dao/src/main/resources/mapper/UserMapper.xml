@@ -36,9 +36,18 @@
   </resultMap>
 
   <!--显示心情发布人的信息Map-->
-  <resultMap id="MoodUserInfoMap" type="com.taomei.dao.dtos.base.UserNPInfoDto">
+  <resultMap id="MoodUserInfoMap" type="com.taomei.dao.dtos.share.UserNPInfoDto">
     <result column="nickname" jdbcType="VARCHAR" property="nickname" />
     <result column="profile_img" property="profileImg"/>
+  </resultMap>
+  <!--圈子名片Map-->
+  <resultMap id="ShowCardUserDtoMap" type="com.taomei.dao.dtos.share.ShowCardUserDto">
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="character" property="character"/>
+    <result column="profile_img" property="profileImg"/>
+    <result column="profession" property="profession"/>
   </resultMap>
   <update id="updateUserBaseInfoById">
     UPDATE users SET nickname=#{nickname},born=#{born},profession=#{profession}, `character`=#{character},hobby=#{hobby},city=#{city}
@@ -72,8 +81,11 @@
   <select id="selectUserNPInfo" resultMap="MoodUserInfoMap">
       SELECT nickname,profile_img FROM users WHERE user_id=#{value}
   </select>
+    <select id="selectCardUserDto" resultMap="ShowCardUserDtoMap">
+      SELECT nickname,sex,profile_img,profession,`character`,city FROM users WHERE user_id=#{userId}
+    </select>
 
-  <insert id="insert" parameterType="com.taomei.dao.entities.Users" useGeneratedKeys="true" keyProperty="userId">
+    <insert id="insert" parameterType="com.taomei.dao.entities.Users" useGeneratedKeys="true" keyProperty="userId">
     insert into users (account,nickName, passwords,born, sex,city,profile_img,original_profile_img)
     values (#{account,jdbcType=VARCHAR},#{nickname},#{passwords,jdbcType=VARCHAR},#{born,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{city,jdbcType=VARCHAR},#{profileImg},#{originalProfileImg})
   </insert>

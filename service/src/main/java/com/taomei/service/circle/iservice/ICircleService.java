@@ -1,6 +1,6 @@
 package com.taomei.service.circle.iservice;
 
-import com.taomei.dao.dtos.base.ShowPagedArtDto;
+import com.taomei.dao.dtos.share.ShowPagedArtDto;
 import com.taomei.dao.dtos.circle.SelectOnePostDto;
 import com.taomei.dao.dtos.circle.SelectPostConditionDto;
 import com.taomei.dao.dtos.circle.ShowPostDto;
@@ -12,6 +12,7 @@ import com.taomei.dao.entities.circle.Post;
  */
 
 public interface ICircleService {
+
 
     /**
      * 查询一个帖子

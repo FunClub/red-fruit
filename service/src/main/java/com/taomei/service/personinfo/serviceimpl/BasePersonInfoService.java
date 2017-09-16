@@ -5,6 +5,7 @@ import com.taomei.dao.dtos.personinfo.UpdateProfileDto;
 import com.taomei.dao.mapper.UserMapper;
 import com.taomei.service.personinfo.iservice.IPersonInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,6 +20,7 @@ public class BasePersonInfoService implements IPersonInfoService {
         this.userMapper = userMapper;
     }
 
+    @CacheEvict(value = "app-cache",key = "#dto.halfId")
     @Override
     public boolean updateUserProfile(UpdateProfileDto dto) throws Exception {
         int count= userMapper.updateUserProfile(dto);

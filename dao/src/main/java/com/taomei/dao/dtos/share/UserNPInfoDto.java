@@ -1,4 +1,4 @@
-package com.taomei.dao.dtos.base;
+package com.taomei.dao.dtos.share;
 
 /**
  * 在心情中显示用户头像昵称等基本信息

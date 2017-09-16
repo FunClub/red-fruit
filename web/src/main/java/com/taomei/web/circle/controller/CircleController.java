@@ -5,27 +5,30 @@ import com.taomei.dao.dtos.circle.SelectPostConditionDto;
 import com.taomei.dao.entities.ResultView;
 import com.taomei.dao.entities.circle.Post;
 import com.taomei.service.circle.iservice.ICircleService;
+import com.taomei.service.share.service.ShareService;
 import com.taomei.web.share.anotaions.SetUserId;
 import com.taomei.web.share.utils.ResultViewUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/circle")
 public class CircleController {
     private final ICircleService circleService;
-
+    private final ShareService shareService;
     @Autowired
-    public CircleController(@Qualifier("baseCircleService") ICircleService circleService) {
+    public CircleController(ShareService shareService, ICircleService circleService) {
+        this.shareService = shareService;
         this.circleService = circleService;
     }
+
+
 
     /**
      * 查询一个帖子
      * @param userId 用户id
      * @param postId 帖子id
-     * @return 帖子
+     * @return 统一数据对象
      */
     @GetMapping("/{postId}/post")
     @SetUserId

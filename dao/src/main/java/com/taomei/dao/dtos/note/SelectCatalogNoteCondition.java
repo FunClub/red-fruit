@@ -1,6 +1,6 @@
 package com.taomei.dao.dtos.note;
 
-import com.taomei.dao.dtos.base.PageRequestDto;
+import com.taomei.dao.dtos.share.PageRequestDto;
 
 /**
  * 查询日志的条件dto

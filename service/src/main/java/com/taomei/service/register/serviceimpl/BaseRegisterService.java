@@ -55,6 +55,7 @@ public class BaseRegisterService implements IBaseRegisterService {
         }else{
             throw new Exception("注册失败！");
         }
+
     }
 
     /**

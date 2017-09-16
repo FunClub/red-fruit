@@ -1,4 +1,4 @@
-package com.taomei.service.share;
+package com.taomei.service.share.service;
 
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.model.ObjectMetadata;

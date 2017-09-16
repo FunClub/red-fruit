@@ -1,6 +1,6 @@
 package com.taomei.service.share.utils;
 
-import com.taomei.dao.dtos.base.UserNPInfoDto;
+import com.taomei.dao.dtos.share.UserNPInfoDto;
 import com.taomei.dao.dtos.mood.ShowMoodDto;
 import com.taomei.dao.dtos.mood.ShowPagedMoodDto;
 import com.taomei.dao.entities.Mood;

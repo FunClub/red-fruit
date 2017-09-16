@@ -1,9 +1,6 @@
 package com.taomei.dao.dtos.mood;
 
-import com.taomei.dao.dtos.base.ArtDto;
 import com.taomei.dao.entities.Mood;
-
-import java.util.List;
 
 /**
  * 用于显示单个心情的dto

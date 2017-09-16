@@ -1,4 +1,4 @@
-package com.taomei.dao.dtos.base;
+package com.taomei.dao.dtos.share;
 
 import java.util.List;
 

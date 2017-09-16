@@ -1,4 +1,4 @@
-package com.taomei.dao.dtos.base;
+package com.taomei.dao.dtos.share;
 
 public class PageRequestDto {
     private int pageSize;
