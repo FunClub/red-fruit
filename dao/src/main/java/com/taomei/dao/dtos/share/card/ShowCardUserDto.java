@@ -1,4 +1,4 @@
-package com.taomei.dao.dtos.share;
+package com.taomei.dao.dtos.share.card;
 
 /**
  * 显示名片上的用户信息
@@ -11,6 +11,15 @@ public class ShowCardUserDto {
     private String character;
     private String city;
     private String profession;
+    private Boolean attentionAble;
+
+    public Boolean getAttentionAble() {
+        return attentionAble;
+    }
+
+    public void setAttentionAble(Boolean attentionAble) {
+        this.attentionAble = attentionAble;
+    }
 
     public String getProfession() {
         return profession;

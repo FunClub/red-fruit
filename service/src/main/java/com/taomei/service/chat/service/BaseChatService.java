@@ -1,7 +1,7 @@
 package com.taomei.service.chat.service;
 
 import com.taomei.dao.dtos.share.IdsDto;
-import com.taomei.dao.dtos.share.UserNPInfoDto;
+import com.taomei.dao.dtos.share.user.UserNPInfoDto;
 import com.taomei.dao.dtos.chat.ShowChatDto;
 import com.taomei.dao.entities.chat.Chat;
 import com.taomei.dao.mapper.UserMapper;

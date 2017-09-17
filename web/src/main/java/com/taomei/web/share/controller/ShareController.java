@@ -1,5 +1,6 @@
 package com.taomei.web.share.controller;
 
+import com.taomei.dao.dtos.share.card.SelectCardDto;
 import com.taomei.dao.entities.Attention;
 import com.taomei.service.share.service.ImageService;
 import com.taomei.service.share.service.ShareService;
@@ -35,10 +36,34 @@ public class ShareController {
     }
 
     /**
+     * 查询被关注人信息
+     * @param userId 关注人id
+     * @return 统一数据对象
+     */
+    @GetMapping("/attention")
+    @SetUserId
+    public ResultView selectAttentionUsers(String userId){
+        return ResultViewUtil.success(shareService.selectAttentionUsers(userId));
+    }
+    /**
+     * 取消关注
+     * @param userId 关注人id
+     * @param attentionUserId 被关注人id
+     * @return 统一数据对象
+     */
+    @DeleteMapping("/{attentionUserId}/attention")
+    @SetUserId
+    public ResultView deleteAttention(String userId, @PathVariable("attentionUserId") String attentionUserId){
+        SelectCardDto dto = new SelectCardDto();
+        dto.setCardUserId(attentionUserId);
+        dto.setUserId(userId);
+        return ResultViewUtil.success(shareService.deleteAttention(dto));
+    }
+    /**
      * 添加关注
      * @param userId 用户id
      * @param attentionUserId 被关注用户的id
-     * @return
+     * @return 统一数据对象
      */
     @PostMapping("/{attentionUserId}/attention")
     @SetUserId
@@ -50,12 +75,16 @@ public class ShareController {
     }
     /**
      * 查询用户card信息
-     * @param userId 用户id
+     * @param cardUserId 被查询的用户id
      * @return 统一数据对象
      */
     @GetMapping("/{userId}/card")
-    public ResultView selectShowCardUserDto(@PathVariable("userId") String userId){
-        return ResultViewUtil.success(shareService.selectCardUser(userId));
+    @SetUserId
+    public ResultView selectShowCardUserDto(String userId,@PathVariable("userId") String cardUserId){
+        SelectCardDto dto = new SelectCardDto();
+        dto.setCardUserId(cardUserId);
+        dto.setUserId(userId);
+        return ResultViewUtil.success(shareService.selectCardUser(dto));
     }
     /**
      * 向浏览器输入验证码

@@ -2,7 +2,7 @@ package com.taomei.service.album.service;
 
 import com.taomei.dao.dtos.album.*;
 import com.taomei.dao.dtos.share.IdsDto;
-import com.taomei.dao.dtos.share.UserNPInfoDto;
+import com.taomei.dao.dtos.share.user.UserNPInfoDto;
 import com.taomei.dao.entities.NoticeArt;
 import com.taomei.dao.entities.Settings;
 import com.taomei.dao.entities.album.Album;

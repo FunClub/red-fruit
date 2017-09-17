@@ -1,10 +1,12 @@
 package com.taomei.dao.mapper;
 
-import com.taomei.dao.dtos.share.ShowCardUserDto;
+import com.taomei.dao.dtos.share.card.ShowCardUserDto;
 import com.taomei.dao.dtos.home.HomeInfoDto;
-import com.taomei.dao.dtos.share.UserNPInfoDto;
+import com.taomei.dao.dtos.share.user.AttentionUserDto;
+import com.taomei.dao.dtos.share.user.UserNPInfoDto;
 import com.taomei.dao.dtos.personinfo.BaseUserInfoDto;
 import com.taomei.dao.dtos.personinfo.UpdateProfileDto;
+import com.taomei.dao.entities.Attention;
 import com.taomei.dao.entities.Users;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -12,6 +14,13 @@ import java.math.BigInteger;
 
 @Mapper
 public interface UserMapper {
+
+    /**
+     * 查询被关注人信息
+     * @param userId 被关注人id
+     * @return 被关注人信息
+     */
+    AttentionUserDto selectAttentionUserDto(String userId);
     /**
      * 查询圈子名片
      * @param userId 用户id

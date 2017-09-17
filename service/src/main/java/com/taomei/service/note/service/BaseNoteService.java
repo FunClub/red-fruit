@@ -2,7 +2,7 @@ package com.taomei.service.note.service;
 
 import com.taomei.dao.dtos.share.PageRequestDto;
 import com.taomei.dao.dtos.share.ShowPagedArtDto;
-import com.taomei.dao.dtos.share.UserNPInfoDto;
+import com.taomei.dao.dtos.share.user.UserNPInfoDto;
 import com.taomei.dao.dtos.note.SelectCatalogNoteCondition;
 import com.taomei.dao.dtos.note.SelectNoteDto;
 import com.taomei.dao.dtos.note.ShowCatalogNoteDto;

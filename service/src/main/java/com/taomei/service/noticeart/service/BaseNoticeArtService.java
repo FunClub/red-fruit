@@ -1,6 +1,6 @@
 package com.taomei.service.noticeart.service;
 
-import com.taomei.dao.dtos.share.UserNPInfoDto;
+import com.taomei.dao.dtos.share.user.UserNPInfoDto;
 import com.taomei.dao.dtos.discussion.ShowParentDiscussionDto;
 import com.taomei.dao.dtos.noticeart.DeleteNoticeArtDto;
 import com.taomei.dao.dtos.noticeart.SelectNoticeArtConditionDto;

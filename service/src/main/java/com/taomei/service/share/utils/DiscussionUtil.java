@@ -1,6 +1,6 @@
 package com.taomei.service.share.utils;
 
-import com.taomei.dao.dtos.share.UserNPInfoDto;
+import com.taomei.dao.dtos.share.user.UserNPInfoDto;
 import com.taomei.dao.dtos.discussion.ShowPagedDiscussionDto;
 import com.taomei.dao.dtos.discussion.ShowParentDiscussionDto;
 import com.taomei.dao.dtos.discussion.ShowSubDiscussionDto;

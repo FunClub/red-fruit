@@ -2,7 +2,7 @@ package com.taomei.service.circle.service;
 
 import com.taomei.dao.dtos.share.ArtInfoDto;
 import com.taomei.dao.dtos.share.ShowPagedArtDto;
-import com.taomei.dao.dtos.share.UserNPInfoDto;
+import com.taomei.dao.dtos.share.user.UserNPInfoDto;
 import com.taomei.dao.dtos.circle.SelectOnePostDto;
 import com.taomei.dao.dtos.circle.SelectPostConditionDto;
 import com.taomei.dao.dtos.circle.ShowPostDto;
