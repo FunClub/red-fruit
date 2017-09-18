@@ -35,6 +35,7 @@ public class ShareController {
         this.shareService = shareService;
     }
 
+
     /**
      * 查询被关注人信息
      * @param userId 关注人id

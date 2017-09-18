@@ -15,7 +15,25 @@ public class Email {
     private String fromUserId;
     private String receiveUserId;
     private String date;
+    private Boolean fromState;
+    private Boolean receiveState;
     private List<EmailContent> emailContents;
+
+    public Boolean getFromState() {
+        return fromState;
+    }
+
+    public void setFromState(Boolean fromState) {
+        this.fromState = fromState;
+    }
+
+    public Boolean getReceiveState() {
+        return receiveState;
+    }
+
+    public void setReceiveState(Boolean receiveState) {
+        this.receiveState = receiveState;
+    }
 
     public String getEmailId() {
         return emailId;

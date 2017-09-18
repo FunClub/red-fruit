@@ -7,7 +7,6 @@ public class EmailContent {
     private String userId;
     private String date;
     private String content;
-    private String state;
 
     public String getUserId() {
         return userId;
@@ -33,11 +32,4 @@ public class EmailContent {
         this.content = content;
     }
 
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
 }
