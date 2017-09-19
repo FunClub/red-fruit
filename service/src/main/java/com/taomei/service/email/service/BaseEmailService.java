@@ -11,19 +11,62 @@ import com.taomei.service.share.utils.TimeUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.springframework.data.mongodb.core.query.Criteria.where;
 
 @Service
 public class BaseEmailService implements IEmailService {
     private final EmailRepository emailRepository;
     private final UserMapper userMapper;
+    private final MongoOperations mongoOperations;
     @Autowired
-    public BaseEmailService(EmailRepository emailRepository, UserMapper userMapper) {
+    public BaseEmailService(EmailRepository emailRepository, UserMapper userMapper, MongoOperations mongoOperations) {
         this.emailRepository = emailRepository;
         this.userMapper = userMapper;
+        this.mongoOperations = mongoOperations;
+    }
+
+    /**
+     * 删除邮件
+     * @param emailIds 邮件id集合
+     * @return 成功与否
+     */
+    @Override
+    public boolean deleteEmail(List<String> emailIds) {
+        Query query  = Query.query(where("emailId").in(emailIds));
+        return mongoOperations.remove(query,Email.class,"email").getN()==emailIds.size();
+    }
+
+    /**
+     * 插入邮件内容
+     * @param dto 插入dto
+     * @return 成功与否
+     */
+    @Override
+    public boolean insertEmailContent(InsertEmailContentDto dto) {
+        dto.getEmailContent().setDate(TimeUtil.getSimpleTime());
+        String emailId = dto.getEmailId();
+        EmailContent emailContent = dto.getEmailContent();
+        String userId = emailContent.getUserId();
+        Email email = emailRepository.findOne(emailId);
+        Query query = Query.query(where("emailId").is(emailId));
+        Update update = new Update();
+        if(userId.equals(email.getFromUserId())){
+            update.set("receiveState",false);
+        }else{
+            update.set("fromState",false);
+        }
+        update.set("date",TimeUtil.getSimpleTime());
+        update.addToSet("emailContents",emailContent);
+        return mongoOperations.updateFirst(query,update,Email.class,"email").getN()>0;
     }
 
     /**
@@ -39,11 +82,17 @@ public class BaseEmailService implements IEmailService {
         String emailId = dto.getEmailId();
         Email email = emailRepository.findOne(emailId);
         String emailUserId;
+        Query query = Query.query(where("emailId").is(emailId));
+        Update update = new Update();
         if(userId.equals(email.getFromUserId())){
             emailUserId=email.getReceiveUserId();
+            update.set("fromState",true);
         }else{
             emailUserId=email.getFromUserId();
+            update.set("receiveState",true);
         }
+         //改为已读
+        mongoOperations.updateFirst(query,update,Email.class,"email");
         showEmailDto.setEmailUserId(emailUserId);
         showEmailDto.setEmailId(email.getEmailId());
         AttentionUserDto attentionUserDto = userMapper.selectAttentionUserDto(emailUserId);
@@ -58,13 +107,15 @@ public class BaseEmailService implements IEmailService {
         }
         for (EmailContent emailContent:emailContents){
             showEmailContentDto = new ShowEmailContentDto();
-            AttentionUserDto emailContentUser = userMapper.selectAttentionUserDto(emailUserId);
+            AttentionUserDto emailContentUser = userMapper.selectAttentionUserDto(emailContent.getUserId());
             BeanUtils.copyProperties(emailContentUser,showEmailContentDto);
             showEmailContentDto.setContent(emailContent.getContent());
             showEmailContentDto.setDate(email.getDate());
             emailContentDtos.add(showEmailContentDto);
         }
         showEmailDto.setEmailContents(emailContentDtos);
+
+
         return showEmailDto;
     }
 

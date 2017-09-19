@@ -1,5 +1,6 @@
 package com.taomei.web.email.controller;
 
+import com.taomei.dao.dtos.email.InsertEmailContentDto;
 import com.taomei.dao.dtos.email.SelectEmailCatalogDto;
 import com.taomei.dao.dtos.email.SelectEmailDto;
 import com.taomei.dao.entities.ResultView;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/email")
 public class EmailController {
@@ -21,6 +24,27 @@ public class EmailController {
         this.emailService = emailService;
     }
 
+    /**
+     * 删除邮件
+     * @param emailIds 邮件id集合
+     * @return 统一数据对象
+     */
+    @PostMapping("/delete")
+    public ResultView deleteEmail(@RequestBody List<String> emailIds){
+        return ResultViewUtil.success(emailService.deleteEmail(emailIds));
+    }
+    /**
+     * 插入邮件内容
+     * @param userId 用户id
+     * @param dto 插入dto
+     * @return 统一数据对象
+     */
+    @PutMapping("/email-content")
+    @SetUserId
+    public ResultView insertEmailContent(String userId, @RequestBody InsertEmailContentDto dto){
+        dto.getEmailContent().setUserId(userId);
+        return ResultViewUtil.success(emailService.insertEmailContent(dto));
+    }
     /**
      * 查询邮件
      * @param userId 用户id
